@@ -3,6 +3,7 @@
 use Core\Foundation\Application;
 use Core\Foundation\Context;
 use Core\Foundation\Request;
+use Core\Loaders\Config;
 use Core\Support\UnitsConversion;
 
 $request = Request::make();
@@ -24,9 +25,15 @@ function secondsToMilliseconds($seconds)
 ?>
 <footer id="debug-bar" x-data="debugbar" :class="{ open: bodyOpen }">
     <div class="debugbar-header">
-        <h4 class="debugbar-title"><?= Application::FrameworkName ?></h4>
+        <h2 class="debugbar-title"><?= Application::FrameworkName ?></h2>
         <ul class="debugbar-options">
-            <!-- Lista de query's -->
+            <!-- Lista de configuraciones -->
+            <li>
+                <button type="button" @click="selectOption('config')">
+                    Configurations
+                </button>
+            </li>
+
             <li>
                 <button type="button" @click="selectOption('query')">
                     Queries (<?= count($queries) ?>)
@@ -47,6 +54,22 @@ function secondsToMilliseconds($seconds)
         </ul>
     </div>
     <div class="debugbar-body" x-show="bodyOpen" x-cloak>
+        <!-- Lista de configuraciones -->
+        <div x-show="selectedOption === 'config'" class="regular-content">
+            <?php foreach (Config::all()->toArray() as $config => $value) : if ($config === 'framework') continue; ?>
+                <h4><?= ucfirst($config); ?></h4>
+                <ul style="margin-bottom: 1.5em;">
+                    <?php foreach ($value as $key => $value) : if (is_array($value)) continue; ?>
+                        <li class="item-config">
+                            <p><?= $key ?></p>
+                            <p><?= $value ?></p>
+                            <p><?= $config ?>.<?= $key ?></p>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endforeach; ?>
+        </div>
+
         <!-- Lista de query's -->
         <div x-show="selectedOption === 'query'" class="debugbar-body-item">
             <ul>

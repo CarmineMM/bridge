@@ -6,6 +6,7 @@ use App\Models\User;
 use Core\Foundation\BaseController;
 use Core\Foundation\Context;
 use Core\Foundation\Request;
+use Core\Loaders\Config;
 
 class HomeController extends BaseController
 {
@@ -16,7 +17,7 @@ class HomeController extends BaseController
         $user->all(['id', 'name']);
         $user->all(['id']);
 
-        dump((new Context)->allState());
+        //dump(Config::all());
         return $this->view('welcome', [
             'foo' => 'bar',
         ]);

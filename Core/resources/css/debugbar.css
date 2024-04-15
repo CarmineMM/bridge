@@ -120,10 +120,15 @@
 
 #debug-bar .debugbar-options li {
 	transition: all 0.2s ease-in-out;
+	height: 100%;
 }
 
 #debug-bar .debugbar-options li:hover {
 	background-color: var(--debug-bar-light-2);
+}
+
+#debug-bar .debugbar-body {
+	overflow: auto;
 }
 
 #debug-bar .debugbar-body .list-item {
@@ -145,4 +150,32 @@
 #debug-bar .debugbar-body .item-query p {
 	font-family: 'Courier New', Courier, monospace;
 	font-size: 0.9em;
+}
+
+#debug-bar .regular-content {
+	padding: 1em;
+}
+
+#debug-bar h4 {
+	font-size: 1.1em;
+	margin-bottom: 0.5em;
+}
+#debug-bar .debugbar-body .item-config {
+	display: flex;
+	align-items: center;
+	font-family: 'Courier New', Courier, monospace;
+	padding: 0.6em 1em;
+	border-bottom: 1px solid var(--debug-bar-light-2);
+}
+
+#debug-bar .debugbar-body .item-config:hover {
+	background-color: var(--debug-bar-light-2);
+}
+
+#debug-bar .debugbar-body .item-config p:nth-child(1) {
+	width: 23%;
+}
+
+#debug-bar .debugbar-body .item-config p:nth-child(2) {
+	width: 50%;
 }

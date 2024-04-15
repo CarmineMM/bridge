@@ -99,7 +99,7 @@ class Config
         }
 
         $config->config = new Collection(
-            array_merge($config->config, $add),
+            $config->filter(array_merge($config->config, $add)),
             false
         );
 
@@ -121,5 +121,23 @@ class Config
     public static function get(string $index, mixed $default = null): mixed
     {
         return self::getInstance()->config->get($index, $default);
+    }
+
+    /**
+     * Filtro para los configuraciones
+     */
+    private function filter(array $filter): array
+    {
+        $fill = [];
+
+        foreach ($filter as $key => $value) {
+            if ($key === 'app') {
+                $value['debug'] = $value['debug'] === 'true' ? true : false;
+                $value['url'] = trim($value['url'], '/');
+            }
+            $fill[$key] = $value;
+        }
+
+        return $fill;
     }
 }

@@ -14,7 +14,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('debugbar', () => ({
         bodyOpen: false,
 
-        selectedOption: 'query',
+        selectedOption: 'config',
 
         toggleBody() {
             this.bodyOpen = !this.bodyOpen
