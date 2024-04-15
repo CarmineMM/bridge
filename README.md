@@ -2,8 +2,8 @@
 
 ### Indice
 
-1. [Introducción](#introduccion)
-2. [Instalación](#instalacion)
+1. [Introducción](#Introducción)
+2. [Instalación](#Instalación)
 3. [Lifecycle](#lifecycle)
 
 ## Introducción
