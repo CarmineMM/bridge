@@ -67,7 +67,7 @@ class Context
      * @param mixed $default
      * @return mixed
      */
-    public function getStore(string $key, mixed $default): mixed
+    public function getStore(string $key, mixed $default = null): mixed
     {
         return $_SESSION[$this->namespace][$this->keyStoreContext][$key] ?? $default;
     }
@@ -80,7 +80,7 @@ class Context
      * @param mixed $default
      * @return mixed
      */
-    public function getState(string $key, mixed $default): mixed
+    public function getState(string $key, mixed $default = null): mixed
     {
         $value = $_SESSION[$this->namespace][$this->keyStateContext][$key] ?? $default;
         unset($_SESSION[$this->namespace][$this->keyStateContext][$key]);

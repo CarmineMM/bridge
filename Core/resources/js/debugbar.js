@@ -20,14 +20,14 @@ document.addEventListener('alpine:init', () => {
             },
         },
 
-        selectedOption: {},
+        selectedOption: 'query',
 
         toggleBody() {
             this.bodyOpen = !this.bodyOpen
         },
 
         selectOption(option) {
-            this.selectedOption = this.options[option];
+            this.selectedOption = option;
             this.bodyOpen = true;
         }
     }))

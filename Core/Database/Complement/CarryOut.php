@@ -29,6 +29,11 @@ class CarryOut
      */
     protected function exec(): array
     {
+        if (Config::get('app.debug', false)) {
+            $startTime = microtime(true);
+            $startMemory = memory_get_usage();
+        }
+
         $this->pdo->beginTransaction();
 
         if (strpos($this->sql, 'SELECT') !== false) {
@@ -52,13 +57,20 @@ class CarryOut
             $this->pdo->commit();
         }
 
+        // Debug
         if (Config::get('app.debug', false)) {
             $context = new Context;
             $context->setState(
                 'bridge:query',
                 array_merge(
                     $context->getState('bridge:query', []),
-                    [$this->sql],
+                    [
+                        [
+                            'query' => $this->sql,
+                            'time' => microtime(true) - $startTime,
+                            'memory' => memory_get_usage() - $startMemory,
+                        ]
+                    ],
                 )
             );
         }

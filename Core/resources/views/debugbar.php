@@ -1,10 +1,12 @@
 <?php
 
 use Core\Foundation\Application;
+use Core\Foundation\Context;
 use Core\Foundation\Request;
 use Core\Support\UnitsConversion;
 
 $request = Request::make();
+$context = new Context;
 
 $end_time = microtime(true);
 $execution_time = round(($end_time - $app->start_time), 5);
@@ -13,7 +15,7 @@ $memory = UnitsConversion::make(memory_get_usage() - $app->memory, 'byte');
 // Función para convertir segundos en Mili-segundos
 function secondsToMilliseconds($seconds)
 {
-    return $seconds * 1000;
+    return round($seconds * 1000, 3);
 }
 
 ?>
@@ -41,6 +43,22 @@ function secondsToMilliseconds($seconds)
         </ul>
     </div>
     <div class="debugbar-body" x-show="bodyOpen" x-cloak>
-        <h1>Ver un resumen de todo</h1>
+        <div x-show="selectedOption === 'query'" class="debugbar-body-item">
+            <ul>
+                <?php foreach ($context->getState('bridge:query', []) as $value) : ?>
+                    <li class="list-item item-query">
+                        <div style="width: 80%;">
+                            <p><?= $value['query'] ?></p>
+                        </div>
+                        <div style="width: 10%;">
+                            <p><?= UnitsConversion::make($value['memory'], 'byte')->show() ?></p>
+                        </div>
+                        <div style="width: 10%;">
+                            <p><?= secondsToMilliseconds($value['time']) ?>ms</p>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     </div>
 </footer>

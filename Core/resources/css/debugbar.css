@@ -125,3 +125,24 @@
 #debug-bar .debugbar-options li:hover {
 	background-color: var(--debug-bar-light-2);
 }
+
+#debug-bar .debugbar-body .list-item {
+	padding: 1em;
+	border-bottom: 1px solid var(--debug-bar-dark);
+	transition: all 0.1s ease-in-out;
+	font-weight: lighter;
+	display: flex;
+	align-items: center;
+}
+#debug-bar .debugbar-body .list-item:hover {
+	background-color: var(--debug-bar-light-2);
+}
+
+#debug-bar .debugbar-body .item-query {
+	justify-content: space-between;
+}
+
+#debug-bar .debugbar-body .item-query p {
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 0.9em;
+}
