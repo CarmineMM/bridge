@@ -1,0 +1,18 @@
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+define('PUBLIC_PATH', __DIR__ . DIRECTORY_SEPARATOR . 'public');
+
+\Core\Foundation\Application::run(
+    isConsole: true,
+);
+
+$console = new \Core\Cli\Console();
+
+# Set URL app
+$console->server = \Core\Loaders\Config::get('app.url', 'http://localhost:8080');
+
+$console->exec();
+
+unset($console);

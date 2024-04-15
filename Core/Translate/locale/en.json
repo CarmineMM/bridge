@@ -1,0 +1,9 @@
+{
+    "welcome": "¡Welcome to the world of Bridge Framework!",
+    "console": {
+        "list": "Show the available command list.",
+        "serve": "Start the web server.",
+        "server-start-in": "Server starting in {server}"
+    },
+    "description": "Description"
+}

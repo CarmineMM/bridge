@@ -1,0 +1,127 @@
+:root {
+	--debug-bar-primary: #fe5f00;
+	--debug-bar-dark: #653239;
+	--debug-bar-light: #fcfcfc;
+	--debug-bar-light-2: #f3eded;
+	--debug-bar-secondary: #416788;
+	--debug-bar-success: #ffbf00;
+}
+
+[x-cloak] {
+	display: none;
+}
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+#debug-bar {
+	position: fixed;
+	bottom: 0;
+	font-size: 14px;
+	left: 0;
+	width: 100%;
+	box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.08);
+	border-top: 2px solid var(--debug-bar-primary);
+	background-color: var(--debug-bar-light);
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	color: var(--debug-bar-dark);
+}
+
+#debug-bar button {
+	background-color: transparent;
+	color: var(--debug-bar-dark);
+	border: none;
+	cursor: pointer;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#debug-bar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#debug-bar .debugbar-header {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	height: 35px;
+}
+
+#debug-bar .debugbar-header ul {
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+#debug-bar .debugbar-header li button {
+	padding: 0 0.9em;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 0.2s ease-in-out;
+}
+#debug-bar .debugbar-header li button:hover {
+	background-color: var(--debug-bar-primary);
+	color: var(--debug-bar-light);
+}
+
+#debug-bar .debugbar-body {
+	border-top: 1px solid var(--debug-bar-dark);
+	height: 500px;
+}
+
+#debug-bar .debugbar-title {
+	color: var(--debug-bar-secondary);
+	font-weight: bold;
+	font-size: 1em;
+	margin-right: 1em;
+	margin-left: 0.9em;
+}
+
+#debug-bar .debugbar-resume {
+	margin-left: auto;
+}
+#debug-bar .debugbar-resume li,
+#debug-bar .debugbar-options button {
+	padding: 0 0.9em;
+	border-left: 1px solid var(--debug-bar-primary);
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.2em;
+}
+
+#debug-bar .debugbar-options button {
+	/* font-weight: bold; */
+}
+
+#debug-bar .debugbar-options li:last-child {
+	border-right: 1px solid var(--debug-bar-primary);
+}
+
+#debug-bar .debugbar-resume li:last-child {
+	padding: 0;
+}
+
+#debug-bar.open .debugbar-resume li:last-child svg {
+	transform: rotate(180deg);
+}
+
+#debug-bar small {
+	font-size: 0.8em;
+	color: var(--debug-bar-primary);
+}
+
+#debug-bar .debugbar-options li {
+	transition: all 0.2s ease-in-out;
+}
+
+#debug-bar .debugbar-options li:hover {
+	background-color: var(--debug-bar-light-2);
+}

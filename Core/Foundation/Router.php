@@ -1,0 +1,108 @@
+<?php
+
+namespace Core\Foundation;
+
+class Router extends Middlewares
+{
+    /**
+     * Instance
+     */
+    public static array $routes = [];
+
+    /**
+     * Ultima ruta agregada
+     */
+    public static $lastRoute = [];
+
+    /**
+     * Ruta Get
+     * 
+     * @param string $url URL de la ruta
+     * @param callable|array $callback Función o método (controlador) a ejecutar
+     * @param string $name Nombre de la ruta
+     * @param array $middleware Middlewares aplicados sobre de la ruta
+     * @return Router
+     */
+    public static function get(
+        string $url,
+        callable|array $callback,
+        string $name = '',
+        array $middleware = []
+    ): Router {
+        self::$lastRoute = [
+            'url'        => trim($url, '/'),
+            'callback'   => $callback,
+            'name'       => $name,
+            'middleware' => $middleware,
+            'method'     => 'GET',
+        ];
+
+        self::$routes['GET'][] = self::$lastRoute;
+
+        return new self;
+    }
+
+    /**
+     * Ruta Get
+     */
+    public static function post(
+        string $url,
+        callable|array $callback,
+        string $name = '',
+        array $middleware = []
+    ): Router {
+        self::$lastRoute = [
+            'url'        => trim($url, '/'),
+            'callback'   => $callback,
+            'name'       => $name,
+            'middleware' => $middleware,
+            'method'     => 'POST',
+        ];
+
+        self::$routes['POST'][] = self::$lastRoute;
+
+        return new self;
+    }
+
+    /**
+     * Establece el nombre de la ruta
+     *
+     * @param string $name
+     * @return Router
+     */
+    public function name(string $name): Router
+    {
+        return $this->__setProp('name', $name);
+    }
+
+    /**
+     * Establece los middlewares de la ruta
+     *
+     * @param string $middleware
+     * @return Router
+     */
+    public function middleware(array $middlewares): Router
+    {
+        return $this->__setProp('middleware', $middlewares);
+    }
+
+    /**
+     * Establece una prop dentro de la ruta actual agregado
+     *
+     * @param string $prop
+     * @param mixed $value
+     * @return Router
+     */
+    private function __setProp(string $prop, mixed $value): Router
+    {
+        self::$routes[self::$lastRoute['method']] = array_map(function ($route) use ($prop, $value) {
+            if ($route['url'] === self::$lastRoute['url']) {
+                $route[$prop] = $value;
+            }
+
+            return $route;
+        }, self::$routes[self::$lastRoute['method']]);
+
+        return $this;
+    }
+}
