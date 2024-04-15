@@ -5,6 +5,7 @@ namespace Core\Loaders;
 use Core\Foundation\Application;
 use Core\Foundation\Filesystem;
 use Core\Loaders\FilesLoad\ConfigAppFile;
+use Core\Loaders\FilesLoad\ConfigDatabaseFile;
 use Core\Loaders\FilesLoad\ConfigResourcesFile;
 use Core\Loaders\FilesLoad\ConfigRoutesFile;
 use Core\Support\Collection;
@@ -17,7 +18,7 @@ use Core\Support\Collection;
  */
 class Config
 {
-    use ConfigAppFile, ConfigRoutesFile, ConfigResourcesFile;
+    use ConfigAppFile, ConfigRoutesFile, ConfigResourcesFile, ConfigDatabaseFile;
 
     /**
      * Archivos de configuración
@@ -26,6 +27,7 @@ class Config
         'app'    => 'app/config/app.php',
         'routes' => 'app/config/routes.php',
         'resources' => 'app/config/resources.php',
+        'database' => 'app/config/database.php',
     ];
 
     /**
@@ -67,6 +69,7 @@ class Config
             self::$instance->config['app'] = self::$instance->appConfig();
             self::$instance->config['routes'] = self::$instance->routesConfig();
             self::$instance->config['resources'] = self::$instance->resourcesConfig();
+            self::$instance->config['database'] = self::$instance->databaseConfig();
         }
 
         return self::$instance;

@@ -104,4 +104,20 @@ class Context
         unset($_SESSION[$this->namespace][$this->keyStateContext][$key]);
         return $this;
     }
+
+    /**
+     * Obtiene todos los valores del state
+     */
+    public function allState(): array
+    {
+        return $_SESSION[$this->namespace][$this->keyStateContext] ?? [];
+    }
+
+    /**
+     * Obtiene todos los valores del state
+     */
+    public function allStore(): array
+    {
+        return $_SESSION[$this->namespace][$this->keyStoreContext] ?? [];
+    }
 }
