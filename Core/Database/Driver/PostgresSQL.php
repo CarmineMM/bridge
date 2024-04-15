@@ -26,7 +26,8 @@ class PostgresSQL extends CarryOut implements DatabaseDriver
      * Constructor
      */
     public function __construct(
-        public array $config
+        public array $config,
+        public string $connection
     ) {
         $dsn = "pgsql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']}";
 
@@ -44,6 +45,9 @@ class PostgresSQL extends CarryOut implements DatabaseDriver
     {
         $this->sql = str_replace('{table}', $table, $this->layout['select']);
         $this->columns = $columns;
-        return $this->exec();
+        return $this->exec(
+            'pgsql',
+            $this->connection
+        );
     }
 }

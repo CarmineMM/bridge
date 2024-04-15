@@ -44,7 +44,7 @@ class Model
         $connectionConfig = Config::get("database.connections.{$this->connection}");
 
         $this->driver = match ($connectionConfig['driver']) {
-            'pgsql' => new PostgresSQL($connectionConfig),
+            'pgsql' => new PostgresSQL($connectionConfig, $this->connection),
             default => throw new \Exception('Driver not found'),
         };
 

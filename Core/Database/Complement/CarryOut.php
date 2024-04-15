@@ -27,7 +27,7 @@ class CarryOut
     /**
      * Ejecutar la consulta
      */
-    protected function exec(): array
+    protected function exec(string $driver = '', string $connection = ''): array
     {
         if (Config::get('app.debug', false)) {
             $startTime = microtime(true);
@@ -69,7 +69,9 @@ class CarryOut
                             'query' => $this->sql,
                             'time' => microtime(true) - $startTime,
                             'memory' => memory_get_usage() - $startMemory,
-                        ]
+                            'driver' => $driver,
+                            'connection' => $connection,
+                        ],
                     ],
                 )
             );

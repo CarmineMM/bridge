@@ -14,12 +14,6 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('debugbar', () => ({
         bodyOpen: false,
 
-        options: {
-            query: {
-                text: 'Queries',
-            },
-        },
-
         selectedOption: 'query',
 
         toggleBody() {

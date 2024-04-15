@@ -12,6 +12,9 @@ $end_time = microtime(true);
 $execution_time = round(($end_time - $app->start_time), 5);
 $memory = UnitsConversion::make(memory_get_usage() - $app->memory, 'byte');
 
+// Obtener las query's
+$queries = $context->getState('bridge:query', []);
+
 // Función para convertir segundos en Mili-segundos
 function secondsToMilliseconds($seconds)
 {
@@ -23,11 +26,12 @@ function secondsToMilliseconds($seconds)
     <div class="debugbar-header">
         <h4 class="debugbar-title"><?= Application::FrameworkName ?></h4>
         <ul class="debugbar-options">
-            <template x-for="(opt, key) in options">
-                <li>
-                    <button type="button" x-text="opt.text" @click="selectOption(key)" />
-                </li>
-            </template>
+            <!-- Lista de query's -->
+            <li>
+                <button type="button" @click="selectOption('query')">
+                    Queries (<?= count($queries) ?>)
+                </button>
+            </li>
         </ul>
         <ul class="debugbar-resume">
             <li title="<?= $memory->display('KB') ?>"><?= $memory->show() ?></li>
@@ -43,18 +47,24 @@ function secondsToMilliseconds($seconds)
         </ul>
     </div>
     <div class="debugbar-body" x-show="bodyOpen" x-cloak>
+        <!-- Lista de query's -->
         <div x-show="selectedOption === 'query'" class="debugbar-body-item">
             <ul>
-                <?php foreach ($context->getState('bridge:query', []) as $value) : ?>
+                <?php foreach ($queries as $value) : ?>
                     <li class="list-item item-query">
-                        <div style="width: 80%;">
+                        <div style="width: 75%;">
                             <p><?= $value['query'] ?></p>
                         </div>
-                        <div style="width: 10%;">
+                        <div style="width: 7%;">
                             <p><?= UnitsConversion::make($value['memory'], 'byte')->show() ?></p>
                         </div>
-                        <div style="width: 10%;">
+                        <div style="width: 7%;">
                             <p><?= secondsToMilliseconds($value['time']) ?>ms</p>
+                        </div>
+                        <div style="width: 10%;">
+                            <p>
+                                <span title="Connection"><?= $value['connection'] ?></span>:<span title="Driver"><?= $value['driver'] ?></span>
+                            </p>
                         </div>
                     </li>
                 <?php endforeach; ?>
