@@ -1,5 +1,22 @@
 # Bridge Framework
 
+### Indice
+
+1. [Introducción](#introduccion)
+2. [Instalación](#instalacion)
+3. [Lifecycle](#lifecycle)
+
+## Introducción
+
+Bridge es un framework PHP pensado para sitios pequeños y medianos, que su objetivo sea aplicaciones monolíticas o API
+
+## Instalación
+
+#### Requisitos
+
+-   PHP 8.3.4
+-   Composer
+
 ### Lifecycle
 
 -   0: **Run App** Antes de ejecutar el kernel (constantes o set sobre singleton), durante el run de la aplicación, aunque contiene el resto de la ejecución.
