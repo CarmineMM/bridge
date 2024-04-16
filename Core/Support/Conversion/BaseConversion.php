@@ -2,23 +2,35 @@
 
 namespace Core\Support\Conversion;
 
+/**
+ * Conversion base (Compatible con otros tipos de conversiones matemáticas)
+ * 
+ * @author Carmine Maggio <carminemaggiom@gmail.com>
+ * @package UnitsConversion
+ * @version 1.0.0
+ */
 class BaseConversion
 {
     /**
      * Valor establecido en el valor mas bajo
      */
-    protected int $originalValue = 0;
+    protected float $originalValue = 0;
 
     /**
      * Valor actual en en el valor mas bajo
      */
-    protected int $currentValue = 0;
+    protected float $currentValue = 0;
 
     /**
      * Lista de elementos
      */
     protected array $lists = [];
 
+    /**
+     * Primera clave de la lista
+     *
+     * @var string
+     */
     private string $firstKey = '';
 
     /**
@@ -27,13 +39,14 @@ class BaseConversion
      * @param string|integer $number
      * @param string $unit
      */
-    public function __construct(string|int $number = 0, string $unit = '')
+    public function __construct(string|int|float $number = 0, string $unit = '')
     {
         if ($number === 0) return;
 
         $this->firstKey = array_keys($this->lists)[0];
 
         [$number, $unit] = $this->discoverUnit($number, $unit);
+
 
         $this->currentValue = $this->originalValue = static::convert($number, $unit, $this->firstKey);
     }
@@ -45,7 +58,7 @@ class BaseConversion
      * @param string $unit
      * @return array
      */
-    protected function discoverUnit(string|int $number, string $unit = ''): array
+    protected function discoverUnit(string|int|float $number, string $unit = ''): array
     {
         if ($unit === '' && !is_string($number)) {
             $number = floatval($number);
@@ -134,7 +147,7 @@ class BaseConversion
      *
      * @return integer
      */
-    public static function convert(int $number, string $unit, string $unitTo): float
+    public static function convert(int|float $number, string $unit, string $unitTo): float
     {
         $self = new static;
 
@@ -163,7 +176,7 @@ class BaseConversion
      * @param string $unit
      * @return static
      */
-    public static function make(string|int $number = 0, string $unit = ''): static
+    public static function make(string|int|float $number = 0, string $unit = ''): static
     {
         return new static($number, $unit);
     }

@@ -4,6 +4,7 @@ use Core\Foundation\Application;
 use Core\Foundation\Context;
 use Core\Foundation\Request;
 use Core\Loaders\Config;
+use Core\Support\Conversion\TimeConversion;
 use Core\Support\Conversion\UnitsConversion;
 
 $request = Request::make();
@@ -44,7 +45,7 @@ function secondsToMilliseconds($seconds)
         </ul>
         <ul class="debugbar-resume">
             <li title="<?= $memory->display('KB') ?>"><?= $memory->show() ?></li>
-            <li title="<?= $execution_time ?> seconds"><?= secondsToMilliseconds($execution_time) ?> <small>ms</small></li>
+            <li title="<?= $execution_time ?> seconds"><?= TimeConversion::make($execution_time, 's')->show() ?></li>
             <li title="<?= $request->url ?>">/<?= $request->uri ?></li>
             <li>
                 <button type="button" title="Show debugbar option" @click="toggleBody">
@@ -71,7 +72,7 @@ function secondsToMilliseconds($seconds)
                             <p><?= UnitsConversion::make($value['memory'], 'byte')->show() ?></p>
                         </div>
                         <div style="width: 7%;">
-                            <p><?= secondsToMilliseconds($value['time']) ?>ms</p>
+                            <p><?= TimeConversion::make($value['time'], 's')->show() ?></p>
                         </div>
                         <div style="width: 10%;">
                             <p>

@@ -22,7 +22,7 @@ class TimeConversion extends BaseConversion
             'known'  => ['second', 'seconds'],
             'symbol' => 's',
         ],
-        'm' => [
+        'min' => [
             'value' => 60000,
             'name' => 'minute',
             'known'  => ['minute', 'minutes'],
@@ -46,7 +46,7 @@ class TimeConversion extends BaseConversion
             'known'  => ['week', 'weeks'],
             'symbol' => 'w',
         ],
-        'mth' => [
+        'm' => [
             'value' => 2629743000,
             'name' => 'month',
             'known'  => ['month', 'months'],
@@ -59,4 +59,22 @@ class TimeConversion extends BaseConversion
             'symbol' => 'y',
         ],
     ];
+
+    /**
+     * Muestra el valor en string, convertido de forma inteligente,
+     * en otras palabras siempre mostrar un numero de fácil lectura
+     */
+    public function show(int $decimals = 2): string
+    {
+        return match (true) {
+            $this->currentValue > $this->lists['y']['value'] => $this->display('y', $decimals),
+            $this->currentValue > $this->lists['m']['value'] => $this->display('m', $decimals),
+            $this->currentValue > $this->lists['w']['value'] => $this->display('w', $decimals),
+            $this->currentValue > $this->lists['d']['value'] => $this->display('d', $decimals),
+            $this->currentValue > $this->lists['h']['value'] => $this->display('h', $decimals),
+            $this->currentValue > $this->lists['min']['value'] => $this->display('min', $decimals),
+            $this->currentValue > $this->lists['s']['value'] => $this->display('s', $decimals),
+            default => $this->display('ms', $decimals),
+        };
+    }
 }

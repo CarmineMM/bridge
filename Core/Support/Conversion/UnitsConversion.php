@@ -7,7 +7,7 @@ namespace Core\Support\Conversion;
  *
  * @author Carmine Maggio <carminemaggiom@gmail.com>
  * @package UnitsConversion
- * @version 2.0.0
+ * @version 3.0.0
  */
 class UnitsConversion extends BaseConversion
 {
@@ -35,25 +35,25 @@ class UnitsConversion extends BaseConversion
         ],
         'MB' => [
             'name'   => 'Megabyte',
-            'value'  => 8 * (1024 ** 2), // bit: 8.388.608
+            'value'  => 8388608, // bit: 8.388.608
             'symbol' => 'MB',
             'known'  => ['mb', 'megabyte', 'megabytes'],
         ],
         'GB' => [
             'name'   => 'Gigabyte',
-            'value'  => 8 * (1024 ** 3), // bit: 8.589.934.592
+            'value'  => 8589934592, // bit: 8.589.934.592
             'symbol' => 'GB',
             'known'  => ['gb', 'gigabyte', 'gigabytes'],
         ],
         'TB' => [
             'name'   => 'Terabyte',
-            'value'  => 8 * (1024 ** 4), // bit: 8.796.093.022.208
+            'value'  => 8796093022208, // bit: 8.796.093.022.208
             'symbol' => 'TB',
             'known'  => ['tb', 'terabyte', 'terabytes'],
         ],
         'PB' => [
             'name'   => 'Petabyte',
-            'value'  => 8 * (1024 ** 5), // bit: --
+            'value'  => 9007199254740992, // bit: --
             'symbol' => 'PB',
             'known'  => ['pb', 'petabyte', 'petabytes'],
         ],
