@@ -13,11 +13,9 @@ class HomeController extends BaseController
     public function __invoke(Request $request)
     {
         $user = new User;
-        $user->all();
-        $user->all(['id', 'name']);
-        $user->all(['id']);
 
-        //dump(Config::all());
+        dump($user->find(2));
+
         return $this->view('welcome', [
             'foo' => 'bar',
         ]);

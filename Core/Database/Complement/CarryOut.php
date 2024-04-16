@@ -18,6 +18,11 @@ class CarryOut
     protected string $sql = '';
 
     /**
+     * Tabla en la base de datos
+     */
+    protected string $table = '';
+
+    /**
      * Conexión por PDO
      *
      * @var \PDO
@@ -34,7 +39,7 @@ class CarryOut
             $startMemory = memory_get_usage();
         }
 
-        $this->pdo->beginTransaction();
+        // $this->pdo->beginTransaction();
 
         if (strpos($this->sql, 'SELECT') !== false) {
             $this->prepareSelect();
@@ -44,7 +49,7 @@ class CarryOut
         $data = [];
 
         if (!$query->execute()) {
-            $this->pdo->rollBack();
+            // $this->pdo->rollBack();
             // 0. El tipo del error
             // 1. Código del error
             // 2. Mensaje del error
@@ -54,7 +59,7 @@ class CarryOut
         // Devolver resultado del SELECT
         if (strpos($this->sql, 'SELECT') !== false) {
             $data = $query->fetchAll(\PDO::FETCH_ASSOC);
-            $this->pdo->commit();
+            // $this->pdo->commit();
         }
 
         // Debug

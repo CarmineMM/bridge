@@ -2,32 +2,28 @@
 
 namespace Core\Database\Driver;
 
+use Core\Database\Base\SQLBaseDriver;
 use Core\Database\Complement\CarryOut;
+use Core\Database\Model;
 use Core\Implements\DatabaseDriver;
 
 /**
  * Driver para PostgreSQL
  */
-class PostgresSQL extends CarryOut implements DatabaseDriver
+class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
 {
-    /**
-     * Layouts para las query's
-     *
-     * @var array
-     */
-    protected array $layout = [
-        'select' => 'SELECT {column} {innerQuery} FROM {table} {where} {group} {order} {limit} {offset}',
-        //'insert' => 'INSERT INTO %s (%s) VALUES (%s)',
-        //'update' => 'UPDATE %s SET %s',
-        //'delete' => 'DELETE FROM %s',
-    ];
-
     /**
      * Constructor
      */
     public function __construct(
+        /**
+         * Configuraciones del desarrollador
+         */
         public array $config,
-        public string $connection
+        /**
+         * Tipo de conexión
+         */
+        public Model $model
     ) {
         $dsn = "pgsql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']}";
 
@@ -36,18 +32,39 @@ class PostgresSQL extends CarryOut implements DatabaseDriver
         } catch (\PDOException $th) {
             throw new \Exception("Error connect to database: " . $th->getMessage());
         }
+
+        $this->table = $this->model->getTable();
     }
 
     /**
      * Obtiene todos los registros de la tabla
      */
-    public function all(string $table, array $columns = ['*']): array
+    public function all(array $columns = ['*']): array
     {
-        $this->sql = str_replace('{table}', $table, $this->layout['select']);
+        $this->sql = str_replace('{table}', $this->table, $this->layout['select']);
+
         $this->columns = $columns;
+
         return $this->exec(
             'pgsql',
-            $this->connection
+            $this->model->connection
         );
+    }
+
+    /**
+     * Adjunta un WHERE a la query, limitando al primary key
+     *
+     * @param string|integer $primaryKey
+     * @return static
+     */
+    public function find(string|int $find): array
+    {
+        return $this
+            ->where($this->model->getPrimaryKey(), $find)
+            ->limit(1)
+            ->exec(
+                'pgsql',
+                $this->model->connection
+            );
     }
 }
