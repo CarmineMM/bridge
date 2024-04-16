@@ -26,14 +26,20 @@ $queries = $context->getState('bridge:query', []);
         <ul class="debugbar-options">
             <!-- Lista de configuraciones -->
             <li>
-                <button type="button" @click="selectOption('config')">
+                <button :class="{ active: selectedOption === 'config' && bodyOpen }" type="button" @click="selectOption('config')">
                     <?= Lang::_get('configurations', [], 'Config') ?>
                 </button>
             </li>
 
             <li>
-                <button type="button" @click="selectOption('query')">
+                <button :class="{ active: selectedOption === 'query' && bodyOpen }" type="button" @click="selectOption('query')">
                     Queries (<?= count($queries) ?>)
+                </button>
+            </li>
+
+            <li>
+                <button :class="{ active: selectedOption === 'context' && bodyOpen }" type="button" @click="selectOption('context')">
+                    Context
                 </button>
             </li>
         </ul>
@@ -53,29 +59,9 @@ $queries = $context->getState('bridge:query', []);
     <div class="debugbar-body" x-show="bodyOpen" x-cloak>
         <!-- Lista de configuraciones -->
         <?php $this->include('debugbar-options.configurations'); ?>
-
         <!-- Lista de query's -->
-        <div x-show="selectedOption === 'query'" class="debugbar-body-item">
-            <ul>
-                <?php foreach ($queries as $value) : ?>
-                    <li class="list-item item-query">
-                        <div style="width: 75%;">
-                            <p><?= $value['query'] ?></p>
-                        </div>
-                        <div style="width: 7%;">
-                            <p><?= UnitsConversion::make($value['memory'], 'byte')->show() ?></p>
-                        </div>
-                        <div style="width: 7%;">
-                            <p><?= TimeConversion::make($value['time'], 's')->show() ?></p>
-                        </div>
-                        <div style="width: 10%;">
-                            <p>
-                                <span title="Connection"><?= $value['connection'] ?></span>:<span title="Driver"><?= $value['driver'] ?></span>
-                            </p>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
+        <?php $this->include('debugbar-options.queries', ['queries' => $queries]); ?>
+        <!-- Lista de items del context -->
+        <?php $this->include('debugbar-options.context'); ?>
     </div>
 </footer>

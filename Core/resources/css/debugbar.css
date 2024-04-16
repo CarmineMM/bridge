@@ -102,8 +102,8 @@
 	gap: 0.2em;
 }
 
-#debug-bar .debugbar-options button {
-	/* font-weight: bold; */
+#debug-bar .debugbar-options button.active {
+	background-color: var(--debug-bar-light-2);
 }
 
 #debug-bar .debugbar-options li:last-child {
@@ -197,4 +197,20 @@
 }
 #debug-bar .debugbar-body .item-config .item-config:hover {
 	background-color: var(--debug-bar-light);
+}
+
+#debug-bar .regular-button {
+	background-color: var(--debug-bar-light);
+	color: var(--debug-bar-dark);
+	padding: 0.5em 1.3em;
+	border-radius: 1px;
+	cursor: pointer;
+	border: 1px solid var(--debug-bar-primary);
+	transition: all 0.2s ease-in-out;
+}
+#debug-bar .regular-button:hover,
+#debug-bar .regular-button:active,
+#debug-bar .regular-button.active {
+	background-color: var(--debug-bar-primary);
+	color: var(--debug-bar-light);
 }

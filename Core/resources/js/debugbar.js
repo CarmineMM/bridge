@@ -16,6 +16,8 @@ document.addEventListener('alpine:init', () => {
 
         selectedOption: 'config',
 
+        tabContext: 'store',
+
         toggleBody() {
             this.bodyOpen = !this.bodyOpen
         },

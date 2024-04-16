@@ -1,4 +1,8 @@
-<?php foreach ($values as $key => $value) : ?>
+<?php
+
+use Core\Translate\Lang;
+
+foreach ($values as $key => $value) : ?>
     <?php if (is_array($value)) : ?>
         <li class="item-config">
             <p class="first-element"><?= $key ?></p>
@@ -24,7 +28,18 @@
         <li class="item-config">
             <p class="first-element"><?= $key ?></p>
             <p class="medium-content"><?= is_bool($value) ? ($value ? 'true' : 'false') : $value ?></p>
-            <p><?= $config ?>.<?= $key ?></p>
+            <?php
+            if (isset($config)) {
+                echo "<p>{$config}.{$key}</p>";
+            }
+            ?>
         </li>
     <?php endif; ?>
 <?php endforeach; ?>
+
+<?php
+
+if (count($values) < 1) {
+    $noResultsTranslate = Lang::_get('no-results');
+    echo "<li style='text-align: \"center\"'>{$noResultsTranslate}</li>";
+}

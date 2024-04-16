@@ -6,5 +6,6 @@
         "server-start-in": "Server starting in {server}"
     },
     "description": "Description",
-    "configurations": "Settings"
+    "configurations": "Settings",
+    "no-results": "No results found."
 }

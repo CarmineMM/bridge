@@ -7,5 +7,6 @@
         "routes": "Listado de rutas disponibles"
     },
     "description": "Descripción",
-    "configurations": "Configuraciones"
+    "configurations": "Configuraciones",
+    "no-results": "No se encontraron resultados."
 }

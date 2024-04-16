@@ -114,7 +114,8 @@ class Context
     }
 
     /**
-     * Obtiene todos los valores del state
+     * Obtiene todos los valores del state,
+     * sin eliminarlos
      */
     public function allStore(): array
     {
