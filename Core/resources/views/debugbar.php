@@ -3,9 +3,9 @@
 use Core\Foundation\Application;
 use Core\Foundation\Context;
 use Core\Foundation\Request;
-use Core\Loaders\Config;
 use Core\Support\Conversion\TimeConversion;
 use Core\Support\Conversion\UnitsConversion;
+use Core\Translate\Lang;
 
 $request = Request::make();
 $context = new Context;
@@ -17,12 +17,6 @@ $memory = UnitsConversion::make(memory_get_usage() - $app->memory, 'byte');
 // Obtener las query's
 $queries = $context->getState('bridge:query', []);
 
-// Función para convertir segundos en Mili-segundos
-function secondsToMilliseconds($seconds)
-{
-    return round($seconds * 1000, 3);
-}
-
 ?>
 <footer id="debug-bar" x-data="debugbar" :class="{ open: bodyOpen }">
     <div class="debugbar-header">
@@ -33,7 +27,7 @@ function secondsToMilliseconds($seconds)
             <!-- Lista de configuraciones -->
             <li>
                 <button type="button" @click="selectOption('config')">
-                    Configurations
+                    <?= Lang::_get('configurations', [], 'Config') ?>
                 </button>
             </li>
 

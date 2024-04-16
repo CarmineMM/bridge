@@ -6,5 +6,6 @@
         "server-start-in": "Servidor iniciando en {server}",
         "routes": "Listado de rutas disponibles"
     },
-    "description": "Descripción"
+    "description": "Descripción",
+    "configurations": "Configuraciones"
 }

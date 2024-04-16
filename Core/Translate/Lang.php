@@ -64,7 +64,7 @@ class Lang
         $newInstance = static::__getInstance();
 
         match ($is) {
-            'internal' => $newInstance->internalTranslations[$lang] = new Collection($translates, false),
+            'framework' => $newInstance->internalTranslations[$lang] = new Collection($translates, false),
             default => $newInstance->translations[$lang] = new Collection($translates, false),
         };
 

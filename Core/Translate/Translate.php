@@ -8,7 +8,7 @@ use Core\Loaders\Config;
 class Translate
 {
     /**
-     * Idioma interno para mensajes y errores del framework
+     * Idioma interno para mensajes y excepciones del framework
      */
     const InternalLocales = ['en', 'es'];
 
@@ -43,7 +43,7 @@ class Translate
     public function loadFrameworkFiles(string $files_folder = '', string $namespace = ''): void
     {
         $folder = $files_folder ? $files_folder : Filesystem::rootPath(
-            Filesystem::explodeStringPath(Config::get('app.locale_folder', ''))
+            Filesystem::explodeStringPath($this->internalLocaleFiles)
         );
 
         if (!is_dir($folder)) {

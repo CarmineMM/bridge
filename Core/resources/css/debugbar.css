@@ -187,3 +187,14 @@
 #debug-bar .debugbar-body .item-config p.medium-content {
 	width: 50%;
 }
+
+#debug-bar .debugbar-body .item-config .full-content {
+	width: 77%;
+}
+
+#debug-bar .debugbar-body .item-config .item-config {
+	border: 0;
+}
+#debug-bar .debugbar-body .item-config .item-config:hover {
+	background-color: var(--debug-bar-light);
+}
