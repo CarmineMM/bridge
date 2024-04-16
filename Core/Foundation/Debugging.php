@@ -5,7 +5,7 @@ namespace Core\Foundation;
 use Core\Loaders\Config;
 use Core\Loaders\HtmlInject;
 use Core\Support\Debug;
-use Core\Support\UnitsConversion;
+use Core\Support\Conversion\UnitsConversion;
 
 class Debugging
 {

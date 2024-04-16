@@ -167,15 +167,18 @@
 	padding: 0.6em 1em;
 	border-bottom: 1px solid var(--debug-bar-light-2);
 }
+#debug-bar .debugbar-body .item-config:first-child {
+	border-top: 1px solid var(--debug-bar-light-2);
+}
 
 #debug-bar .debugbar-body .item-config:hover {
 	background-color: var(--debug-bar-light-2);
 }
 
-#debug-bar .debugbar-body .item-config p:nth-child(1) {
+#debug-bar .debugbar-body .item-config p.first-element {
 	width: 23%;
 }
 
-#debug-bar .debugbar-body .item-config p:nth-child(2) {
+#debug-bar .debugbar-body .item-config p.medium-content {
 	width: 50%;
 }

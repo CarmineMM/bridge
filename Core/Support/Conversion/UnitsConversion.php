@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Support;
+namespace Core\Support\Conversion;
 
 /**
  * Conversion de unidades
@@ -9,27 +9,12 @@ namespace Core\Support;
  * @package UnitsConversion
  * @version 2.0.0
  */
-class UnitsConversion
+class UnitsConversion extends BaseConversion
 {
-    /**
-     * Valor establecido en bits,
-     * que se establece al principio del script
-     *
-     * @var integer
-     */
-    private int $originalValue = 0;
-
-    /**
-     * Valor actual en bits
-     *
-     * @var integer
-     */
-    private int $currentValue = 0;
-
     /**
      * Unidades conocidas
      */
-    private array $units = [
+    protected array $lists = [
         'bit' => [
             'name'   => 'Bit',
             'value'  => 1,
@@ -90,16 +75,6 @@ class UnitsConversion
     }
 
     /**
-     * Unidades disponibles para la conversión
-     *
-     * @return array
-     */
-    public function getAvailableUnits(): array
-    {
-        return $this->units;
-    }
-
-    /**
      * Descubre la unidad de medida de un numero o de una cadena
      *
      * @param string|integer $number
@@ -127,44 +102,6 @@ class UnitsConversion
     }
 
     /**
-     * Obtiene el key de la unidad de medida,
-     * devolverá un string vació en caso de no existir.
-     *
-     * @param string $unit
-     * @return string
-     */
-    private function getKeyUnit(string $unit): string
-    {
-        $unit = strtolower($unit);
-        if (isset($this->units[$unit])) {
-            return $unit;
-        }
-
-        foreach ($this->units as $key => $value) {
-            if (in_array($unit, $value['known'])) {
-                return $key;
-            }
-        }
-
-        return 'bit';
-    }
-
-    /**
-     * Convierte a bits
-     *
-     * @return integer
-     */
-    public static function convert(int $number, string $unit, string $unitTo): float
-    {
-        $self = new self;
-
-        $unit = $self->getAvailableUnits()[$unit];
-        $unitTo = $self->getAvailableUnits()[$unitTo];
-
-        return ($number * $unit['value']) / $unitTo['value'];
-    }
-
-    /**
      * Convertir el valor a un otro tipo de unidad
      *
      * @param string $unit
@@ -174,7 +111,7 @@ class UnitsConversion
     {
         $value = 0;
 
-        foreach ($this->units as $key => $theUnit) {
+        foreach ($this->lists as $key => $theUnit) {
             if ($unit === $key) {
                 $value = $theUnit['value'];
                 break;
@@ -208,7 +145,7 @@ class UnitsConversion
             throw new \Exception('Unidad desconocida');
         }
 
-        return round($this->to($unitKey), $decimals, PHP_ROUND_HALF_UP) . ' ' . $this->units[$unitKey]['symbol'];
+        return round($this->to($unitKey), $decimals, PHP_ROUND_HALF_UP) . ' ' . $this->lists[$unitKey]['symbol'];
     }
 
     /**
@@ -316,30 +253,6 @@ class UnitsConversion
     }
 
     /**
-     * Make units conversion
-     *
-     * @param integer $number
-     * @param string $unit
-     * @return UnitsConversion
-     */
-    public static function make(string|int $number = 0, string $unit = ''): UnitsConversion
-    {
-        return new static($number, $unit);
-    }
-
-    /**
-     * Reset current value
-     *
-     * @return UnitsConversion
-     */
-    public function reset(): UnitsConversion
-    {
-        $this->currentValue = $this->originalValue;
-
-        return $this;
-    }
-
-    /**
      * Origin value en bits
      *
      * @return integer
@@ -368,12 +281,12 @@ class UnitsConversion
     public function show(): string
     {
         return match (true) {
-            $this->currentValue > $this->units['PB']['value'] => $this->display('PB'),
-            $this->currentValue > $this->units['TB']['value'] => $this->display('TB'),
-            $this->currentValue > $this->units['GB']['value'] => $this->display('GB'),
-            $this->currentValue > $this->units['MB']['value'] => $this->display('MB'),
-            $this->currentValue > $this->units['KB']['value'] => $this->display('KB'),
-            $this->currentValue > $this->units['byte']['value'] => $this->display('byte'),
+            $this->currentValue > $this->lists['PB']['value'] => $this->display('PB'),
+            $this->currentValue > $this->lists['TB']['value'] => $this->display('TB'),
+            $this->currentValue > $this->lists['GB']['value'] => $this->display('GB'),
+            $this->currentValue > $this->lists['MB']['value'] => $this->display('MB'),
+            $this->currentValue > $this->lists['KB']['value'] => $this->display('KB'),
+            $this->currentValue > $this->lists['byte']['value'] => $this->display('byte'),
             default => $this->display('bit'),
         };
     }

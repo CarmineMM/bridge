@@ -4,7 +4,7 @@ use Core\Foundation\Application;
 use Core\Foundation\Context;
 use Core\Foundation\Request;
 use Core\Loaders\Config;
-use Core\Support\UnitsConversion;
+use Core\Support\Conversion\UnitsConversion;
 
 $request = Request::make();
 $context = new Context;
@@ -55,20 +55,7 @@ function secondsToMilliseconds($seconds)
     </div>
     <div class="debugbar-body" x-show="bodyOpen" x-cloak>
         <!-- Lista de configuraciones -->
-        <div x-show="selectedOption === 'config'" class="regular-content">
-            <?php foreach (Config::all()->toArray() as $config => $value) : if ($config === 'framework') continue; ?>
-                <h4><?= ucfirst($config); ?></h4>
-                <ul style="margin-bottom: 1.5em;">
-                    <?php foreach ($value as $key => $value) : if (is_array($value)) continue; ?>
-                        <li class="item-config">
-                            <p><?= $key ?></p>
-                            <p><?= $value ?></p>
-                            <p><?= $config ?>.<?= $key ?></p>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php endforeach; ?>
-        </div>
+        <?php $this->include('debugbar-options.configurations'); ?>
 
         <!-- Lista de query's -->
         <div x-show="selectedOption === 'query'" class="debugbar-body-item">

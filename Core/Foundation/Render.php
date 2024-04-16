@@ -51,4 +51,21 @@ class Render extends View
 
         return $content;
     }
+
+    /**
+     * Incluye un archivo de vista
+     *
+     * @param string $view La estructura de los includes sigue la nomenclatura de las vistas
+     * @param array $data
+     * @return string|false
+     */
+    public function include(string $view, array $data = []): string|false
+    {
+        $viewRender = $this->getFilePath($view);
+
+        extract($data);
+        include $viewRender;
+
+        return '';
+    }
 }
