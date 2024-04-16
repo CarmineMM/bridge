@@ -25,7 +25,9 @@ function secondsToMilliseconds($seconds)
 ?>
 <footer id="debug-bar" x-data="debugbar" :class="{ open: bodyOpen }">
     <div class="debugbar-header">
-        <h2 class="debugbar-title"><?= Application::FrameworkName ?></h2>
+        <h2 class="debugbar-title">
+            <a href="https://github.com/CarmineMM/bridge" target="_blank"><?= Application::FrameworkName ?></a>
+        </h2>
         <ul class="debugbar-options">
             <!-- Lista de configuraciones -->
             <li>

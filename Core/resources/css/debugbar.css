@@ -29,6 +29,11 @@
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	color: var(--debug-bar-dark);
 }
+#debug-bar a {
+	text-decoration: none;
+	color: inherit;
+	background-color: inherit;
+}
 
 #debug-bar button {
 	background-color: transparent;

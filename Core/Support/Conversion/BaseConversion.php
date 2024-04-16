@@ -19,6 +19,52 @@ class BaseConversion
      */
     protected array $lists = [];
 
+    private string $firstKey = '';
+
+    /**
+     * Construct
+     *
+     * @param string|integer $number
+     * @param string $unit
+     */
+    public function __construct(string|int $number = 0, string $unit = '')
+    {
+        if ($number === 0) return;
+
+        $this->firstKey = array_keys($this->lists)[0];
+
+        [$number, $unit] = $this->discoverUnit($number, $unit);
+
+        $this->currentValue = $this->originalValue = static::convert($number, $unit, $this->firstKey);
+    }
+
+    /**
+     * Descubre la unidad de medida de un numero o de una cadena
+     *
+     * @param string|integer $number
+     * @param string $unit
+     * @return array
+     */
+    protected function discoverUnit(string|int $number, string $unit = ''): array
+    {
+        if ($unit === '' && !is_string($number)) {
+            $number = floatval($number);
+        }
+
+        if (is_numeric($number) && $unit !== '') {
+            return [$number, $this->getKeyUnit(strtolower($unit))];
+        }
+
+
+        if (is_string($number) && $unit === '') {
+            [$number, $unit] = explode(' ', $number);
+
+            return [floatval($number), $this->getKeyUnit($unit)];
+        }
+
+        return [0, $this->firstKey];
+    }
+
     /**
      * Obtiene el key de la unidad de medida,
      * devolverá un string vació en caso de no existir.
@@ -40,7 +86,36 @@ class BaseConversion
             }
         }
 
-        return reset($this->lists);
+        return $this->firstKey;
+    }
+
+    /**
+     * Convertir el valor a un otro tipo de unidad
+     *
+     * @param string $unit
+     * @return float
+     */
+    public function to(string $unit): float
+    {
+        $value = 0;
+
+        foreach ($this->lists as $key => $theUnit) {
+            if ($unit === $key) {
+                $value = $theUnit['value'];
+                break;
+            }
+
+            if (in_array($unit, $theUnit['known'])) {
+                $value = $theUnit['value'];
+                break;
+            }
+        }
+
+        if ($value === 0) {
+            throw new \Exception('Unit not found');
+        }
+
+        return $this->currentValue / $value;
     }
 
     /**
@@ -91,5 +166,138 @@ class BaseConversion
     public static function make(string|int $number = 0, string $unit = ''): static
     {
         return new static($number, $unit);
+    }
+
+    /**
+     * Origin value en el valor mas bajo
+     *
+     * @return integer
+     */
+    public function origin(): int
+    {
+        return $this->originalValue;
+    }
+
+    /**
+     * Muestra el valor en una unidad especifica,
+     * en un string.
+     *
+     * @param string $unit
+     * @return string
+     */
+    public function display(string $unit, $decimals = 2): string
+    {
+        $unitKey = $this->getKeyUnit($unit);
+
+        if ($unitKey === '') {
+            throw new \Exception('Unidad desconocida');
+        }
+
+        return round($this->to($unitKey), $decimals, PHP_ROUND_HALF_UP) . ' ' . $this->lists[$unitKey]['symbol'];
+    }
+
+    /**
+     * Agrega un valor a la unidad actual
+     *
+     * @param string|integer $number
+     * @param string $unit
+     * @return UnitsConversion
+     */
+    public function add(string|int $number, string $unit = ''): UnitsConversion
+    {
+        [$number, $unit] = $this->discoverUnit($number, $unit);
+
+        $this->currentValue += static::convert($number, $unit, $this->firstKey);
+
+        return $this;
+    }
+
+    /**
+     * Resta un valor a la unidad actual
+     *
+     * @param string|integer $number
+     * @param string $unit
+     * @return UnitsConversion
+     */
+    public function less(string|int $number, string $unit = ''): UnitsConversion
+    {
+        [$number, $unit] = $this->discoverUnit($number, $unit);
+
+        $this->currentValue -= static::convert($number, $unit, $this->firstKey);
+
+        return $this;
+    }
+
+
+    /**
+     * Compara si el valor actual es menor que el valor pasado
+     *
+     * @param string|integer $number
+     * @param string $unit
+     * @return boolean
+     */
+    public function isGreaterThan(string|int $number, string $unit = ''): bool
+    {
+        [$number, $unit] = $this->discoverUnit($number, $unit);
+
+        return $this->currentValue > static::convert($number, $unit, $this->firstKey);
+    }
+
+    /**
+     * Compara si el valor actual es menor que el valor pasado
+     *
+     * @param string|integer $number
+     * @param string $unit
+     * @return boolean
+     */
+    public function isLessThan(string|int $number, string $unit = ''): bool
+    {
+        [$number, $unit] = $this->discoverUnit($number, $unit);
+
+        return $this->currentValue < static::convert($number, $unit, $this->firstKey);
+    }
+
+    /**
+     * Compara si el valor actual es igual o menor al valor pasado
+     *
+     * @param string|integer $number
+     * @param string $unit
+     * @return boolean
+     */
+    public function isSameOrLess(string|int $number, string $unit = ''): bool
+    {
+        [$number, $unit] = $this->discoverUnit($number, $unit);
+
+        return $this->currentValue <= static::convert($number, $unit, 'bit');
+    }
+
+    /**
+     * Compara si el valor actual es igual o mayor al valor pasado
+     *
+     * @param string|integer $number
+     * @param string $unit
+     * @return boolean
+     */
+    public function isSameOrGreater(string|int $number, string $unit = ''): bool
+    {
+        [$number, $unit] = $this->discoverUnit($number, $unit);
+
+        return $this->currentValue >= static::convert($number, $unit, $this->firstKey);
+    }
+
+    /**
+     * Compara si el valor actual es igual o mayor al valor pasado
+     *
+     * @param string|integer $number
+     * @param string $unit
+     * @return boolean
+     */
+    public function isBetween(string|int $number, string $unit = ''): bool
+    {
+        [$number, $unit] = $this->discoverUnit($number, $unit);
+
+        $is = static::convert($number, $unit, $this->firstKey);
+
+        return $this->currentValue >= $is && $this->currentValue <= $is;
     }
 }
