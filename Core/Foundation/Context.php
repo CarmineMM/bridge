@@ -121,4 +121,20 @@ class Context
     {
         return $_SESSION[$this->namespace][$this->keyStoreContext] ?? [];
     }
+
+    /**
+     * Comprueba si existe un elemento en el store
+     */
+    public function hasStore($key): bool
+    {
+        return isset($_SESSION[$this->namespace][$this->keyStoreContext][$key]);
+    }
+
+    /**
+     * Comprueba si existe un elemento en el state
+     */
+    public function hasState($key): bool
+    {
+        return isset($_SESSION[$this->namespace][$this->keyStateContext][$key]);
+    }
 }
