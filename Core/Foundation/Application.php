@@ -92,8 +92,6 @@ class Application
         if (!$isConsole) {
             $route = $app->coincidenceRoute();
 
-            Response::make();
-
             $through = new CarryThrough($app, $route);
 
             if (is_array($through->toRender) || $through->toRender instanceof Collection) {
@@ -111,6 +109,7 @@ class Application
             }
 
             Response::return();
+
             echo $renderHtml;
         }
 

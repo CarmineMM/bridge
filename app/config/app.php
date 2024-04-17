@@ -47,4 +47,11 @@ return [
      * Archivos de idioma.
      */
     'locale_folder' => 'app/locale',
+
+    /**
+     * Listado de providers
+     */
+    'providers' => [
+        \App\Providers\AppServiceProvider::class,
+    ],
 ];

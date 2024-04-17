@@ -31,6 +31,7 @@ class CarryThrough
             $this->toRender = $this->call($route['callback']);
         }
     }
+
     /**
      * Invoca una función o método a partir de un arreglo
      * 
@@ -86,6 +87,8 @@ class CarryThrough
      */
     public function return404(): string
     {
+        if (Request::$instance->isAjax) {
+        }
         return '404 Not Found';
     }
 
