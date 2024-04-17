@@ -38,4 +38,4 @@ Bridge es un framework PHP pensado para sitios pequeños y medianos, que su obje
 -   11: **Call Action** En caso de existir la ruta se intenta llamar la acción asociada (Callback o Controlador)
 -   11.1: **Render Or Return Json** Devuelve una vista o retorna un json
 -   12: **Render Debug Bar** Mostrar la barra de debug
--   13: **Response Return** El Response se construye a lo largo de la app, este hace la construcción final para la aplicación
+-   13: **Response Send** El Response se construye a lo largo de la app, este hace la construcción final para la aplicación

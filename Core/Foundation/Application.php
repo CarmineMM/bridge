@@ -73,7 +73,6 @@ class Application
 
         Security::roadmap();
         Translate::make();
-
         Routes::loadForm();
         Routes::loadForm('api');
 
@@ -122,7 +121,7 @@ class Application
                 Debugging::renderDebugBar($app, $renderHtml);
             }
 
-            Response::return();
+            Response::send();
 
             echo $renderHtml;
         }

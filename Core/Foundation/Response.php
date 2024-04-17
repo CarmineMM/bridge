@@ -20,6 +20,11 @@ class Response
     public static $instance = null;
 
     /**
+     * Código de respuesta
+     */
+    private int $statusCode = 200;
+
+    /**
      * Construye la respuesta inicial
      * 
      * @lifecycle 9: Response Make
@@ -42,10 +47,14 @@ class Response
     /**
      * Realiza el render de la respuesta
      * 
-     * @lifecycle 13: Response Return
+     * @lifecycle 13: Response Send
      */
-    public static function return(): void
+    public static function send(): void
     {
+        // Set the status code
+        http_response_code(self::$instance->statusCode);
+
+        // Set the headers
         foreach (self::$instance->headers as $key => $value) {
             header("$key: $value");
         }
@@ -65,13 +74,17 @@ class Response
 
     /**
      * Establece el valor de un header
-     *
-     * @param string $header
-     * @param string $value
-     * @return void
      */
     public static function setHeader(string $header, string $value): void
     {
         self::$instance->headers[$header] = $value;
+    }
+
+    /**
+     * Establece el código de respuesta de la aplicación
+     */
+    public static function setStatusCode(int $code): void
+    {
+        self::$instance->statusCode = $code;
     }
 }

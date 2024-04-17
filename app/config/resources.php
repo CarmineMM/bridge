@@ -13,5 +13,6 @@ return [
     'http_exceptions' => [
         '400' => false,
         '404' => false,
+        '429' => false,
     ],
 ];
