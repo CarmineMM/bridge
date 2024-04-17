@@ -2,6 +2,7 @@
 
 namespace Core\Foundation;
 
+use Core\Exception\ExceptionHandle;
 use Core\Loaders\Config;
 use Core\Loaders\Routes;
 use Core\Support\Collection;
@@ -99,35 +100,56 @@ class Application
         if (!$isConsole) {
             $route = $app->coincidenceRoute();
 
-            $through = new CarryThrough($app, $route);
+            $through = new CarryThrough($route);
 
-            Security::roadmap($through);
+            try {
+                if (empty($route)) {
+                    throw new \Exception('Route not found', 404);
+                }
 
-            // Si la ruta existe, entonces ejecutar el boot de los service providers
-            if (!empty($route)) {
-                Kernel::runBootServiceProvider($app->providers);
+                $render = $app->runRender($through);
+
+                Response::send();
+
+                echo $render;
+            } catch (\Throwable $th) {
+                ExceptionHandle::isHttpExceptions($th, $through);
             }
+        }
 
-            if ($through->commonRender && (is_array($through->toRender) || $through->toRender instanceof Collection)) {
-                return $through->renderJson();
-            }
+        return '';
+    }
 
+    /**
+     * Ejecutar el renderizado de la aplicación
+     *
+     * @param CarryThrough $through
+     * @return string
+     */
+    public function runRender(CarryThrough $through): string
+    {
+        Security::roadmap($through);
+
+        // Si la ruta existe, entonces ejecutar el boot de los service providers
+        if (!empty($route)) {
+            Kernel::runBootServiceProvider($this->providers);
+        }
+
+        if ((is_array($through->toRender) || is_object($through->toRender) || $through->toRender instanceof Collection)) {
+            return $through->renderJson();
+        } else {
             $renderHtml = '';
 
-            if ($through->commonRender && is_string($through->toRender)) {
+            if (is_string($through->toRender)) {
                 $renderHtml = $through->renderString();
             }
 
             if (Config::get('app.debug', false) && Response::headerIs('Content-Type', 'text/html')) {
-                Debugging::renderDebugBar($app, $renderHtml);
+                Debugging::renderDebugBar($this, $renderHtml);
             }
 
-            Response::send();
-
-            echo $renderHtml;
+            return $renderHtml;
         }
-
-        return '';
     }
 
     /**

@@ -135,10 +135,16 @@ class Config
 
         foreach ($filter as $key => $value) {
             if ($key === 'app') {
-                $value['debug'] = $value['debug'] === 'true' ? true : false;
                 $value['url'] = trim($value['url'], '/');
             }
-            $fill[$key] = $value;
+
+            $fill[$key] = is_string($value)
+                ? match ($value) {
+                    'true'  => true,
+                    'false' => false,
+                    default => $value
+                }
+                : $value;
         }
 
         return $fill;

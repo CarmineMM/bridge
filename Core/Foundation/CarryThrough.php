@@ -3,6 +3,7 @@
 namespace Core\Foundation;
 
 use Core\Support\Collection;
+use Exception;
 
 /**
  * Realiza el deploy de la aplicación
@@ -15,13 +16,6 @@ class CarryThrough
     public mixed $toRender = null;
 
     /**
-     * Indica si debe realizar una renderización común
-     *
-     * @var boolean
-     */
-    public bool $commonRender = true;
-
-    /**
      * Preparar para el despliegue de la app
      *
      * @lifecycle 19: Carry Through
@@ -30,7 +24,6 @@ class CarryThrough
      * @return mixed
      */
     public function __construct(
-        Application $app,
         /**
          * Ruta actual
          *
@@ -38,10 +31,7 @@ class CarryThrough
          */
         public array $route = []
     ) {
-
-        if (empty($this->route)) {
-            $this->toRender = $this->return404();
-        } else {
+        if (!empty($this->route)) {
             $this->toRender = $this->call($route['callback']);
         }
     }
@@ -116,11 +106,9 @@ class CarryThrough
      */
     public function renderJson(): string
     {
-        echo $this->toRender instanceof Collection
+        return $this->toRender instanceof Collection
             ? json_encode($this->toRender->toArray())
             : json_encode($this->toRender);
-
-        return '';
     }
 
     /**
