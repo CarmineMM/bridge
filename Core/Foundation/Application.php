@@ -10,6 +10,7 @@ use Core\Support\Debug;
 use Core\Support\Env;
 use Core\Translate\Lang;
 use Core\Translate\Translate;
+use Exception;
 
 /**
  * Foundation Application
@@ -104,7 +105,7 @@ class Application
 
             try {
                 if (empty($route)) {
-                    throw new \Exception('Route not found', 404);
+                    throw new \Exception('Not found', 404);
                 }
 
                 $render = $app->runRender($through);

@@ -8,5 +8,6 @@
     },
     "description": "Descripción",
     "configurations": "Configuraciones",
-    "no-results": "No se encontraron resultados."
+    "no-results": "No se encontraron resultados.",
+    "exceptions": "Excepciones"
 }

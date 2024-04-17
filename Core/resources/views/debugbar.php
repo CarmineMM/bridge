@@ -42,6 +42,12 @@ $queries = $context->getState('bridge:query', []);
                     Context
                 </button>
             </li>
+
+            <li>
+                <button :class="{ active: selectedOption === 'exceptions' && bodyOpen }" type="button" @click="selectOption('exceptions')">
+                    <?= Lang::_get('exceptions', [], 'Config') ?>
+                </button>
+            </li>
         </ul>
         <ul class="debugbar-resume">
             <li title="<?= $memory->display('KB') ?>"><?= $memory->show() ?></li>
@@ -63,5 +69,7 @@ $queries = $context->getState('bridge:query', []);
         <?php $this->include('debugbar-options.queries', ['queries' => $queries]); ?>
         <!-- Lista de items del context -->
         <?php $this->include('debugbar-options.context'); ?>
+        <!-- Lista de items de las excepciones -->
+        <?php $this->include('debugbar-options.exceptions'); ?>
     </div>
 </footer>

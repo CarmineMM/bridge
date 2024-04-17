@@ -35,24 +35,21 @@ class HttpException
      * Al preparar para el renderizado este establece el response y el status code,
      * ademas de que se encarga de encontrar la vista
      *
-     * @param integer $error
-     * @param [type] $through
+     * @param Throwable $errorCode
+     * @param CarryThrough $through
+     * @param Application $app
      * @return string
      */
-    public function prepareRender(int $error, CarryThrough $through, Application $app): string
+    public function prepareRender(\Throwable $error, CarryThrough $through, Application $app): string
     {
-        $configAction = Config::get("resources.http_exceptions.{$error}");
+        $configAction = Config::get("resources.http_exceptions.{$error->getCode()}");
 
         if ($configAction === null || $configAction === false) {
-            $configAction = $this->listExceptionActions[$error];
+            $configAction = $this->listExceptionActions[$error->getCode()];
         }
 
         if ($configAction === 'use-internal') {
-            return match ($error) {
-                400 => 'Error 400',
-                404 => $through->return404($app),
-                500 => 'Error 500',
-            };
+            return $through->renderByErrorCode($app, $error);
         }
 
         return '';

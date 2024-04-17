@@ -95,16 +95,16 @@ class CarryThrough
      *
      * @return string
      */
-    public function return404(Application $app): string
+    public function renderByErrorCode(Application $app, \Throwable $error): string
     {
-        Response::make()->setStatusCode(404);
+        Response::make()->setStatusCode($error->getCode());
 
         if (Request::$instance->isAjax) {
             Response::make()->setHeader('Content-Type', 'application/json');
 
             return [
-                'code'    => 404,
-                'message' => 'Not Found',
+                'code'    => $error->getCode(),
+                'message' => $error->getMessage(),
             ];
         }
 
@@ -112,7 +112,7 @@ class CarryThrough
 
         $render->config_view_path = 'framework.view_path';
 
-        $renderHtml = $render->view('errors.404', ['app' => $app]);
+        $renderHtml = $render->view("errors.{$error->getCode()}", ['app' => $app]);
 
         if (Config::get('app.debug', false)) {
             Debugging::renderDebugBar($app, $renderHtml);
