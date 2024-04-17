@@ -113,7 +113,7 @@ class Application
 
                 echo $render;
             } catch (\Throwable $th) {
-                ExceptionHandle::isHttpExceptions($th, $through);
+                ExceptionHandle::isHttpExceptions($th, $through, $app);
             }
         }
 

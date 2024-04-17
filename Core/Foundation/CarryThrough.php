@@ -2,6 +2,7 @@
 
 namespace Core\Foundation;
 
+use Core\Loaders\Config;
 use Core\Support\Collection;
 use Exception;
 
@@ -94,11 +95,30 @@ class CarryThrough
      *
      * @return string
      */
-    public function return404(): string
+    public function return404(Application $app): string
     {
+        Response::make()->setStatusCode(404);
+
         if (Request::$instance->isAjax) {
+            Response::make()->setHeader('Content-Type', 'application/json');
+
+            return [
+                'code'    => 404,
+                'message' => 'Not Found',
+            ];
         }
-        return '404 Not Found';
+
+        $render = new Render;
+
+        $render->config_view_path = 'framework.view_path';
+
+        $renderHtml = $render->view('errors.404', ['app' => $app]);
+
+        if (Config::get('app.debug', false)) {
+            Debugging::renderDebugBar($app, $renderHtml);
+        }
+
+        return $renderHtml;
     }
 
     /**
