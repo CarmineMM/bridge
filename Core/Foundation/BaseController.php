@@ -12,6 +12,18 @@ namespace Core\Foundation;
 class BaseController implements \Core\Implements\ShouldController
 {
     /**
+     * Response de la aplicación
+     */
+    public ?Response $response = null;
+
+    /**
+     * Request de la aplicación
+     *
+     * @var Request|null
+     */
+    public ?Request $request = null;
+
+    /**
      * Rendering view
      * 
      * @param string $view La vista debe estar ubicada en la carpeta indicada por el config
@@ -29,6 +41,7 @@ class BaseController implements \Core\Implements\ShouldController
      */
     public function handleControllerImplements(): void
     {
-        //...
+        $this->response = Response::make();
+        $this->request = Request::make();
     }
 }

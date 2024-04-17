@@ -10,11 +10,12 @@ use Core\Loaders\Config;
 
 class HomeController extends BaseController
 {
-    public function __invoke(Request $request)
+    public function __invoke()
     {
         $user = new User;
 
         // dump($user->find(2));
+        dump($this->request->uri);
 
         return $this->view('welcome', [
             'foo' => 'bar',

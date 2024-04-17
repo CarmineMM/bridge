@@ -54,6 +54,11 @@ class CarryThrough
 
             $instance = new $namespaceClass();
 
+            // Inyectar la instancia de la respuesta
+            if (method_exists($instance, 'handleControllerImplements')) {
+                $instance->handleControllerImplements();
+            }
+
             // Si el controlador tiene el método __invoke
             // Usar este para la invocación automática del controlador
             if (count($call) === 1) {
@@ -61,7 +66,7 @@ class CarryThrough
                     throw new \Exception("Method __invoke not found in $namespaceClass");
                 }
 
-                return $instance->__invoke($request, ...$request->route->get('dynamic_params'));
+                return $instance->__invoke(...$request->route->get('dynamic_params'));
             }
 
             // Si tiene dos elementos, el segundo es el método a invocar
@@ -73,7 +78,7 @@ class CarryThrough
                     throw new \Exception("Method $method not found in $namespaceClass");
                 }
 
-                return $instance->$method($request, ...$request->route->get('dynamic_params'));
+                return $instance->$method(...$request->route->get('dynamic_params'));
             }
         }
 

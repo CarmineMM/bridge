@@ -40,7 +40,7 @@ class Debug
         Router::$routes['GET'][] = [
             'url' => self::resources['alpine'],
             'callback' => function () {
-                Response::setHeader('Content-Type', 'text/javascript');
+                Response::make()->setHeader('Content-Type', 'text/javascript');
                 return file_get_contents(Filesystem::rootPath(['Core', 'resources', 'js', 'alpine-3.13.8.min.js']));
             },
             'name' => 'alpine.js',
@@ -51,7 +51,7 @@ class Debug
         Router::$routes['GET'][] = [
             'url' => self::resources['css'],
             'callback' => function () {
-                Response::setHeader('Content-Type', 'text/css');
+                Response::make()->setHeader('Content-Type', 'text/css');
                 return file_get_contents(Filesystem::rootPath(['Core', 'resources', 'css', 'debugbar.css']));
             },
             'name' => 'debugging.css',
@@ -62,7 +62,7 @@ class Debug
         Router::$routes['GET'][] = [
             'url' => self::resources['js'],
             'callback' => function () {
-                Response::setHeader('Content-Type', 'text/javascript');
+                Response::make()->setHeader('Content-Type', 'text/javascript');
                 return file_get_contents(Filesystem::rootPath(['Core', 'resources', 'js', 'debugbar.js']));
             },
             'name' => 'debugging.js',

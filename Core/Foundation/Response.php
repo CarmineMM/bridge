@@ -75,16 +75,18 @@ class Response
     /**
      * Establece el valor de un header
      */
-    public static function setHeader(string $header, string $value): void
+    public function setHeader(string $header, string $value): Response
     {
         self::$instance->headers[$header] = $value;
+        return $this;
     }
 
     /**
      * Establece el código de respuesta de la aplicación
      */
-    public static function setStatusCode(int $code): void
+    public function setStatusCode(int $code): Response
     {
         self::$instance->statusCode = $code;
+        return $this;
     }
 }
