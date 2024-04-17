@@ -8,6 +8,7 @@ use Core\Loaders\FilesLoad\ConfigAppFile;
 use Core\Loaders\FilesLoad\ConfigDatabaseFile;
 use Core\Loaders\FilesLoad\ConfigResourcesFile;
 use Core\Loaders\FilesLoad\ConfigRoutesFile;
+use Core\Loaders\FilesLoad\ConfigSecurityFile;
 use Core\Support\Collection;
 
 /**
@@ -18,7 +19,7 @@ use Core\Support\Collection;
  */
 class Config
 {
-    use ConfigAppFile, ConfigRoutesFile, ConfigResourcesFile, ConfigDatabaseFile;
+    use ConfigAppFile, ConfigRoutesFile, ConfigResourcesFile, ConfigDatabaseFile, ConfigSecurityFile;
 
     /**
      * Archivos de configuración
@@ -28,6 +29,7 @@ class Config
         'routes' => 'app/config/routes.php',
         'resources' => 'app/config/resources.php',
         'database' => 'app/config/database.php',
+        'security' => 'app/config/security.php',
     ];
 
     /**
@@ -70,6 +72,7 @@ class Config
             self::$instance->config['routes'] = self::$instance->routesConfig();
             self::$instance->config['resources'] = self::$instance->resourcesConfig();
             self::$instance->config['database'] = self::$instance->databaseConfig();
+            self::$instance->config['security'] = self::$instance->securityConfig();
         }
 
         return self::$instance;

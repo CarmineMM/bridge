@@ -19,6 +19,10 @@ class Kernel
         $timer = microtime(true);
         $memory = memory_get_usage();
 
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $array = explode(DIRECTORY_SEPARATOR, PUBLIC_PATH);
         array_pop($array);
 

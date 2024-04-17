@@ -2,6 +2,8 @@
 
 namespace Core\Foundation;
 
+use Core\Loaders\Config;
+
 class Router extends Middlewares
 {
     /**
@@ -35,6 +37,7 @@ class Router extends Middlewares
             'name'       => $name,
             'middleware' => $middleware,
             'method'     => 'GET',
+            'rate_limit' => Config::get('security.rate_limit.limit', 60)
         ];
 
         self::$routes['GET'][] = self::$lastRoute;
@@ -57,6 +60,7 @@ class Router extends Middlewares
             'name'       => $name,
             'middleware' => $middleware,
             'method'     => 'POST',
+            'rate_limit' => Config::get('security.rate_limit.limit', 60)
         ];
 
         self::$routes['POST'][] = self::$lastRoute;

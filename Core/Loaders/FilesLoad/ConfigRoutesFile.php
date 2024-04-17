@@ -12,13 +12,15 @@ trait ConfigRoutesFile
             'files' => ['app/routes/web.php'],
             'prefix' => '',
             'middleware' => [],
-            'name' => ''
+            'name' => '',
+            'rate_limit' => 60
         ],
         'api' => [
             'files' => [],
             'prefix' => '',
             'middleware' => [],
-            'name' => ''
+            'name' => '',
+            'rate_limit' => 60
         ],
     ];
 

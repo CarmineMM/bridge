@@ -60,3 +60,13 @@ if (!function_exists('dump')) {
         Debug::dump(...$vars);
     }
 }
+
+if (!function_exists('config')) {
+    /**
+     * Obtiene un valor de la configuración
+     */
+    function config(string $key, mixed $default = null): mixed
+    {
+        return Core\Loaders\Config::get($key, $default);
+    }
+}

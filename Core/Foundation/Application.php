@@ -63,6 +63,7 @@ class Application
             Response::make();
         }
 
+        Security::roadmap();
         Translate::make();
         Routes::loadForm();
         Routes::loadForm('api');
