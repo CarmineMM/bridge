@@ -27,6 +27,12 @@ class Debug
     {
         echo '<pre>';
         foreach ($vars as $var) {
+            if ($var instanceof Collection) {
+                var_dump([
+                    'Core\Support\Collection' => $var->toArray(),
+                ]);
+                continue;
+            }
             var_dump($var);
         }
         echo '</pre>';
