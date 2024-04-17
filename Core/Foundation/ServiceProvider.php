@@ -10,9 +10,14 @@ class ServiceProvider
     protected mixed $httpException;
 
     /**
+     * Observadores de los modelos
+     */
+    protected array $observers = [];
+
+    /**
      * Registra los servicios de la aplicación
      */
-    public function register(): void
+    public function register(bool $consoleMode): void
     {
         // Registrar servicios
     }
@@ -23,5 +28,13 @@ class ServiceProvider
     public function boot(): void
     {
         //
+    }
+
+    /**
+     * Obtiene las props necesarias para instancia en el contenedor
+     */
+    public function getObservers(): array
+    {
+        return $this->observers;
     }
 }

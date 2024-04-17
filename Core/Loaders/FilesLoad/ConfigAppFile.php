@@ -20,6 +20,9 @@ trait ConfigAppFile
         'locale'          => 'es',
         'fallback_locale' => 'en',
         'locale_folder'   => 'app/locale',
+        'providers'       => [
+            \Core\Foundation\ServiceProvider::class,
+        ]
     ];
 
     /**

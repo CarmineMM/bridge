@@ -40,6 +40,11 @@ class Application
     const FrameworkName = 'Bridge';
 
     /**
+     * Providers
+     */
+    private array $providers = [];
+
+    /**
      * Construct
      */
     public function __construct($consoleMode = false)
@@ -58,6 +63,9 @@ class Application
             unset($timer);
         }
 
+        // Llamar el 'register' de los servicios
+        $this->providers = Kernel::registerServiceProviders($consoleMode);
+
         if (!$consoleMode) {
             Request::make();
             Response::make();
@@ -65,6 +73,7 @@ class Application
 
         Security::roadmap();
         Translate::make();
+
         Routes::loadForm();
         Routes::loadForm('api');
 
@@ -91,6 +100,11 @@ class Application
 
         if (!$isConsole) {
             $route = $app->coincidenceRoute();
+
+            // Si la ruta existe, entonces ejecutar el boot de los service providers
+            if (!empty($route)) {
+                Kernel::runBootServiceProvider($app->providers);
+            }
 
             $through = new CarryThrough($app, $route);
 

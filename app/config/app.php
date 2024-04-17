@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\Dos;
 use Core\Support\Env;
 
 /**
