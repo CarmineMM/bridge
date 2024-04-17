@@ -15,6 +15,13 @@ class CarryThrough
     public mixed $toRender = null;
 
     /**
+     * Indica si debe realizar una renderización común
+     *
+     * @var boolean
+     */
+    public bool $commonRender = true;
+
+    /**
      * Preparar para el despliegue de la app
      *
      * @lifecycle 19: Carry Through
@@ -22,10 +29,17 @@ class CarryThrough
      * @param array $route
      * @return mixed
      */
-    public function __construct(Application $app, array $route)
-    {
+    public function __construct(
+        Application $app,
+        /**
+         * Ruta actual
+         *
+         * @var array
+         */
+        public array $route = []
+    ) {
 
-        if (empty($route)) {
+        if (empty($this->route)) {
             $this->toRender = $this->return404();
         } else {
             $this->toRender = $this->call($route['callback']);

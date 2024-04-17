@@ -32,5 +32,13 @@ return [
          * Cantidad de peticiones permitidas por minuto
          */
         'limit' => 60,
+
+        /**
+         * Los driver de manejo de rate limit
+         * disponibles son: 
+         * 
+         * - session: Manejo por variable global Session
+         */
+        'driver' => 'session',
     ],
 ];

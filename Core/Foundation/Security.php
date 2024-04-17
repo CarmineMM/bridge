@@ -8,8 +8,10 @@ class Security
 {
     /**
      * Realiza un seguimiento de seguridad en el framework
+     * 
+     * @param array $route Ruta actual coincidente, puede estar vacía e indicar un 404
      */
-    public static function roadmap(): void
+    public static function roadmap(CarryThrough $route): void
     {
         $self = new self;
         $context = new Context;
@@ -25,6 +27,8 @@ class Security
         if ($context->getStore("{$token_name}_EXPIRE", 0) < time()) {
             $self->generateCSRF_TOKEN($context, $token_name);
         }
+
+        // Comprobación del rate limit global
     }
 
     /**

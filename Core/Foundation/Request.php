@@ -62,6 +62,11 @@ class Request
     public bool $isAjax = false;
 
     /**
+     * IP de la petición
+     */
+    public string $ip = '';
+
+    /**
      * Construye el request entrante
      * 
      * @lifecycle 5: Make Request
@@ -77,6 +82,7 @@ class Request
         $self->url = trim(Config::get('app.url'), '/') . '/' . trim($_SERVER['REQUEST_URI'], '/');
         $self->method = strtoupper($_SERVER['REQUEST_METHOD']);
         $self->user_agent = $_SERVER['HTTP_USER_AGENT'];
+        $self->ip = $_SERVER['REMOTE_ADDR'];
         $self->vars = [
             'post' => new Collection($_POST, false),
             'get'  => new Collection($_GET, false),

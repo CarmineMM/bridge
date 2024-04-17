@@ -71,7 +71,6 @@ class Application
             Response::make();
         }
 
-        Security::roadmap();
         Translate::make();
         Routes::loadForm();
         Routes::loadForm('api');
@@ -100,20 +99,22 @@ class Application
         if (!$isConsole) {
             $route = $app->coincidenceRoute();
 
+            $through = new CarryThrough($app, $route);
+
+            Security::roadmap($through);
+
             // Si la ruta existe, entonces ejecutar el boot de los service providers
             if (!empty($route)) {
                 Kernel::runBootServiceProvider($app->providers);
             }
 
-            $through = new CarryThrough($app, $route);
-
-            if (is_array($through->toRender) || $through->toRender instanceof Collection) {
+            if ($through->commonRender && (is_array($through->toRender) || $through->toRender instanceof Collection)) {
                 return $through->renderJson();
             }
 
             $renderHtml = '';
 
-            if (is_string($through->toRender)) {
+            if ($through->commonRender && is_string($through->toRender)) {
                 $renderHtml = $through->renderString();
             }
 
