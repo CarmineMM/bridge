@@ -54,7 +54,7 @@ class CarryThrough
             $namespaceClass = $call[0];
 
             if (!class_exists($namespaceClass)) {
-                throw new \Exception("Class $namespaceClass not found");
+                throw new \Exception("Class $namespaceClass not found", 500);
             }
 
             $instance = new $namespaceClass();
@@ -68,7 +68,7 @@ class CarryThrough
             // Usar este para la invocación automática del controlador
             if (count($call) === 1) {
                 if (!method_exists($instance, '__invoke')) {
-                    throw new \Exception("Method __invoke not found in $namespaceClass");
+                    throw new \Exception("Method __invoke not found in $namespaceClass", 500);
                 }
 
                 return $instance->__invoke(...$request->route->get('dynamic_params'));
@@ -80,7 +80,7 @@ class CarryThrough
                 $method = $call[1];
 
                 if (!method_exists($instance, $method)) {
-                    throw new \Exception("Method $method not found in $namespaceClass");
+                    throw new \Exception("Method $method not found in $namespaceClass", 500);
                 }
 
                 return $instance->$method(...$request->route->get('dynamic_params'));

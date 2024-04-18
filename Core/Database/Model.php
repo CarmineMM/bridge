@@ -2,13 +2,15 @@
 
 namespace Core\Database;
 
+use Core\Database\Complement\Casts;
 use Core\Database\Driver\PostgresSQL;
 use Core\Loaders\Config;
 use Core\Support\Collection;
-use PDO;
 
 class Model
 {
+    use Casts;
+
     /**
      * Tabla en la base de datos
      */
@@ -23,6 +25,13 @@ class Model
      * Columnas que se pueden editar y crear
      */
     protected array $fillable = [];
+
+    /**
+     * Columnas ocultas en las respuestas
+     *
+     * @var array
+     */
+    protected array $hidden = [];
 
     /**
      * Configuración de conexión a la base de datos,
@@ -51,7 +60,7 @@ class Model
 
         $this->driver = match ($connectionConfig['driver']) {
             'pgsql' => new PostgresSQL($connectionConfig, $this),
-            default => throw new \Exception('Driver not found'),
+            default => throw new \Exception('Driver not found', 500),
         };
     }
 
@@ -76,7 +85,9 @@ class Model
      */
     public function all(array $columns = ['*']): Collection
     {
-        return new Collection($this->driver->all($columns));
+        return new Collection(
+            $this->filterReturnColumns($this->driver->all($columns))
+        );
     }
 
     /**
@@ -93,7 +104,28 @@ class Model
     public function find(string|int $findByPrimaryKey): Collection
     {
         return new Collection(
-            $this->driver->find($findByPrimaryKey)[0] ?? []
+            $this->filterReturnColumns($this->driver->find($findByPrimaryKey))[0] ?? []
         );
+    }
+
+    /**
+     * Filtro a las columnas durante los get,
+     * es usa para aplicar los hidden, los casts y los appends
+     */
+    public function filterReturnColumns(array $data): array
+    {
+        return array_map(function ($item) {
+            // Hidden
+            foreach ($this->hidden as $hidden) {
+                unset($item[$hidden]);
+            }
+
+            // Casts
+            foreach ($this->casts as $key => $value) {
+                $item[$key] = $this->getApplyCast($value, $item[$key]);
+            }
+
+            return $item;
+        }, $data);
     }
 }

@@ -125,7 +125,7 @@ class BaseConversion
         }
 
         if ($value === 0) {
-            throw new \Exception('Unit not found');
+            throw new \Exception('Unit not found', 500);
         }
 
         return $this->currentValue / $value;
@@ -203,7 +203,7 @@ class BaseConversion
         $unitKey = $this->getKeyUnit($unit);
 
         if ($unitKey === '') {
-            throw new \Exception('Unidad desconocida');
+            throw new \Exception('Unit not found', 500);
         }
 
         return round($this->to($unitKey), $decimals, PHP_ROUND_HALF_UP) . ' ' . $this->lists[$unitKey]['symbol'];

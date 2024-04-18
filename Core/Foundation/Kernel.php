@@ -15,7 +15,7 @@ class Kernel
     public static function initConstants(): array
     {
         if (defined('ROOT_PATH')) {
-            throw new \Exception('The Constants have be declared');
+            throw new \Exception('The Constants have be declared', 521);
         }
         $timer = microtime(true);
         $memory = memory_get_usage();

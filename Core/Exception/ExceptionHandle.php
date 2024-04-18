@@ -89,7 +89,7 @@ class ExceptionHandle
         $httpException = new HttpException();
         if (!$httpException->configActions($error->getCode())) {
             if (Config::get('app.debug', true)) {
-                throw new \Exception("Is Not error HTTP", $error->getCode());
+                throw new \Exception("Is Not error HTTP", $error->getCode(), 500);
             }
 
             // Render de un error 500

@@ -26,7 +26,7 @@ class RateLimit
     {
         $this->driver = match ($useDriver) {
             'session' => new Session,
-            default => throw new \Exception("Driver {$useDriver} not found"),
+            default => throw new \Exception("Driver {$useDriver} not found", 500),
         };
     }
 }

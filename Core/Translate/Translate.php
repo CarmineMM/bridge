@@ -47,7 +47,7 @@ class Translate
         );
 
         if (!is_dir($folder)) {
-            throw new \Exception("The folder '{$folder}' does not exist.");
+            throw new \Exception("The folder '{$folder}' does not exist.", 500);
             return;
         }
 

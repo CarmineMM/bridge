@@ -30,7 +30,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
         try {
             $this->pdo = new \PDO($dsn, $this->config['username'], $this->config['password']);
         } catch (\PDOException $th) {
-            throw new \Exception("Error connect to database: " . $th->getMessage());
+            throw new \Exception("Error connect to database: " . $th->getMessage(), 500);
         }
 
         $this->table = $this->model->getTable();

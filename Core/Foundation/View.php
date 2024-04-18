@@ -29,7 +29,7 @@ class View
         }
 
         if (!file_exists($viewRender)) {
-            throw new \Exception("The file '$view ($viewRender)' not exists");
+            throw new \Exception("The file '$view ($viewRender)' not exists", 500);
         }
 
         return $viewRender;
