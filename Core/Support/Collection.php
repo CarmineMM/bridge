@@ -176,4 +176,32 @@ class Collection
 
         return $this;
     }
+
+    /**
+     * Actualiza un elemento de la colección
+     */
+    public function update(string $key, mixed $value): Collection
+    {
+        return $this;
+    }
+
+    /**
+     * Convertir a atributos HTML
+     *
+     * @return string
+     */
+    public function toHTMLAttributes(): string
+    {
+        $attributes = '';
+
+        foreach ($this->data as $key => $value) {
+            if (!is_string($value)) {
+                continue;
+            }
+
+            $attributes .= "{$key}=\"$value\" ";
+        }
+
+        return trim($attributes, ' ');
+    }
 }

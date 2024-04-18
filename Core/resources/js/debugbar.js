@@ -21,6 +21,11 @@ document.addEventListener('alpine:init', () => {
             return (bytes / 1024).toFixed(2);
         }
 
+        /**
+         * Keys de los elementos que se deben de mostrar como un implode 
+         */
+        const keyImplodeFileReference = ['view_path', 'providers', 'file'];
+
         return {
             bodyOpen: false,
 
@@ -65,16 +70,32 @@ document.addEventListener('alpine:init', () => {
                 this.bodyOpen = true;
             },
 
+            printable(value) {
+                if (typeof value === 'boolean') {
+                    return value ? 'true' : 'false'
+                }
+
+                if (_.isArray(value)) {
+                    if (_.isArray(value[0])) {
+                        return '[' + value.map((sub) => this.printable(sub)).join(', ') + ']'
+                    }
+
+                    return value.join('\\')
+                }
+
+                return value
+            },
+
             /**
              * Hace render de una opción dentro de un <li>
              */
             renderOption(values, key, configKey = false) {
-                if (['string', 'number'].includes(typeof values)) {
+                if (['string', 'number'].includes(typeof values) || keyImplodeFileReference.includes(key)) {
                     /*html*/
                     return `
                         <li class="item-config">
                             <p class="first-element" x-text="key"></p>
-                            <p class="medium-content" x-html="typeof values === 'boolean' ? (values ? 'true': 'false') : values"></p>
+                            <p class="medium-content" x-html="printable(values)"></p>
                         </li>
                     `
                 }

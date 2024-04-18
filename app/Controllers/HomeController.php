@@ -15,7 +15,7 @@ class HomeController extends BaseController
         $user = new User;
 
         dump(
-            $user->query('SELECT * FROM users'),
+            // $user->query('SELECT * FROM users'),
             // $user->all()
         );
 

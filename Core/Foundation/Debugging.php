@@ -58,7 +58,7 @@ class Debugging
         $list = [
             'config' => [
                 'title' => Lang::_get('configurations', [], 'Config'),
-                'elements' => Config::all()->toArray(),
+                'elements' => static::splitFormatFiles(Config::all()->toArray(), ['view_path', 'providers']),
                 'tabs' => [],
             ],
             'queries' => [
@@ -82,11 +82,35 @@ class Debugging
             ],
             'exceptions' => [
                 'title' => Lang::_get('exceptions', [], 'Config') . ' (' . count($exceptions) . ')',
-                'elements' => $exceptions,
+                'elements' => static::splitFormatFiles($exceptions, ['file']),
                 'tabs' => [],
             ]
         ];
 
         return $list;
+    }
+
+    /**
+     * El frontend no lee el carácter '\' por lo que se deben de dividir,  
+     * en un arreglo y posteriormente unirlos en el front.
+     * Esta función busca los string coincidentes y los separa.
+     */
+    public static function splitFormatFiles(array $innerArray, array $coincidences)
+    {
+        foreach ($innerArray as $innerKey => $values) {
+            foreach ($values as $key => $path) {
+                if (in_array($key, $coincidences)) {
+                    if (is_string($path)) {
+                        $innerArray[$innerKey][$key] = explode('\\', $path);
+                    } else if (is_array($path)) {
+                        $innerArray[$innerKey][$key] = array_map(function ($item) {
+                            return explode('\\', $item);
+                        }, $path);
+                    }
+                }
+            }
+        }
+
+        return $innerArray;
     }
 }
