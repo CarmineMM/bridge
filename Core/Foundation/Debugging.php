@@ -86,7 +86,7 @@ class Debugging
                 ],
             ],
             'exceptions' => [
-                'title' => Lang::_get('exceptions', [], 'Config'),
+                'title' => Lang::_get('exceptions', [], 'Config') . ' (' . count($exceptions) . ')',
                 'elements' => $exceptions,
                 'tabs' => [],
             ]

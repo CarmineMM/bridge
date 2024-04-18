@@ -1,23 +1,7 @@
-<?php
-
-use Core\Exception\ExceptionHandle;
-
-$elements = [];
-
-foreach (ExceptionHandle::getList() as $item) {
-    $elements[] = [
-        'code' => $item->getCode(),
-        'message' => $item->getMessage(),
-        'file' => $item->getFile(),
-        'line' => $item->getLine(),
-    ];
-}
-
-// dump($elements, ExceptionHandle::getList());
-
-?>
-
-<div x-show="selectedOption === 'exceptions'" class="regular-content">
+<div x-show="selectedOption === 'exceptions'" class="debugbar-body-item">
     <ul>
+        <template x-for="(exception) in items.exceptions.elements">
+            <li class="list-item item-query" x-text="exception.code +':'+ exception.message"></li>
+        </template>
     </ul>
 </div>

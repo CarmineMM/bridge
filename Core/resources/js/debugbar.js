@@ -52,6 +52,7 @@ document.addEventListener('alpine:init', () => {
                     parseRenderItems[key] = item;
                 });
 
+                console.log({ parseRenderItems });
                 this.items = parseRenderItems;
             },
 
@@ -67,17 +68,13 @@ document.addEventListener('alpine:init', () => {
             /**
              * Hace render de una opción dentro de un <li>
              */
-            renderOption(config, key, configKey = false) {
-                if (key === 'rate_limit') {
-                    console.log({ config });
-                }
-
-                if (['string', 'number'].includes(typeof config)) {
+            renderOption(values, key, configKey = false) {
+                if (['string', 'number'].includes(typeof values)) {
                     /*html*/
                     return `
                         <li class="item-config">
                             <p class="first-element" x-text="key"></p>
-                            <p class="medium-content" x-html="typeof config === 'boolean' ? (config ? 'true': 'false') : config"></p>
+                            <p class="medium-content" x-html="typeof values === 'boolean' ? (values ? 'true': 'false') : values"></p>
                         </li>
                     `
                 }
@@ -87,7 +84,7 @@ document.addEventListener('alpine:init', () => {
                     <li class="item-config">
                         <p class="first-element" x-text="key"></p>
                         <ul class="full-content">
-                            <template x-for="(subValue, subKey) in config">
+                            <template x-for="(subValue, subKey) in values">
                                 <li class="item-config">
                                     <p class="first-element" x-show="['string', 'number'].includes(typeof subKey)" x-text="subKey"></p>
 

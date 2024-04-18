@@ -55,6 +55,7 @@ class Application
         Kernel::loadFunctionsFile();
         Env::load();
         Config::load();
+        ExceptionHandle::saveWarnings();
 
         if (Config::get('app.debug', false)) {
             // Inicia la medición del tiempo

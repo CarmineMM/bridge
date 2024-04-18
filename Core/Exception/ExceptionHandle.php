@@ -53,4 +53,11 @@ class ExceptionHandle
 
         echo $httpException->prepareRender($error, $through, $app);
     }
+
+    public static function saveWarnings(): void
+    {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            dump('errores');
+        });
+    }
 }

@@ -14,7 +14,10 @@ class HomeController extends BaseController
     {
         $user = new User;
 
-        dump($user->find(2));
+        dump(
+            $user->find(2),
+            $user->all()
+        );
 
         return $this->view('welcome', [
             'foo' => 'bar',

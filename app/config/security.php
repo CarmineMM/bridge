@@ -40,5 +40,10 @@ return [
          * - session: Manejo por variable global Session
          */
         'driver' => 'session',
+
+        /**
+         * Tiempo de ban expresado en segundos.
+         */
+        'ban_time' => 3600
     ],
 ];
