@@ -15,8 +15,8 @@ class HomeController extends BaseController
         $user = new User;
 
         dump(
-            $user->find(2),
-            $user->all()
+            '$user->find(2),
+            $user->all()'
         );
 
         return $this->view('welcome', [

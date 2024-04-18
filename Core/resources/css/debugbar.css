@@ -5,6 +5,7 @@
 	--debug-bar-light-2: #f3eded;
 	--debug-bar-secondary: #416788;
 	--debug-bar-success: #ffbf00;
+	--debug-bar-error: #ff0000;
 }
 
 [x-cloak] {
@@ -218,4 +219,20 @@
 #debug-bar .regular-button.active {
 	background-color: var(--debug-bar-primary);
 	color: var(--debug-bar-light);
+}
+
+#debug-bar .exception {
+	color: white;
+	padding: 0.4em;
+	text-align: center;
+	width: 9em;
+	margin-right: 1.9em;
+}
+
+#debug-bar .exception-error {
+	background-color: var(--debug-bar-error);
+}
+
+#debug-bar .exception-warning {
+	background-color: var(--debug-bar-success);
 }

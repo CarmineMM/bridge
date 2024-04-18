@@ -52,12 +52,7 @@ class Debugging
         $exceptions = [];
 
         foreach (ExceptionHandle::getList() as $item) {
-            $exceptions[] = [
-                'code' => $item->getCode(),
-                'message' => $item->getMessage(),
-                'file' => $item->getFile(),
-                'line' => $item->getLine(),
-            ];
+            $exceptions[] = $item;
         }
 
         $list = [

@@ -13,7 +13,27 @@ class ExceptionHandle
      *
      * @var [type]
      */
-    private static array $exceptionList = [];
+    private array $exceptionList = [];
+
+    /**
+     * Instancia del contenedor
+     *
+     * @var Container|null
+     */
+    private static ?ExceptionHandle $instance = null;
+
+    /**
+     * Establece la instancia
+     */
+    public static function setInstance(): ?ExceptionHandle
+    {
+        if (is_null(self::$instance)) {
+            $self = new self();
+            self::$instance = $self;
+        }
+
+        return self::$instance;
+    }
 
     /**
      * La idea es almacenar las excepciones que van ocurren en la app
@@ -23,7 +43,33 @@ class ExceptionHandle
      */
     public static function addExceptionList(\Throwable $error): void
     {
-        self::$exceptionList[] = $error;
+        self::setInstance()->exceptionList[] = [
+            'severity' => 'error',
+            'code' => $error->getCode(),
+            'message' => $error->getMessage(),
+            'file' => $error->getFile(),
+            'line' => $error->getLine(),
+            'trace' => $error->getTrace(),
+            'previous' => $error->getPrevious(),
+            'previousTrace' => $error->getPrevious() ? $error->getPrevious()->getTrace() : '',
+        ];
+    }
+
+    /**
+     * Agrega warning a la lista
+     */
+    public static function addWarningList(array $error): void
+    {
+        self::setInstance()->exceptionList[] = [
+            'severity' => 'warning',
+            'code' => $error[0],
+            'message' => $error[1],
+            'file' => $error[2],
+            'line' => $error[3],
+            'trace' => [],
+            'previous' => null,
+            'previousTrace' => ''
+        ];
     }
 
     /**
@@ -31,7 +77,7 @@ class ExceptionHandle
      */
     public static function getList(): array
     {
-        return self::$exceptionList;
+        return static::setInstance()->exceptionList;
     }
 
     /**
@@ -49,15 +95,21 @@ class ExceptionHandle
             // Render de un error 500
         }
 
-        static::addExceptionList($error);
+        if (Config::get('app.debug', true)) {
+            static::addExceptionList($error);
+        }
 
         echo $httpException->prepareRender($error, $through, $app);
     }
 
+    /**
+     * Guarda los warnings que ocurren en la aplicación
+     */
     public static function saveWarnings(): void
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            dump('errores');
+        set_error_handler(function (...$params) {
+            dump('probar');
+            ExceptionHandle::addWarningList($params);
         });
     }
 }
