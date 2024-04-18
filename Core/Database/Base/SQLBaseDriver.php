@@ -56,4 +56,18 @@ class SQLBaseDriver extends CarryOut
 
         return $this;
     }
+
+    /**
+     * Realiza un 'or where' en el sentencia SQL
+     */
+    public function orWhere(string $column, string $sentence, string $three = ''): static
+    {
+        $this->instance('select');
+
+        $this->sql = $three
+            ? str_replace('{where}', "OR WHERE {$column} {$sentence} {$three} {where}", $this->sql)
+            : str_replace('{where}', "OR WHERE {$column} = '{$sentence}' {where}", $this->sql);
+
+        return $this;
+    }
 }
