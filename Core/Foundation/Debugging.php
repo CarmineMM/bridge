@@ -2,10 +2,12 @@
 
 namespace Core\Foundation;
 
+use Core\Exception\ExceptionHandle;
 use Core\Loaders\Config;
 use Core\Loaders\HtmlInject;
 use Core\Support\Debug;
 use Core\Support\Conversion\UnitsConversion;
+use Core\Translate\Lang;
 
 class Debugging
 {
@@ -36,5 +38,60 @@ class Debugging
 
         // echo "<br><br>Execution Time: {$execution_time} seconds";
         // echo "<br>Memory Usage: " . UnitsConversion::make($memory, 'Bytes')->display('KB');
+    }
+
+    /**
+     * Formatea la estructura de la lista de cosas a debugbar,
+     * esto para hacer que javascript haga el renderizado
+     *
+     * @return array
+     */
+    public static function formatDebugList(): array
+    {
+        $queries = (new Context)->getState('bridge:query', []);
+        $exceptions = [];
+
+        foreach (ExceptionHandle::getList() as $item) {
+            $exceptions[] = [
+                'code' => $item->getCode(),
+                'message' => $item->getMessage(),
+                'file' => $item->getFile(),
+                'line' => $item->getLine(),
+            ];
+        }
+
+        $list = [
+            'config' => [
+                'title' => Lang::_get('configurations', [], 'Config'),
+                'elements' => Config::all()->toArray(),
+                'tabs' => [],
+            ],
+            'queries' => [
+                'title' => 'Queries (' . count($queries) . ')',
+                'elements' => $queries,
+                'tabs' => [],
+            ],
+            'context' => [
+                'title' => 'Context',
+                'elements' => [],
+                'tabs' => [
+                    'store' => [
+                        'title' => 'Context Store',
+                        'elements' => (new Context)->allStore(),
+                    ],
+                    'state' => [
+                        'title' => 'Context State',
+                        'elements' => (new Context)->allState(),
+                    ],
+                ],
+            ],
+            'exceptions' => [
+                'title' => Lang::_get('exceptions', [], 'Config'),
+                'elements' => $exceptions,
+                'tabs' => [],
+            ]
+        ];
+
+        return $list;
     }
 }

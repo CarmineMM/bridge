@@ -1,14 +1,12 @@
-<?php
-
-use Core\Loaders\Config;
-
-?>
-
 <div x-show="selectedOption === 'config'" class="regular-content">
-    <?php foreach (Config::all()->toArray() as $config => $values) : if ($config === 'framework' || $config === 'routes') continue; ?>
-        <h4><?= ucfirst($config); ?></h4>
-        <ul style="margin-bottom: 1.5em;">
-            <?php $this->include('components.item-config', ['values' => $values, 'config' => $config]) ?>
-        </ul>
-    <?php endforeach; ?>
+    <template x-for="(el, index) in items.config.elements">
+        <div style="margin-bottom: 1em;">
+            <h4 x-text="index" class="capitalize"></h4>
+            <ul>
+                <template x-for="(config, key) in el">
+                    <li x-html="renderOption(config, key)"></li>
+                </template>
+            </ul>
+        </div>
+    </template>
 </div>

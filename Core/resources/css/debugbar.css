@@ -29,6 +29,11 @@
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	color: var(--debug-bar-dark);
 }
+
+#debug-bar .capitalize {
+	text-transform: capitalize;
+}
+
 #debug-bar a {
 	text-decoration: none;
 	color: inherit;

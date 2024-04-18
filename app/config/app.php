@@ -13,7 +13,7 @@ return [
     /**
      * Nombre de la aplicación.
      */
-    'name' => Env::get('APP_NAME', 'Bridge Framework'),
+    'name' => Env::get('APP_NAME', 'Bridge'),
 
     /**
      * Debug mode.

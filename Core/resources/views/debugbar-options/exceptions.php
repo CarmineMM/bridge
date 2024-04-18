@@ -2,9 +2,22 @@
 
 use Core\Exception\ExceptionHandle;
 
-dump(ExceptionHandle::getList());
+$elements = [];
+
+foreach (ExceptionHandle::getList() as $item) {
+    $elements[] = [
+        'code' => $item->getCode(),
+        'message' => $item->getMessage(),
+        'file' => $item->getFile(),
+        'line' => $item->getLine(),
+    ];
+}
+
+// dump($elements, ExceptionHandle::getList());
+
 ?>
 
 <div x-show="selectedOption === 'exceptions'" class="regular-content">
-    lista de excepciones
+    <ul>
+    </ul>
 </div>

@@ -2,52 +2,35 @@
 
 use Core\Foundation\Application;
 use Core\Foundation\Context;
+use Core\Foundation\Debugging;
 use Core\Foundation\Request;
 use Core\Support\Conversion\TimeConversion;
 use Core\Support\Conversion\UnitsConversion;
+use Core\Support\Str;
 use Core\Translate\Lang;
 
 $request = Request::make();
-$context = new Context;
+$elements = Debugging::formatDebugList();
 
 $end_time = microtime(true);
 $execution_time = round(($end_time - $app->start_time), 5);
 $memory = UnitsConversion::make(memory_get_usage() - $app->memory, 'byte');
 
-// Obtener las query's
-$queries = $context->getState('bridge:query', []);
-
 ?>
-<footer id="debug-bar" x-data="debugbar" :class="{ open: bodyOpen }">
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
+<footer id="debug-bar" x-data="debugbar(<?= (new Str(json_encode($elements)))->toJsonHtml() ?>)" :class="{ open: bodyOpen }">
     <div class="debugbar-header">
         <h2 class="debugbar-title">
             <a href="https://github.com/CarmineMM/bridge" target="_blank"><?= Application::FrameworkName ?></a>
         </h2>
         <ul class="debugbar-options">
             <!-- Lista de configuraciones -->
-            <li>
-                <button :class="{ active: selectedOption === 'config' && bodyOpen }" type="button" @click="selectOption('config')">
-                    <?= Lang::_get('configurations', [], 'Config') ?>
-                </button>
-            </li>
-
-            <li>
-                <button :class="{ active: selectedOption === 'query' && bodyOpen }" type="button" @click="selectOption('query')">
-                    Queries (<?= count($queries) ?>)
-                </button>
-            </li>
-
-            <li>
-                <button :class="{ active: selectedOption === 'context' && bodyOpen }" type="button" @click="selectOption('context')">
-                    Context
-                </button>
-            </li>
-
-            <li>
-                <button :class="{ active: selectedOption === 'exceptions' && bodyOpen }" type="button" @click="selectOption('exceptions')">
-                    <?= Lang::_get('exceptions', [], 'Config') ?>
-                </button>
-            </li>
+            <template x-for="(el, key) in items">
+                <li>
+                    <button type="button" x-text="el.title" :class="{ active: bodyOpen && key === selectedOption }" @click="selectOption(key)" />
+                </li>
+            </template>
         </ul>
         <ul class="debugbar-resume">
             <li title="<?= $memory->display('KB') ?>"><?= $memory->show() ?></li>
@@ -66,10 +49,13 @@ $queries = $context->getState('bridge:query', []);
         <!-- Lista de configuraciones -->
         <?php $this->include('debugbar-options.configurations'); ?>
         <!-- Lista de query's -->
-        <?php $this->include('debugbar-options.queries', ['queries' => $queries]); ?>
+        <?php // $this->include('debugbar-options.queries', ['queries' => $queries]); 
+        ?>
         <!-- Lista de items del context -->
-        <?php $this->include('debugbar-options.context'); ?>
+        <?php //$this->include('debugbar-options.context'); 
+        ?>
         <!-- Lista de items de las excepciones -->
-        <?php $this->include('debugbar-options.exceptions'); ?>
+        <?php //$this->include('debugbar-options.exceptions'); 
+        ?>
     </div>
 </footer>
