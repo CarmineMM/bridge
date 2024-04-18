@@ -53,18 +53,25 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
 
     /**
      * Adjunta un WHERE a la query, limitando al primary key
-     *
-     * @param string|integer $primaryKey
-     * @return static
      */
     public function find(string|int $find): array
     {
         return $this
             ->where($this->model->getPrimaryKey(), $find)
             ->limit(1)
-            ->exec(
-                'pgsql',
-                $this->model->connection
-            );
+            ->get();
+    }
+
+    /**
+     * Obtener los resultados
+     */
+    public function get(array $columns = ['*']): array
+    {
+        $this->columns = $columns;
+
+        return $this->exec(
+            'pgsql',
+            $this->model->connection
+        );
     }
 }

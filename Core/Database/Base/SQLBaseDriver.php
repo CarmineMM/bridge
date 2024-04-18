@@ -46,13 +46,13 @@ class SQLBaseDriver extends CarryOut
     /**
      * Realiza un where en el sentencia SQL
      */
-    public function where($column, $sentence, $three = ''): static
+    public function where(string $column, string $sentence, string $three = ''): static
     {
         $this->instance('select');
 
         $this->sql = $three
-            ? str_replace('{where}', "WHERE {$column} {$sentence} {$three}", $this->sql)
-            : str_replace('{where}', "WHERE {$column} = '{$sentence}'", $this->sql);
+            ? str_replace('{where}', "WHERE {$column} {$sentence} {$three} {where}", $this->sql)
+            : str_replace('{where}', "WHERE {$column} = '{$sentence}' {where}", $this->sql);
 
         return $this;
     }

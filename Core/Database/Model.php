@@ -42,7 +42,7 @@ class Model
     /**
      * Driver de conexión
      */
-    protected mixed $driver;
+    protected PostgresSQL $driver;
 
     /**
      * Constructor obligatorio
@@ -109,6 +109,38 @@ class Model
     }
 
     /**
+     * Where sentence
+     */
+    public function where(string $column, mixed $sentence, mixed $three = ''): Model
+    {
+        $this->driver->where($column, $sentence, $three);
+
+        return $this;
+    }
+
+    /**
+     * Where sentence
+     */
+    public function limit(int $limit): Model
+    {
+        $this->driver->limit($limit);
+
+        return $this;
+    }
+
+    /**
+     * Obtiene los registros
+     *
+     * @return Collection
+     */
+    public function get(array $columns = ['*']): Collection
+    {
+        return new Collection(
+            $this->filterReturnColumns($this->driver->get($columns))
+        );
+    }
+
+    /**
      * Filtro a las columnas durante los get,
      * es usa para aplicar los hidden, los casts y los appends
      */
@@ -122,7 +154,9 @@ class Model
 
             // Casts
             foreach ($this->casts as $key => $value) {
-                $item[$key] = $this->getApplyCast($value, $item[$key]);
+                if (isset($item[$key])) {
+                    $item[$key] = $this->getApplyCast($value, $item[$key]);
+                }
             }
 
             return $item;

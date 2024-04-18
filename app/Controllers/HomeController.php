@@ -15,7 +15,7 @@ class HomeController extends BaseController
         $user = new User;
 
         dump(
-            $user->find(2),
+            $user->where('id', 3)->get(['id', 'name']),
             // $user->all()
         );
 

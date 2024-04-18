@@ -6,6 +6,10 @@
                 <p x-show="exception.severity === 'error'">
                     <span title="Exception code" x-text="exception.code"></span>:<span title="Exception message" x-text="exception.message"></span>
                 </p>
+                <div>
+                    <p x-show="exception.severity === 'warning'" x-text="exception.message"></p>
+                    <p class="small-monospace" x-text="exception.file"></p>
+                </div>
             </li>
         </template>
     </ul>

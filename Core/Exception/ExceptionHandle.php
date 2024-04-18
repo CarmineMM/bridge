@@ -108,7 +108,6 @@ class ExceptionHandle
     public static function saveWarnings(): void
     {
         set_error_handler(function (...$params) {
-            dump('probar');
             ExceptionHandle::addWarningList($params);
         });
     }
