@@ -162,4 +162,12 @@ class Model
             return $item;
         }, $data);
     }
+
+    /**
+     * Ejecutar un query manualmente
+     */
+    public function query(string $query): array
+    {
+        return $this->driver->excQuery($query);
+    }
 }

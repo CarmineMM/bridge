@@ -74,4 +74,17 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
             $this->model->connection
         );
     }
+
+    /**
+     * Ejecutar query SQL
+     */
+    public function excQuery(string $query): array
+    {
+        $this->sql = $query;
+
+        return $this->exec(
+            'manually',
+            $this->model->connection
+        );
+    }
 }
