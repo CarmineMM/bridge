@@ -11,8 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Alpine.js
 document.addEventListener('alpine:init', () => {
-    Alpine.data('debugbar', (items) => {
-        console.log({ items })
+    Alpine.data('debugbar', (renderItems) => {
+
+        const secondsToMs = (time) => {
+            return (time * 1000).toFixed(3);
+        }
+
+        const byteToKb = (bytes) => {
+            return (bytes / 1024).toFixed(2);
+        }
 
         return {
             bodyOpen: false,
@@ -21,7 +28,32 @@ document.addEventListener('alpine:init', () => {
 
             tabContext: 'store',
 
-            items,
+            items: [],
+
+            init() {
+                const parseRenderItems = {}
+
+                _.each(renderItems, (item, key) => {
+                    if (key === 'config') {
+                        delete item.elements.routes;
+                        delete item.elements.framework;
+                    }
+
+                    if (key === 'queries') {
+                        item.elements = item.elements.map((query) => {
+                            return {
+                                ...query,
+                                time: secondsToMs(query.time) + ' ms',
+                                memory: byteToKb(query.memory) + ' KB'
+                            };
+                        });
+                    }
+
+                    parseRenderItems[key] = item;
+                });
+
+                this.items = parseRenderItems;
+            },
 
             toggleBody() {
                 this.bodyOpen = !this.bodyOpen

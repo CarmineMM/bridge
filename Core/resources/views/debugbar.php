@@ -49,8 +49,7 @@ $memory = UnitsConversion::make(memory_get_usage() - $app->memory, 'byte');
         <!-- Lista de configuraciones -->
         <?php $this->include('debugbar-options.configurations'); ?>
         <!-- Lista de query's -->
-        <?php // $this->include('debugbar-options.queries', ['queries' => $queries]); 
-        ?>
+        <?php $this->include('debugbar-options.queries'); ?>
         <!-- Lista de items del context -->
         <?php //$this->include('debugbar-options.context'); 
         ?>
