@@ -253,3 +253,25 @@
 #debug-bar .exception-warning {
 	background-color: var(--debug-bar-success);
 }
+
+.debug-handle .debug-tab {
+	width: 100%;
+}
+
+.debug-handle table {
+	vertical-align: top;
+	display: table;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.debug-handle table th,
+.debug-handle table td {
+	padding: 0.5em 1em;
+	text-align: left;
+	font-weight: lighter;
+	border: 1px solid var(--debug-bar-primary);
+}
+.debug-handle table td {
+	width: 100%;
+}

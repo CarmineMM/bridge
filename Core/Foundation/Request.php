@@ -109,4 +109,21 @@ class Request
     {
         return $key === '' ? $this->params : $this->params->get($key, $default);
     }
+
+    /**
+     * Lleva a un arreglo el request actual
+     */
+    public function toArray(): array
+    {
+        return [
+            'method' => $this->method,
+            'vars' => $this->vars,
+            'uri' => $this->uri,
+            'url' => $this->url,
+            'user_agent' => $this->user_agent,
+            'route' => $this->route,
+            'isAjax' => $this->isAjax,
+            'ip' => $this->ip,
+        ];
+    }
 }

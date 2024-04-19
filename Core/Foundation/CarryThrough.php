@@ -130,7 +130,11 @@ class CarryThrough
 
         $render->config_view_path = 'framework.view_path';
 
-        $renderHtml = $render->view('exception-handle', ['error' => $error]);
+        $renderHtml = $render->view('exception-handle', [
+            'error'   => $error,
+            'app'     => $app,
+            'request' => Request::make(),
+        ]);
 
         if (Config::get('app.debug', false)) {
             Debugging::renderDebugBar($app, $renderHtml);

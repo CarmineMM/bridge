@@ -1,1 +1,0 @@
-mostrar el tracer de las excepciones

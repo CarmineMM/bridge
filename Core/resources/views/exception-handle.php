@@ -1,3 +1,7 @@
+<?php
+
+use Core\Support\Str;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,6 +64,10 @@
             width: 20%;
         }
 
+        main ul li {
+            margin-bottom: 1em;
+        }
+
         @media (min-width: 962px) {
             main ul {
                 width: 10%;
@@ -74,26 +82,27 @@
 
 <body class="exception-handle debug-handle">
     <header>
-        <h1>Bridge</h1>
+        <h1><?= $app::FrameworkName ?></h1>
     </header>
 
-    <div class="container" x-data="{ activeTab: 'request' }">
+    <div class="container" x-data="{ activeTab: 'tracer', request: <?= (new Str(json_encode($request->toArray())))->toJsonHtml() ?> }">
         <div class="container-exception">
             <h2><?= $error->getMessage() ?></h2>
             <p>File: <?= $error->getFile() ?></p>
         </div>
-        <div class="container-exception">
-            <?= $this->include('components.exception-show', ['error' => $error]) ?>
-        </div>
         <main>
             <ul>
                 <li>
-                    <button type="button" :class="{ active: activeTab ==='request' }" class="regular-button">Request</button>
+                    <button @click="activeTab = 'tracer'" type="button" :class="{ active: activeTab ==='tracer' }" class="regular-button">Tracer</button>
+                </li>
+                <li>
+                    <button @click="activeTab = 'request'" type="button" :class="{ active: activeTab ==='request' }" class="regular-button">Request</button>
                 </li>
             </ul>
-            <div x-show="activeTab === 'request'">
-                activeTab
+            <div x-show="activeTab === 'tracer'">
+                <?= $this->include('exceptions.tracer', ['error' => $error]) ?>
             </div>
+            <?= $this->include('exceptions.request') ?>
         </main>
     </div>
 </body>
