@@ -265,12 +265,17 @@
 	border-collapse: collapse;
 }
 
+.debug-handle table th {
+	word-wrap: break-word;
+	text-wrap: nowrap;
+}
+
 .debug-handle table th,
 .debug-handle table td {
 	padding: 0.5em 1em;
 	text-align: left;
 	font-weight: lighter;
-	border: 1px solid var(--debug-bar-primary);
+	border: 1px solid var(--debug-bar-secondary);
 }
 .debug-handle table td {
 	width: 100%;
