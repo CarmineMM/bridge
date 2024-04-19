@@ -14,7 +14,7 @@ class View
     public string $config_view_path = 'resources.view_path';
 
     /**
-     * Obtiene el path directo hacia la vista
+     * Obtiene el path directo hacia la vista o archivo en las vistas
      */
     protected function getFilePath(string $view): string
     {
