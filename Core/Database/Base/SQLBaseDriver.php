@@ -3,9 +3,12 @@
 namespace Core\Database\Base;
 
 use Core\Database\Complement\CarryOut;
+use Core\Database\Complement\Casts;
 
 class SQLBaseDriver extends CarryOut
 {
+    use Casts;
+
     /**
      * Layouts para las query's
      *
@@ -13,7 +16,7 @@ class SQLBaseDriver extends CarryOut
      */
     protected array $layout = [
         'select' => 'SELECT {column} {innerQuery} FROM {table} {where} {group} {order} {limit} {offset}',
-        //'insert' => 'INSERT INTO %s (%s) VALUES (%s)',
+        'insert' => 'INSERT INTO {table} ({keys}) VALUES ({values})',
         //'update' => 'UPDATE %s SET %s',
         //'delete' => 'DELETE FROM %s',
     ];
@@ -27,7 +30,7 @@ class SQLBaseDriver extends CarryOut
     protected function instance(string $type): void
     {
         if (!$this->sql) {
-            $this->sql = str_replace('{table}', $this->table, $this->layout[$type]);
+            $this->sql = str_replace('{table}', $this->model->getTable(), $this->layout[$type]);
         }
     }
 
@@ -69,5 +72,30 @@ class SQLBaseDriver extends CarryOut
             : str_replace('{where}', "OR WHERE {$column} = '{$sentence}' {where}", $this->sql);
 
         return $this;
+    }
+
+    /**
+     * Crear un nuevo registro
+     */
+    public function create(array $data, array $fillable = [], array $casts = []): array
+    {
+        $this->instance('insert');
+
+        $keys = [];
+        $values = [];
+        $placeholders = [];
+
+        foreach ($data as $key => $value) {
+            if (in_array($key, $fillable)) {
+                $keys[] = $key;
+                $values[] = "'" . $this->getApplyCast($casts[$key] ?? null, $value, 'set') . "'";
+                $placeholders[] = '?';
+            }
+        }
+
+        $this->sql = str_replace('{keys}', implode(', ', $keys), $this->sql);
+        $this->sql = str_replace('{values}', implode(', ', $placeholders), $this->sql);
+
+        return $values;
     }
 }

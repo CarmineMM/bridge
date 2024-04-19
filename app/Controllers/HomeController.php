@@ -14,10 +14,15 @@ class HomeController extends BaseController
     {
         $user = new User;
 
-        dump(
-            // $user->query('SELECT * FROM users'),
-            // $user->all()
-        );
+        // $user->query('SELECT * FROM users'),
+        dump($user->create([
+            'name' => [
+                'first' => 'John',
+                'last' => 'Doe',
+            ],
+            'email' => 'j@mail.como',
+            'password' => '123456'
+        ])->toSQL());
 
         return $this->view('welcome', [
             'foo' => 'bar',

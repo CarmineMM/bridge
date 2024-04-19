@@ -11,4 +11,5 @@ class User extends Model
         'name' => 'collection',
         'created_at' => 'datetime'
     ];
+    protected array $fillable = ['name', 'email', 'password'];
 }

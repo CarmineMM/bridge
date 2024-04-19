@@ -23,15 +23,15 @@ trait Casts
     /**
      * Aplicar casts
      */
-    protected function getApplyCast(mixed $cast, mixed $item): mixed
+    protected function getApplyCast(mixed $cast, mixed $item, $from = 'get'): mixed
     {
         if (is_string($cast) && array_key_exists($cast, $this->definedCasts)) {
             $castMethod = $this->definedCasts[$cast];
-            return $this->$castMethod()['get']($item);
+            return $this->$castMethod()[$from]($item);
         }
 
         if (is_callable($cast)) {
-            return $cast()['get']($item);
+            return $cast()[$from]($item);
         }
 
         if (is_array($cast)) {
@@ -42,10 +42,10 @@ trait Casts
             $class = new $cast[0]();
 
             if (count($cast) === 1) {
-                return $class->__invoke()['get']($item);
+                return $class->__invoke()[$from]($item);
             }
 
-            return $class->{$cast[1]}()['get']($item);
+            return $class->{$cast[1]}()[$from]($item);
         }
 
         return $item;

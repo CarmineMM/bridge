@@ -3,6 +3,7 @@
 namespace Core\Foundation;
 
 use Core\Loaders\Config;
+use Exception;
 
 /**
  * Rendering o devuelve una vista, o objetos JSON
@@ -121,6 +122,8 @@ class Render extends View
         if (count($this->sections) && $this->layout && is_file($this->layout)) {
             extract($this->data);
             include_once $this->layout;
+        } else {
+            throw new Exception('The layout has not been found or not defined', 500);
         }
     }
 }

@@ -170,4 +170,21 @@ class Model
     {
         return $this->driver->excQuery($query);
     }
+
+    /**
+     * Crea un nuevo registro
+     */
+    public function create(array $data): static
+    {
+        $this->driver->create($data, $this->fillable, $this->casts);
+        return $this;
+    }
+
+    /**
+     * Obtiene el SQL generado
+     */
+    public function toSQL(): string
+    {
+        return $this->driver->toSQL();
+    }
 }

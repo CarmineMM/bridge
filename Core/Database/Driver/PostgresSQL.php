@@ -6,6 +6,7 @@ use Core\Database\Base\SQLBaseDriver;
 use Core\Database\Complement\CarryOut;
 use Core\Database\Model;
 use Core\Implements\DatabaseDriver;
+use Core\Support\Collection;
 
 /**
  * Driver para PostgreSQL
@@ -23,7 +24,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
         /**
          * Tipo de conexión
          */
-        public Model $model
+        Model $model
     ) {
         $dsn = "pgsql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']}";
 
@@ -33,7 +34,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
             throw new \Exception("Error connect to database: " . $th->getMessage(), 500);
         }
 
-        $this->table = $this->model->getTable();
+        $this->model = $model;
     }
 
     /**
@@ -41,7 +42,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
      */
     public function all(array $columns = ['*']): array
     {
-        $this->sql = str_replace('{table}', $this->table, $this->layout['select']);
+        $this->sql = str_replace('{table}', $this->model->getTable(), $this->layout['select']);
 
         $this->columns = $columns;
 
@@ -85,6 +86,17 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
         return $this->exec(
             'manually',
             $this->model->connection
+        );
+    }
+
+    public function create(array $data, array $fillable = [], array $casts = []): array
+    {
+        $values = parent::create($data, $fillable, $casts);
+
+        return $this->exec(
+            'pgsql',
+            $this->model->connection,
+            $values
         );
     }
 }
