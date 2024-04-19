@@ -1,10 +1,15 @@
+<?php
+
+use Core\Loaders\Config;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title><?= Config::get('app.name') ?> - 404 Not Found</title>
     <style>
         :root {
             --debug-bar-primary: #fe5f00;

@@ -89,7 +89,7 @@ class ExceptionHandle
         $httpException = new HttpException();
         if (!$httpException->configActions($error->getCode())) {
             if (Config::get('app.debug', true)) {
-                throw new \Exception("Is Not error HTTP", $error->getCode(), 500);
+                throw new \Exception("Is Not error HTTP", $error->getCode());
             }
 
             // Render de un error 500
@@ -110,5 +110,23 @@ class ExceptionHandle
         set_error_handler(function (...$params) {
             ExceptionHandle::addWarningList($params);
         });
+    }
+
+    /**
+     * Ejecuta un exception handle view para ver lo errores de una mejor forma.
+     * O ejecuta un error 500 en caso de tener el debug apagado
+     */
+    public static function runExceptionHandleView(\Throwable $error, Application $app): void
+    {
+        $through = new CarryThrough();
+
+        if (!Config::get('app.debug', false)) {
+            echo $through->renderByErrorCode($app, $error);
+            return;
+        }
+
+        static::addExceptionList($error);
+
+        echo $through->renderExceptionHandler($app, $error);
     }
 }

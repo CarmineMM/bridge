@@ -18,6 +18,12 @@
 	margin: 0;
 }
 
+.exception-handle {
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-size: 14px;
+	background-color: var(--debug-bar-light);
+}
+
 #debug-bar {
 	position: fixed;
 	bottom: 0;

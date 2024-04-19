@@ -97,13 +97,15 @@ class CarryThrough
      */
     public function renderByErrorCode(Application $app, \Throwable $error): string
     {
-        Response::make()->setStatusCode($error->getCode());
+        $code = $error->getCode() > 550 ? 500 : $error->getCode();
+
+        Response::make()->setStatusCode($code);
 
         if (Request::$instance->isAjax) {
             Response::make()->setHeader('Content-Type', 'application/json');
 
             return [
-                'code'    => $error->getCode(),
+                'code'    => $code,
                 'message' => $error->getMessage(),
             ];
         }
@@ -112,7 +114,23 @@ class CarryThrough
 
         $render->config_view_path = 'framework.view_path';
 
-        $renderHtml = $render->view("errors.{$error->getCode()}", ['app' => $app]);
+        $renderHtml = $render->view("errors.{$code}", ['app' => $app]);
+
+        if (Config::get('app.debug', false)) {
+            Debugging::renderDebugBar($app, $renderHtml);
+        }
+
+        return $renderHtml;
+    }
+
+    public function renderExceptionHandler(Application $app, \Throwable $error): string
+    {
+
+        $render = new Render;
+
+        $render->config_view_path = 'framework.view_path';
+
+        $renderHtml = $render->view('exception-handle', ['error' => $error]);
 
         if (Config::get('app.debug', false)) {
             Debugging::renderDebugBar($app, $renderHtml);

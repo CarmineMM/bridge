@@ -102,20 +102,27 @@ class Application
         if (!$isConsole) {
             $route = $app->coincidenceRoute();
 
-            $through = new CarryThrough($route);
-
+            // Este try esta vinculado al manejo de los controladores
             try {
-                if (empty($route)) {
-                    throw new \Exception('Not found', 404);
+                $through = new CarryThrough($route);
+
+                // Try interno para manejos de excepciones HTTP
+                try {
+                    if (empty($route)) {
+                        throw new \Exception('Not found', 404);
+                    }
+
+                    $render = $app->runRender($through);
+
+                    Response::send();
+
+                    echo $render;
+                } catch (\Throwable $th) {
+                    ExceptionHandle::isHttpExceptions($th, $through, $app);
                 }
-
-                $render = $app->runRender($through);
-
-                Response::send();
-
-                echo $render;
             } catch (\Throwable $th) {
-                ExceptionHandle::isHttpExceptions($th, $through, $app);
+                ExceptionHandle::runExceptionHandleView($th, $app);
+                return '';
             }
         }
 
