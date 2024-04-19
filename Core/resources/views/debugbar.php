@@ -19,7 +19,7 @@ $memory = UnitsConversion::make(memory_get_usage() - $app->memory, 'byte');
 ?>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
-<footer id="debug-bar" x-data="debugbar(<?= (new Str(json_encode($elements)))->toJsonHtml() ?>)" :class="{ open: bodyOpen }">
+<footer id="debug-bar" x-data="debugbar(<?= (new Str(json_encode($elements)))->toJsonHtml() ?>)" :class="{ open: bodyOpen }" class="debug-handle">
     <div class="debugbar-header">
         <h2 class="debugbar-title">
             <a href="https://github.com/CarmineMM/bridge" target="_blank"><?= Application::FrameworkName ?></a>

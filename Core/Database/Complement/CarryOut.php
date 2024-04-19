@@ -56,12 +56,14 @@ class CarryOut
         $query = $this->pdo->prepare($this->sql);
         $data = [];
 
-        if (!$query->execute($params)) {
+        try {
+            $query->execute($params);
+        } catch (\Throwable $th) {
             // $this->pdo->rollBack();
             // 0. El tipo del error
             // 1. Código del error
             // 2. Mensaje del error
-            throw new \Exception("Error execute query: " . $query->errorInfo()[2]);
+            throw new \Exception("Bridge ORM: " . $query->errorInfo()[2], 500, $th);
         }
 
         // Devolver resultado del SELECT

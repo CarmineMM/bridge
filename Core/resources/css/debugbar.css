@@ -47,7 +47,7 @@
 	background-color: inherit;
 }
 
-#debug-bar button {
+.debug-handle button {
 	background-color: transparent;
 	color: var(--debug-bar-dark);
 	border: none;
@@ -55,7 +55,7 @@
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-#debug-bar ul {
+.debug-handle ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
@@ -74,7 +74,7 @@
 	align-items: center;
 }
 
-#debug-bar .debugbar-header li button {
+.debug-handle .debugbar-header li button {
 	padding: 0 0.9em;
 	height: 100%;
 	display: flex;
@@ -217,7 +217,7 @@
 	background-color: var(--debug-bar-light);
 }
 
-#debug-bar .regular-button {
+.debug-handle .regular-button {
 	background-color: var(--debug-bar-light);
 	color: var(--debug-bar-dark);
 	padding: 0.5em 1.3em;
@@ -226,9 +226,14 @@
 	border: 1px solid var(--debug-bar-primary);
 	transition: all 0.2s ease-in-out;
 }
-#debug-bar .regular-button:hover,
-#debug-bar .regular-button:active,
-#debug-bar .regular-button.active {
+.debug-handle .regular-button:hover,
+.debug-handle .regular-button:active,
+.debug-handle .regular-button.active {
+	background-color: var(--debug-bar-primary);
+	color: var(--debug-bar-light);
+}
+
+.debug-handle .regular-button.btn-primary {
 	background-color: var(--debug-bar-primary);
 	color: var(--debug-bar-light);
 }
