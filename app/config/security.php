@@ -13,6 +13,11 @@ return [
     'token_expire' => 3600,
 
     /**
+     * Método de ssl de encriptación de datos
+     */
+    'encrypt_data' => 'AES-128-ECB',
+
+    /**
      * Opciones del CORS
      */
     'cors' => [],
