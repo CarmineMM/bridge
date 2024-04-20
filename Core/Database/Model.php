@@ -3,6 +3,7 @@
 namespace Core\Database;
 
 use Core\Database\Complement\Casts;
+use Core\Database\Driver\MySQL;
 use Core\Database\Driver\PostgresSQL;
 use Core\Loaders\Config;
 use Core\Support\Collection;
@@ -60,6 +61,8 @@ class Model
 
         $this->driver = match ($connectionConfig['driver']) {
             'pgsql' => new PostgresSQL($connectionConfig, $this),
+            'mysql' => new MySQL($connectionConfig, $this),
+            'mariadb' => new MySQL($connectionConfig, $this),
             default => throw new \Exception('Driver not found', 500),
         };
     }

@@ -29,9 +29,9 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
         $dsn = "pgsql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']}";
 
         try {
-            $this->pdo = new \PDO($dsn, $this->config['username'], $this->config['password']);
+            $this->pdo = new \PDO($dsn, $this->config['username'], $this->config['password'], $this->config['options'] ?? []);
         } catch (\PDOException $th) {
-            throw new \Exception("Error connect to database: " . $th->getMessage(), 500);
+            throw new \Exception("Bridge Driver PostgreSQL: " . $th->getMessage(), 500);
         }
 
         $this->model = $model;
