@@ -8,5 +8,14 @@
     "description": "Description",
     "configurations": "Settings",
     "no-results": "No results found.",
-    "exceptions": "Exceptions"
+    "exceptions": "Exceptions",
+    "how-to-use": "Form of use",
+    "args": "Arguments",
+    "no-args": "No arguments",
+    "routes": {
+        "description": "Show the route list"
+    },
+    "serve": {
+        "description": "Start a local test server, provided by PHP"
+    }
 }

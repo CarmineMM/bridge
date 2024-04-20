@@ -25,7 +25,12 @@ class Console extends Printer
      *
      * @var string
      */
-    private $command;
+    private string $command;
+
+    /**
+     * Argumento extra
+     */
+    private array $args = [];
 
     /**
      * Constructor Console
@@ -33,6 +38,7 @@ class Console extends Printer
     public function __construct()
     {
         $this->command = $_SERVER['argv'][1] ?? false;
+        $this->args = array_slice($_SERVER['argv'], 2);
     }
 
     /**
@@ -44,13 +50,15 @@ class Console extends Printer
     {
         if (!$this->command || $this->command === 'list') return $this->list();
 
+        $isHelp = in_array('--help', $this->args) || in_array('-h', $this->args);
+
         $actions = new Actions(
             server: $this->server
         );
 
         match ($this->command) {
-            'serve' => $actions->serve(),
-            'routes' => $actions->routes(),
+            'serve' => $actions->serve($isHelp),
+            'routes' => $actions->routes($isHelp),
             default => '',
         };
 

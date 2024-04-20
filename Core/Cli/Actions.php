@@ -26,14 +26,11 @@ class Actions extends Printer
     public function routes($isHelp = false): void
     {
         if ($isHelp) {
-            $this->color_light_cyan(Lang::_get('description') . "\n");
-            $this->color_unset("   Muestra el listado de rutas.\n\n");
-
-            $this->color_light_cyan("Forma de uso:\n");
-            $this->color_light_green('  php jump routes');
-
-            $this->color_light_cyan("\nArgumentos:\n");
-            $this->color_red('  Sin Argumentos');
+            $this->printHelp(
+                Lang::_get('routes.description'),
+                'php jump routes',
+                Lang::_get('no-args')
+            );
             return;
         }
 
@@ -72,24 +69,44 @@ class Actions extends Printer
      */
     public function serve($isHelp = false): void
     {
-        if (!$isHelp) {
-            $this->color_light_cyan(
-                Lang::_get('console.server-start-in', ['server' => $this->server], 'Development server')
-            )->toPrint();
-            $runIn = str_replace('http://', '', $this->server);
-            $runIn = str_replace('https://', '', $runIn);
-
-            exec("php -S {$runIn} -t public");
+        if ($isHelp) {
+            $this->printHelp(
+                Lang::_get('serve.description'),
+                'php jump serve',
+                Lang::_get('no-args')
+            );
             return;
         }
 
+        $this->color_light_cyan(
+            Lang::_get('console.server-start-in', ['server' => $this->server], 'Development server')
+        )->toPrint();
+
+        $runIn = str_replace('http://', '', $this->server);
+        $runIn = str_replace('https://', '', $runIn);
+
+        exec("php -S {$runIn} -t public");
+        return;
+    }
+
+    /**
+     * Imprime una descripción de ayuda
+     *
+     * @param string $description
+     * @param string $command
+     * @param string $args
+     * @return void
+     */
+    private function printHelp(string $description, string $command, string $args): void
+    {
         $this->color_light_cyan(Lang::_get('description') . "\n");
-        $this->color_unset("   Inicia un servidor.\n\n");
+        $this->color_unset("   " . $description . "\n\n");
 
-        $this->color_light_cyan("Forma de uso:\n");
-        $this->color_light_green('  php jump serve');
+        $this->color_light_cyan(Lang::_get('how-to-use') . "\n");
+        $this->color_light_green('  ' . $command);
 
-        $this->color_light_cyan("\nArgumentos:\n");
-        $this->color_red('  Sin Argumentos');
+        $this->color_light_cyan("\n\n" .  Lang::_get('args') . ":\n");
+        $this->color_red('  ' . $args);
+        $this->toPrint();
     }
 }

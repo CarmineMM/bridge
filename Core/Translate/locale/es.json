@@ -9,5 +9,14 @@
     "description": "Descripción",
     "configurations": "Configuraciones",
     "no-results": "No se encontraron resultados.",
-    "exceptions": "Excepciones"
+    "exceptions": "Excepciones",
+    "how-to-use": "Forma de uso",
+    "args": "Argumentos",
+    "no-args": "Sin argumentos",
+    "routes": {
+        "description": "Muestra el listado de rutas"
+    },
+    "serve": {
+        "description": "Inicia un servidor local para pruebas, proporcionado por PHP"
+    }
 }
