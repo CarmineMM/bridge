@@ -10,7 +10,7 @@ class Migrations extends MigrationHandler implements DatabaseMigrations
     /**
      * Indica las migraciones que deben ser ejecutadas y el orden
      */
-    public function run(): array
+    public function migrate(): array
     {
         return [];
     }

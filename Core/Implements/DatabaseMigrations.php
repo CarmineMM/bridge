@@ -7,5 +7,5 @@ interface DatabaseMigrations
     /**
      * Indica las migraciones que deben ser ejecutadas
      */
-    public function run(): array;
+    public function migrate(): array;
 }

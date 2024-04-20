@@ -9,6 +9,7 @@ trait ConfigDatabaseFile
      */
     private array $database = [
         'default' => 'pgsql',
+        'migration_handler' => '',
         'connections' => [
             'pgsql' => [
                 'driver' => 'pgsql',

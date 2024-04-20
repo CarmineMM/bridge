@@ -9,6 +9,11 @@ return [
     'default' => Env::get('DB_CONNECTION', 'pgsql'),
 
     /**
+     * Controlador de migraciones de migraciones
+     */
+    'migration_handler' => \Database\Migrations::class,
+
+    /**
      * Listado de conexiones administrable por base de datos
      */
     'connections' => [
