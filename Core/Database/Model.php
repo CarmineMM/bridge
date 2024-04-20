@@ -35,21 +35,20 @@ class Model
     protected array $hidden = [];
 
     /**
-     * Configuración de conexión a la base de datos,
-     * almacenado en las configuraciones.
-     */
-    public ?string $connection;
-
-    /**
      * Driver de conexión
      */
-    protected PostgresSQL $driver;
+    protected PostgresSQL|MySQL $driver;
 
     /**
      * Constructor obligatorio
      */
-    public function __construct()
-    {
+    public function __construct(
+        /**
+         * Configuración de conexión a la base de datos,
+         * almacenado en las configuraciones.
+         */
+        public ?string $connection = null
+    ) {
         // Configuración automática de la tabla
         if ($this->table === '') {
             $table = explode('\\', get_called_class());

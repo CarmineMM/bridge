@@ -3,10 +3,8 @@
 namespace Core\Database\Driver;
 
 use Core\Database\Base\SQLBaseDriver;
-use Core\Database\Complement\CarryOut;
 use Core\Database\Model;
 use Core\Implements\DatabaseDriver;
-use Core\Support\Collection;
 
 /**
  * Driver para PostgreSQL
@@ -89,6 +87,9 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
         );
     }
 
+    /**
+     * Crea un registro
+     */
     public function create(array $data, array $fillable = [], array $casts = []): array
     {
         $values = parent::create($data, $fillable, $casts);
