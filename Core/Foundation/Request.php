@@ -78,7 +78,7 @@ class Request
         }
 
         $self = new self;
-        $self->uri = trim($_SERVER['REQUEST_URI'], '/');
+        $self->uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $self->url = trim(Config::get('app.url'), '/') . '/' . trim($_SERVER['REQUEST_URI'], '/');
         $self->method = strtoupper($_SERVER['REQUEST_METHOD']);
         $self->user_agent = $_SERVER['HTTP_USER_AGENT'];
@@ -117,7 +117,10 @@ class Request
     {
         return [
             'method' => $this->method,
-            'vars' => $this->vars,
+            'vars' => [
+                'post' => $this->vars['post'] instanceof Collection ? $this->vars['post']->toArray() : [],
+                'get' => $this->vars['get'] instanceof Collection ? $this->vars['get']->toArray() : [],
+            ],
             'uri' => $this->uri,
             'url' => $this->url,
             'user_agent' => $this->user_agent,

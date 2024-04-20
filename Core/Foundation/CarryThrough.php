@@ -47,7 +47,10 @@ class CarryThrough
         $request = Request::make();
 
         if (is_callable($call)) {
-            return $call($request, ...$request->route->get('dynamic_params'));
+            return $call(
+                $request,
+                ...($request->route ? $request->route->get('dynamic_params') : [])
+            );
         }
 
         if (is_array($call) && count($call) <= 2) {
@@ -71,7 +74,7 @@ class CarryThrough
                     throw new \Exception("Method __invoke not found in $namespaceClass", 500);
                 }
 
-                return $instance->__invoke(...$request->route->get('dynamic_params'));
+                return $instance->__invoke(...($request->route ? $request->route->get('dynamic_params') : []));
             }
 
             // Si tiene dos elementos, el segundo es el método a invocar
@@ -83,7 +86,7 @@ class CarryThrough
                     throw new \Exception("Method $method not found in $namespaceClass", 500);
                 }
 
-                return $instance->$method(...$request->route->get('dynamic_params'));
+                return $instance->$method(...($request->route ? $request->route->get('dynamic_params') : []));
             }
         }
 
@@ -97,12 +100,14 @@ class CarryThrough
      */
     public function renderByErrorCode(Application $app, \Throwable $error): string
     {
-        $code = $error->getCode() > 550 ? 500 : $error->getCode();
+        $code = $error->getCode() > 550 || $error->getCode() < 300 ? 500 : $error->getCode();
 
         Response::make()->setStatusCode($code);
 
         if (Request::$instance->isAjax) {
             Response::make()->setHeader('Content-Type', 'application/json');
+
+            Response::send();
 
             return [
                 'code'    => $code,
@@ -140,11 +145,11 @@ class CarryThrough
         $renderHtml = $render->view('exception-handle', [
             'error'   => $error,
             'app'     => $app,
-            'request' => Request::make(),
-            'response' => Response::make(),
+            'request' => Request::make()->toArray(),
+            'response' => Response::make()->toArray(),
         ]);
 
-        if (Config::get('app.debug', false)) {
+        if ($app->isDebug) {
             Debugging::renderDebugBar($app, $renderHtml);
         }
 

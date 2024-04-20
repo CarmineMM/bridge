@@ -29,7 +29,7 @@ class View
         }
 
         if (!file_exists($viewRender)) {
-            throw new \Exception("The file '$view ($viewRender)' not exists", 500);
+            throw new \Exception("Bridge Render Error: The file '$viewRender' not exists", 500);
         }
 
         return $viewRender;

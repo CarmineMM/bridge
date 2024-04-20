@@ -35,7 +35,7 @@ $memory = UnitsConversion::make(memory_get_usage() - $app->memory, 'byte');
         <ul class="debugbar-resume">
             <li title="<?= $memory->display('KB') ?>"><?= $memory->show() ?></li>
             <li title="<?= $execution_time ?> seconds"><?= TimeConversion::make($execution_time, 's')->show() ?></li>
-            <li title="<?= $request->url ?>">/<?= $request->uri ?></li>
+            <li title="<?= $request->url ?>"><?= $request->uri ?></li>
             <li>
                 <button type="button" title="Show debugbar option" @click="toggleBody">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-up">

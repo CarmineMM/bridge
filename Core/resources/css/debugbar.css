@@ -243,6 +243,7 @@
 	padding: 0.4em;
 	text-align: center;
 	width: 9em;
+	min-width: 9em;
 	margin-right: 1.9em;
 }
 
@@ -284,4 +285,8 @@
 .debug-handle h4 {
 	font-size: 1.1em;
 	margin-bottom: 0.9em;
+}
+
+.debug-handle .text-monospace {
+	font-family: 'Courier New', Courier, monospace;
 }

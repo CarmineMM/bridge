@@ -47,6 +47,13 @@ class Application
     private array $providers = [];
 
     /**
+     * Si se esta en modo debug
+     *
+     * @var boolean
+     */
+    public bool $isDebug = true;
+
+    /**
      * Construct
      */
     public function __construct($consoleMode = false)
@@ -56,8 +63,9 @@ class Application
         Env::load();
         Config::load();
         ExceptionHandle::saveWarnings();
+        $this->isDebug = Config::get('app.debug', false);
 
-        if (Config::get('app.debug', false)) {
+        if ($this->isDebug) {
             // Inicia la medición del tiempo
             $this->start_time = $timer;
             $this->memory = $memory;
@@ -170,11 +178,11 @@ class Application
     {
         $request = Request::make();
         $theRoute = [];
-        $uri = $request->uri;
+        $uri = trim($request->uri, '/');
 
         // Obtener la ruta coincidente
         foreach (Router::$routes[$request->method] as $route) {
-            $route['path'] = $route['url'];
+            $route['path'] = trim($route['url'], '/');
 
             // Parámetros de la ruta
             if (strpos($route['url'], ':') !== false) {

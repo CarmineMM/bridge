@@ -1,4 +1,4 @@
-<div x-show="activeTab === 'response'" class="debug-tab">
+<div x-show="activeTab === 'response'" class="debug-tab" x-cloak>
     <table>
         <tbody>
             <tr>

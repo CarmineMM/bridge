@@ -89,14 +89,14 @@ class ExceptionHandle
     {
         $httpException = new HttpException();
         if (!$httpException->configActions($error->getCode())) {
-            if (Config::get('app.debug', true)) {
+            if ($app->isDebug) {
                 throw new \Exception("Is Not error HTTP", $error->getCode());
             }
 
             // Render de un error 500
         }
 
-        if (Config::get('app.debug', true)) {
+        if ($app->isDebug) {
             static::addExceptionList($error);
         }
 
@@ -127,8 +127,9 @@ class ExceptionHandle
         }
 
         static::addExceptionList($error);
+        $code = $error->getCode();
 
-        Response::make()->setStatusCode($error->getCode() > 550 ? 500 : $error->getCode());
+        Response::make()->setStatusCode($code > 550 || $code < 300 ? 500 : $code);
 
         Response::send();
 

@@ -13,7 +13,9 @@ return [
      */
     'http_exceptions' => [
         400 => false,
-        404 => false,
+        404 => function () {
+            return 'hola';
+        },
         429 => false,
     ],
 ];

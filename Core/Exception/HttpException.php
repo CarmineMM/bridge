@@ -4,6 +4,8 @@ namespace Core\Exception;
 
 use Core\Foundation\Application;
 use Core\Foundation\CarryThrough;
+use Core\Foundation\Debugging;
+use Core\Foundation\Render;
 use Core\Loaders\Config;
 
 class HttpException
@@ -52,6 +54,21 @@ class HttpException
             return $through->renderByErrorCode($app, $error);
         }
 
-        return '';
+        if (is_string($configAction) && !empty($configAction)) {
+            $renderHtml = (new Render)->view($configAction);
+
+            if ($app->isDebug) {
+                Debugging::renderDebugBar($app, $renderHtml);
+            }
+
+            return $renderHtml;
+        }
+
+        $through = new CarryThrough([
+            'callback' => $configAction,
+        ]);
+
+
+        return $app->runRender($through);
     }
 }
