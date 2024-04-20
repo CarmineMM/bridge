@@ -141,6 +141,7 @@ class CarryThrough
             'error'   => $error,
             'app'     => $app,
             'request' => Request::make(),
+            'response' => Response::make(),
         ]);
 
         if (Config::get('app.debug', false)) {

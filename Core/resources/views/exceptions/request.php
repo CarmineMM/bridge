@@ -34,7 +34,7 @@
         </tbody>
     </table>
 
-    <h4 style="margin-bottom: 0.9em;">GET</h4>
+    <h4>GET</h4>
     <table>
         <tbody>
             <template x-for="(value, index) in request.vars?.get">
@@ -46,7 +46,7 @@
         </tbody>
     </table>
 
-    <h4 style="margin-bottom: 0.9em;">POST</h4>
+    <h4>POST</h4>
     <table>
         <tbody>
             <template x-for="(value, index) in request.vars?.post">

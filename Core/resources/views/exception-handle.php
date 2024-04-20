@@ -84,7 +84,7 @@ use Core\Support\Str;
     <header>
         <h1><?= $app::FrameworkName ?></h1>
     </header>
-    <div class="container" x-data="{ activeTab: 'tracer', request: <?= (new Str(json_encode($request->toArray())))->toJsonHtml() ?> }">
+    <div class="container" x-data="{ activeTab: 'tracer', request: <?= (new Str(json_encode($request->toArray())))->toJsonHtml() ?>, response: <?= (new Str(json_encode($response->toArray())))->toJsonHtml() ?> }">
         <div class="container-exception">
             <h2><?= $error->getMessage() ?></h2>
             <p>File: <?= $error->getFile() ?></p>
@@ -97,11 +97,15 @@ use Core\Support\Str;
                 <li>
                     <button @click="activeTab = 'request'" type="button" :class="{ active: activeTab ==='request' }" class="regular-button">Request</button>
                 </li>
+                <li>
+                    <button @click="activeTab = 'response'" type="button" :class="{ active: activeTab ==='response' }" class="regular-button">Response</button>
+                </li>
             </ul>
             <div x-show="activeTab === 'tracer'">
                 <?= $this->include('exceptions.tracer', ['error' => $error]) ?>
             </div>
             <?= $this->include('exceptions.request') ?>
+            <?= $this->include('exceptions.response') ?>
         </main>
     </div>
 </body>

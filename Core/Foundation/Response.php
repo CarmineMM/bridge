@@ -89,4 +89,15 @@ class Response
         self::$instance->statusCode = $code;
         return $this;
     }
+
+    /**
+     * Convierte a array el response
+     */
+    public function toArray(): array
+    {
+        return [
+            'headers' => $this->headers,
+            'statusCode' => $this->statusCode,
+        ];
+    }
 }
