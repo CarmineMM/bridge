@@ -71,11 +71,21 @@ class Console extends Printer
         match ($this->command) {
             'serve' => $actions->serve($isHelp),
             'routes' => $actions->routes($isHelp),
-            'migrate' => $actions->migrate($isHelp),
+            'migrate' => $actions->migrate($isHelp, $this->cleanArgsActions()),
             default => '',
         };
 
         return '';
+    }
+
+    /**
+     * Limpia las actions
+     */
+    private function cleanArgsActions(): array
+    {
+        return array_filter($this->args, function ($arg) {
+            return strpos($arg, "-") === false;
+        });
     }
 
     /**

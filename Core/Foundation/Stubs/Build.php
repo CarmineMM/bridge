@@ -10,14 +10,21 @@ class Build
      * a. {time} Timestamp
      * b. {table} Nombre de la tabla
      */
-    private array $buildFileName = [
+    protected array $buildFileName = [
         'migration' => '{time}_create_{table}_table.php',
+    ];
+
+    /**
+     * Carpeta de destino para los archivos
+     */
+    protected array $buildResultFolder = [
+        'migration' => 'database/migrations',
     ];
 
     /**
      * Nombre del stub a buscar
      */
-    private array $findStub = [
+    protected array $findStub = [
         'migration' => 'migration.stub',
     ];
 }

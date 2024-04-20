@@ -21,6 +21,9 @@
         "description": "Start a local test server, provided by PHP"
     },
     "migrate": {
-        "description": "Run the migrations"
+        "description": "Run the migrations",
+        "name": "Table name (in plural). It can also be the full name of migration.",
+        "required-name": "You must specify the name of the table or migration.",
+        "created-in": "Migration created in the folder: {Folder}"
     }
 }

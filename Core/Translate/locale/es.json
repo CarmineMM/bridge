@@ -21,6 +21,9 @@
         "description": "Inicia un servidor local para pruebas, proporcionado por PHP"
     },
     "migrate": {
-        "description": "Ejecuta las migraciones en la base de datos"
+        "description": "Ejecuta las migraciones en la base de datos",
+        "name": "Nombre de la tabla (En plural). También puede ser el nombre completo de la migración.",
+        "required-name": "Debe especificar el nombre de la tabla o migración.",
+        "created-in": "Migración creada en la carpeta: {folder}"
     }
 }

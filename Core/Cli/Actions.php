@@ -20,11 +20,18 @@ class Actions extends Printer
         //...
     }
 
-    public function routes(): string
+    /**
+     * Listado de rutas
+     */
+    public function routes(bool $isHelp = false): string
     {
-        // $this->color_light_cyan(
-        //     Config::get('framework.name', Application::FrameworkName) . ' ' . Config::get('framework.version', Application::FrameworkVersion) . "\n"
-        // );
+        if ($isHelp) {
+            $this->printHelp(
+                Lang::_get('routes.description'),
+                'php jump routes'
+            );
+            return '';
+        }
 
         // Encabezados de la tabla
         $this->color_light_green(sprintf("%-10s %-30s %-20s %-30s\n", "METHOD", "URL", "NAME", "ACTION"));
@@ -48,50 +55,6 @@ class Actions extends Printer
         }
 
         return $this->toPrint();
-    }
-
-    /**
-     * Listado de rutas
-     */
-    public function ddroutes($isHelp = false): void
-    {
-        if ($isHelp) {
-            $this->printHelp(
-                Lang::_get('routes.description'),
-                'php jump routes',
-                Lang::_get('no-args')
-            );
-            return;
-        }
-
-        $this->color_white("--------------------------------------------------------------------\n");
-        $this->color_white("|  Method  |\tURL\t\t|\tName\t|\tAction\t\t|");
-
-        $routes = Collection::make(Router::$routes)->collapse()->toArray();
-
-        foreach ($routes as $route) {
-            // Método
-            $this->color_white("\n|\t{$route['method']}");
-
-            // Ruta
-            $this->color_cyan("| /{$route['url']} \t");
-
-            // Nombre
-            $this->color_white("| {$route['name']}\t");
-
-            // Action
-            if ($route['callback'] instanceof \Closure) {
-                $this->color_green("| Closure\t\t |");
-            } else if (is_array($route['callback']) && count($route['callback']) == 1) {
-                $this->color_green("| {$route['callback'][0]}:__invoke   \t|");
-            } else if (is_array($route['callback']) && count($route['callback']) == 2) {
-                $this->color_green("| {$route['callback'][0]}:{$route['callback'][1]}   \t|");
-            }
-        }
-
-        $this->color_white("\n--------------------------------------------------------------------");
-
-        $this->toPrint();
     }
 
     /**
@@ -125,9 +88,8 @@ class Actions extends Printer
      * @param string $description
      * @param string $command
      * @param string $args
-     * @return void
      */
-    private function printHelp(string $description, string $command, string $args): void
+    private function printHelp(string $description, string $command, string|bool $args = false): string
     {
         $this->color_light_cyan(Lang::_get('description') . "\n");
         $this->color_unset("   " . $description . "\n\n");
@@ -136,22 +98,40 @@ class Actions extends Printer
         $this->color_light_green('  ' . $command);
 
         $this->color_light_cyan("\n\n" .  Lang::_get('args') . ":\n");
-        $this->color_red('  ' . $args);
-        $this->toPrint();
+
+        $args ? $this->color_light_green('  ' . $args) : $this->color_red('  ' . Lang::_get('no-args'));
+
+        return $this->toPrint();
+    }
+
+    public function printArgsRequired(string $message): string
+    {
+        return $this->color_red($message)->toPrint();
     }
 
     /**
      * Ejecuta las migraciones del sistema
      */
-    public function migrate($isHelp): void
+    public function migrate(bool $isHelp, array $args = []): string
     {
         if ($isHelp) {
-            $this->printHelp(
+            return $this->printHelp(
                 Lang::_get('migrate.description'),
-                'php jump serve',
-                Lang::_get('no-args')
+                'php jump migrate {table}',
+                Lang::_get('migrate.name')
             );
-            return;
         }
+
+        if (count($args) < 1) {
+            return $this->printArgsRequired(Lang::_get('migrate.required-name'));
+        }
+
+        $stubHandler = new \Core\Foundation\Stubs\StubHandler();
+
+        $this->color_green(
+            Lang::_get('migrate.created-in', ['folder' => $stubHandler->publishMigration($args[0])])
+        );
+
+        return $this->toPrint();
     }
 }

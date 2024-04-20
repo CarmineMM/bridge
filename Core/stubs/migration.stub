@@ -13,4 +13,4 @@ return new class extends \Core\Database\Table implements \Core\Implements\Migrat
     {
         # code...
     }
-}
+};
