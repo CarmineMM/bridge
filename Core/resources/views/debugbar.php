@@ -1,13 +1,11 @@
 <?php
 
 use Core\Foundation\Application;
-use Core\Foundation\Context;
 use Core\Foundation\Debugging;
 use Core\Foundation\Request;
 use Core\Support\Conversion\TimeConversion;
 use Core\Support\Conversion\UnitsConversion;
 use Core\Support\Str;
-use Core\Translate\Lang;
 
 $request = Request::make();
 $elements = Debugging::formatDebugList();
@@ -17,7 +15,6 @@ $execution_time = round(($end_time - $app->start_time), 5);
 $memory = UnitsConversion::make(memory_get_usage() - $app->memory, 'byte');
 
 ?>
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
 <footer id="debug-bar" x-data="debugbar(<?= (new Str(json_encode($elements)))->toJsonHtml() ?>)" :class="{ open: bodyOpen }" class="debug-handle">
     <div class="debugbar-header">

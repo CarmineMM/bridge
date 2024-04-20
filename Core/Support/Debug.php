@@ -12,9 +12,9 @@ class Debug
      * Recursos para debug
      */
     const resources = [
-        'css' => '__bridge-debugbar-css',
-        'js'  => '__bridge-debugbar-js',
-        'alpine' => 'alpine-3-13-8-js',
+        'js-deps' => '__bridge-deps-js',
+        'css'     => '__bridge-debugbar-css',
+        'js'      => '__bridge-debugbar-js',
     ];
 
     /**
@@ -44,12 +44,12 @@ class Debug
     public static function registerRoutes(): void
     {
         Router::$routes['GET'][] = [
-            'url' => self::resources['alpine'],
+            'url' => self::resources['js-deps'],
             'callback' => function () {
                 Response::make()->setHeader('Content-Type', 'text/javascript');
-                return file_get_contents(Filesystem::rootPath(['Core', 'resources', 'js', 'alpine-3.13.8.min.js']));
+                return file_get_contents(Filesystem::rootPath(['Core', 'resources', 'js', 'deps.js']));
             },
-            'name' => 'alpine.js',
+            'name' => 'js-deps',
             'middleware' => [],
             'method' => 'GET'
         ];

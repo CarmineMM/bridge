@@ -6,7 +6,6 @@ use Core\Exception\ExceptionHandle;
 use Core\Loaders\Config;
 use Core\Loaders\HtmlInject;
 use Core\Support\Debug;
-use Core\Support\Conversion\UnitsConversion;
 use Core\Translate\Lang;
 
 class Debugging
@@ -21,7 +20,7 @@ class Debugging
         $htmlInject = new HtmlInject($renderHtml);
         $cssDebug = Debug::resources['css'];
         $jsDebug = Debug::resources['js'];
-        $alpine = Debug::resources['alpine'];
+        $deps = Debug::resources['js-deps'];
         $render = new Render;
         $render->config_view_path = 'framework.view_path';
 
@@ -31,7 +30,7 @@ class Debugging
             ->headBot("
                 <link rel='stylesheet' href='/{$cssDebug}'>
                 <script src='/{$jsDebug}' defer></script>
-                <script src='/{$alpine}' defer></script>
+                <script src='/{$deps}' defer></script>
             ")
             ->bodyBot($render->view('debugbar', ['app' => $app]))
             ->getHtml();
