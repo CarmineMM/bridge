@@ -3,7 +3,9 @@
     "console": {
         "list": "Show the available command list.",
         "serve": "Start the web server.",
-        "server-start-in": "Server starting in {server}"
+        "server-start-in": "Server starting in {server}",
+        "routes": "List of available routes",
+        "migrate": "Run the migrations."
     },
     "description": "Description",
     "configurations": "Settings",

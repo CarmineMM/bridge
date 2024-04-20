@@ -20,10 +20,40 @@ class Actions extends Printer
         //...
     }
 
+    public function routes(): string
+    {
+        // $this->color_light_cyan(
+        //     Config::get('framework.name', Application::FrameworkName) . ' ' . Config::get('framework.version', Application::FrameworkVersion) . "\n"
+        // );
+
+        // Encabezados de la tabla
+        $this->color_light_green(sprintf("%-10s %-30s %-20s %-30s\n", "METHOD", "URL", "NAME", "ACTION"));
+
+        foreach (Router::$routes as $method => $routes) {
+            foreach ($routes as $route) {
+                $formattedLine = sprintf(
+                    "%-10s %-30s %-20s %-30s\n",
+                    $method,
+                    '/' . $route['url'],
+                    $route['name'] ?? '',
+                    match (true) {
+                        $route['callback'] instanceof \Closure => 'Closure',
+                        is_array($route['callback']) && count($route['callback']) == 1 => $route['callback'][0] . ':__invoke',
+                        is_array($route['callback']) && count($route['callback']) == 2 => $route['callback'][0] . ':' . $route['callback'][1],
+                        default => $route['action'],
+                    }
+                );
+                $this->color_unset($formattedLine);
+            }
+        }
+
+        return $this->toPrint();
+    }
+
     /**
      * Listado de rutas
      */
-    public function routes($isHelp = false): void
+    public function ddroutes($isHelp = false): void
     {
         if ($isHelp) {
             $this->printHelp(
@@ -108,5 +138,20 @@ class Actions extends Printer
         $this->color_light_cyan("\n\n" .  Lang::_get('args') . ":\n");
         $this->color_red('  ' . $args);
         $this->toPrint();
+    }
+
+    /**
+     * Ejecuta las migraciones del sistema
+     */
+    public function migrate($isHelp): void
+    {
+        if ($isHelp) {
+            $this->printHelp(
+                Lang::_get('serve.description'),
+                'php jump serve',
+                Lang::_get('no-args')
+            );
+            return;
+        }
     }
 }

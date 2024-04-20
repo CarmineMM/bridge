@@ -4,7 +4,8 @@
         "list": "Muestra la lista de comandos disponibles.",
         "serve": "Inicia el servidor web.",
         "server-start-in": "Servidor iniciando en {server}",
-        "routes": "Listado de rutas disponibles"
+        "routes": "Listado de rutas disponibles",
+        "migrate": "Ejecuta las migraciones."
     },
     "description": "Descripción",
     "configurations": "Configuraciones",

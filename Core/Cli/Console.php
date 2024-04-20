@@ -33,12 +33,24 @@ class Console extends Printer
     private array $args = [];
 
     /**
+     * Lista de comandos disponibles
+     */
+    private array $commands = [];
+
+    /**
      * Constructor Console
      */
     public function __construct()
     {
         $this->command = $_SERVER['argv'][1] ?? false;
         $this->args = array_slice($_SERVER['argv'], 2);
+
+        $this->commands = [
+            'list' => Lang::_get('console.list'),
+            'serve' => Lang::_get('console.serve'),
+            'routes' => Lang::_get('console.routes'),
+            'migrate' => Lang::_get('console.migrate'),
+        ];
     }
 
     /**
@@ -59,6 +71,7 @@ class Console extends Printer
         match ($this->command) {
             'serve' => $actions->serve($isHelp),
             'routes' => $actions->routes($isHelp),
+            'migrate' => $actions->migrate($isHelp),
             default => '',
         };
 
@@ -74,17 +87,10 @@ class Console extends Printer
             Config::get('framework.name', Application::FrameworkName) . ' ' . Config::get('framework.version', Application::FrameworkVersion) . "\n"
         );
 
-        # List
-        $this->color_light_green('  list');
-        $this->color_unset("\t\t" . Lang::_get('console.list') . "\n");
-
-        # Serve
-        $this->color_light_green('  serve');
-        $this->color_unset("\t\t" .  Lang::_get('console.serve') .  "\n");
-
-        # Listado de rutas
-        $this->color_light_green('  routes');
-        $this->color_unset("\t" . Lang::_get('console.routes') . "\n");
+        foreach ($this->commands as $command => $help) {
+            $this->color_light_green(sprintf("\n  %-15s", $command));
+            $this->color_unset($help);
+        }
 
         return $this->toPrint();
     }
