@@ -112,7 +112,7 @@ class Actions extends Printer
     /**
      * Ejecuta las migraciones del sistema
      */
-    public function migrate(bool $isHelp, array $args = []): string
+    public function makeMigration(bool $isHelp, array $args = []): string
     {
         if ($isHelp) {
             return $this->printHelp(

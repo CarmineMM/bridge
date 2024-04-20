@@ -49,7 +49,7 @@ class Console extends Printer
             'list' => Lang::_get('console.list'),
             'serve' => Lang::_get('console.serve'),
             'routes' => Lang::_get('console.routes'),
-            'migrate' => Lang::_get('console.migrate'),
+            'make:migration' => Lang::_get('console.make.migration'),
         ];
     }
 
@@ -71,7 +71,8 @@ class Console extends Printer
         match ($this->command) {
             'serve' => $actions->serve($isHelp),
             'routes' => $actions->routes($isHelp),
-            'migrate' => $actions->migrate($isHelp, $this->cleanArgsActions()),
+
+            'make:migration' => $actions->makeMigration($isHelp, $this->cleanArgsActions()),
             default => '',
         };
 
@@ -98,7 +99,7 @@ class Console extends Printer
         );
 
         foreach ($this->commands as $command => $help) {
-            $this->color_light_green(sprintf("\n  %-15s", $command));
+            $this->color_light_green(sprintf("\n  %-17s", $command));
             $this->color_unset($help);
         }
 

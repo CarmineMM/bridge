@@ -34,7 +34,7 @@ class StubHandler extends Build
             $name . '.php'
         ]);
 
-        $file = $this->createFile($fileSave);
+        $file = fopen($fileSave, 'w');
 
         fwrite($file, $getContent);
 
@@ -47,8 +47,7 @@ class StubHandler extends Build
      * @param [type] $fileSave
      * @return string Devuelve el archivo creado
      */
-    public function createFile(string $fileSave): string
+    public function createFile(string $fileSave): void
     {
-        return fopen($fileSave, 'w');
     }
 }

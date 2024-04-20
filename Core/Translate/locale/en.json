@@ -5,7 +5,10 @@
         "serve": "Start the web server.",
         "server-start-in": "Server starting in {server}",
         "routes": "List of available routes",
-        "migrate": "Run the migrations."
+        "migrate": "Run the migrations.",
+        "make": {
+            "migration": "Create a new migration."
+        }
     },
     "description": "Description",
     "configurations": "Settings",
