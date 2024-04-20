@@ -6,7 +6,10 @@ return new class extends \Core\Database\Table implements \Core\Implements\Migrat
 {
     public function up(): void
     {
-        # code...
+        $this->table('users')
+            ->column(
+                fn ($column) => $column->bigInt('id')->primaryKey()
+            );
     }
 
     public function down(): void

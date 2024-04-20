@@ -5,15 +5,6 @@ namespace Core\Database\Driver;
 class MigratePostgresSQL extends PostgresSQL
 {
     /**
-     * Crea una tabla
-     */
-    public function table(string $name): static
-    {
-        $this->sql .= "CREATE TABLE IF NOT EXISTS {$name} (";
-        return $this;
-    }
-
-    /**
      * Genera un primary key
      *
      * @param string $column

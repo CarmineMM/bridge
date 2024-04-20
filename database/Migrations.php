@@ -3,15 +3,8 @@
 namespace Database;
 
 use Core\Database\MigrationHandler;
-use Core\Implements\DatabaseMigrations;
 
-class Migrations extends MigrationHandler implements DatabaseMigrations
+class Migrations extends MigrationHandler
 {
-    /**
-     * Indica las migraciones que deben ser ejecutadas y el orden
-     */
-    public function migrate(): array
-    {
-        return [];
-    }
+    //..
 }

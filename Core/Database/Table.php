@@ -26,6 +26,16 @@ class Table
     protected MigratePostgresSQL $driver;
 
     /**
+     * Listado del SQL para crear columnas
+     */
+    private array $columnsCreated = [];
+
+    /**
+     * Creador de columnas
+     */
+    private CreatorColumn $creatorColumn;
+
+    /**
      * Boot method
      *
      * @return void
@@ -36,12 +46,11 @@ class Table
         $connectionConfig = Config::get("database.connections.{$this->connection}");
 
         $this->driver = match ($this->connection) {
-            'pgsql' => new MigratePostgresSQL(
-                $connectionConfig,
-                new Model
-            ),
+            'pgsql' => new MigratePostgresSQL($connectionConfig, new Model),
             default => throw new Exception("No se ha definido la conexión {$this->connection}"),
         };
+
+        $this->creatorColumn = new CreatorColumn($this->driver);
     }
 
     /**
@@ -52,7 +61,16 @@ class Table
      */
     protected function table(string $table_name): static
     {
-        $this->driver->table($table_name);
+        $this->sql = "CREATE TABLE IF NOT EXISTS {$table_name} ({columns})";
+        return $this;
+    }
+
+    /**
+     * Agrega columna a la tabla
+     */
+    protected function column(callable $call): static
+    {
+        $this->columnsCreated[] = $call($this->creatorColumn);
         return $this;
     }
 }
