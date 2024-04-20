@@ -185,7 +185,7 @@
 	border-bottom: 1px solid var(--debug-bar-light-2);
 }
 
-#debug-bar .small-monospace {
+.debug-handle .small-monospace {
 	font-family: 'Courier New', Courier, monospace;
 	font-size: 0.8em;
 }
@@ -263,6 +263,7 @@
 	display: table;
 	width: 100%;
 	border-collapse: collapse;
+	margin-bottom: 2em;
 }
 
 .debug-handle table th {
@@ -279,4 +280,7 @@
 }
 .debug-handle table td {
 	width: 100%;
+}
+.debug-handle h4 {
+	font-size: 1.1em;
 }

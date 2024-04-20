@@ -123,6 +123,13 @@ class CarryThrough
         return $renderHtml;
     }
 
+    /**
+     * Hace el render el exception handle
+     *
+     * @param Application $app
+     * @param \Throwable $error
+     * @return string
+     */
     public function renderExceptionHandler(Application $app, \Throwable $error): string
     {
 

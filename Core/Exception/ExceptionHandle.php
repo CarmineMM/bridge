@@ -4,6 +4,7 @@ namespace Core\Exception;
 
 use Core\Foundation\Application;
 use Core\Foundation\CarryThrough;
+use Core\Foundation\Response;
 use Core\Loaders\Config;
 
 class ExceptionHandle
@@ -126,6 +127,10 @@ class ExceptionHandle
         }
 
         static::addExceptionList($error);
+
+        Response::make()->setStatusCode($error->getCode() > 550 ? 500 : $error->getCode());
+
+        Response::send();
 
         echo $through->renderExceptionHandler($app, $error);
     }

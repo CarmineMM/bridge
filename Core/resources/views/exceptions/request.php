@@ -26,8 +26,35 @@
                 <td x-text="request.isAjax ? 'true' : 'false'"></td>
             </tr>
             <tr>
-                <th></th>
+                <th>Router</th>
+                <td>
+                    <span style="font-weight: bold;" class="small-monospace" x-text="request.route.method"></span>: <span style="font-weight: lighter;" x-text="`${request.route.callback}`"></span>
+                </td>
             </tr>
+        </tbody>
+    </table>
+
+    <h4 style="margin-bottom: 0.9em;">GET</h4>
+    <table>
+        <tbody>
+            <template x-for="(value, index) in request.vars?.get">
+                <tr>
+                    <th x-text="index"></th>
+                    <td x-text="value"></td>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+
+    <h4 style="margin-bottom: 0.9em;">POST</h4>
+    <table>
+        <tbody>
+            <template x-for="(value, index) in request.vars?.post">
+                <tr>
+                    <th x-text="index"></th>
+                    <td x-text="value"></td>
+                </tr>
+            </template>
         </tbody>
     </table>
 </div>

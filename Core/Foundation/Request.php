@@ -121,7 +121,7 @@ class Request
             'uri' => $this->uri,
             'url' => $this->url,
             'user_agent' => $this->user_agent,
-            'route' => $this->route,
+            'route' => $this->route instanceof Collection ? $this->route->toArray() : [],
             'isAjax' => $this->isAjax,
             'ip' => $this->ip,
         ];

@@ -84,7 +84,6 @@ use Core\Support\Str;
     <header>
         <h1><?= $app::FrameworkName ?></h1>
     </header>
-
     <div class="container" x-data="{ activeTab: 'tracer', request: <?= (new Str(json_encode($request->toArray())))->toJsonHtml() ?> }">
         <div class="container-exception">
             <h2><?= $error->getMessage() ?></h2>
