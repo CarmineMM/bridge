@@ -19,5 +19,8 @@
     },
     "serve": {
         "description": "Inicia un servidor local para pruebas, proporcionado por PHP"
+    },
+    "migrate": {
+        "description": "Ejecuta las migraciones en la base de datos"
     }
 }

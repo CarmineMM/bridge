@@ -147,7 +147,7 @@ class Actions extends Printer
     {
         if ($isHelp) {
             $this->printHelp(
-                Lang::_get('serve.description'),
+                Lang::_get('migrate.description'),
                 'php jump serve',
                 Lang::_get('no-args')
             );

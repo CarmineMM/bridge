@@ -19,5 +19,8 @@
     },
     "serve": {
         "description": "Start a local test server, provided by PHP"
+    },
+    "migrate": {
+        "description": "Run the migrations"
     }
 }
