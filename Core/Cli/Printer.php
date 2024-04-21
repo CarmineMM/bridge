@@ -12,7 +12,7 @@ class Printer
     /**
      * Version del CLI
      */
-    private $versionCli = '1.0.0';
+    private $versionCli = '1.2.0';
 
     /**
      * Colores de letra

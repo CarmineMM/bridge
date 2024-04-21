@@ -11,7 +11,7 @@ class Build
      * b. {table} Nombre de la tabla
      */
     protected array $buildFileName = [
-        'migration' => '{time}_create_{table}_table.php',
+        'migration' => 'Create{table}Table.php',
     ];
 
     /**

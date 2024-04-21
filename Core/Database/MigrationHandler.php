@@ -3,6 +3,7 @@
 namespace Core\Database;
 
 use Core\Implements\DatabaseMigrations;
+use Database\Migrations;
 
 class MigrationHandler implements DatabaseMigrations
 {
@@ -19,20 +20,17 @@ class MigrationHandler implements DatabaseMigrations
     protected string $migration_path = 'database/migrations';
 
     /**
+     * Instancias de los archivos de migraciones
+     *
+     * @var string
+     */
+    private array $migration_instance = [];
+
+    /**
      * Ejecuta las Queries de migraciones
      */
     private function runQueries()
     {
-    }
-
-    /**
-     * Ejecutar migraciones
-     *
-     * @return array Retorna los archivos migrados
-     */
-    public function migrate(): array
-    {
-        return [];
     }
 
     /**
@@ -42,5 +40,17 @@ class MigrationHandler implements DatabaseMigrations
      */
     public function getMigrationsFiles(): void
     {
+        $files = glob(ROOT_PATH . $this->migration_path . '/*.php');
+        $class = 'Database\Migrations\CreateUsersTable';
+
+        dump(class_exists($class));
+
+        // foreach ($files as $file) {
+        //     $class = 'Database\\migrations\\' . pathinfo($file, PATHINFO_FILENAME);
+
+        //     $this->migration_instance[] = new $class;
+        // }
+
+        // dump($this->migration_instance);
     }
 }

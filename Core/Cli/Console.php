@@ -49,6 +49,7 @@ class Console extends Printer
             'list' => Lang::_get('console.list'),
             'serve' => Lang::_get('console.serve'),
             'routes' => Lang::_get('console.routes'),
+            'migrate' => Lang::_get('console.migrate'),
             'make:migration' => Lang::_get('console.make.migration'),
         ];
     }
@@ -71,6 +72,7 @@ class Console extends Printer
         match ($this->command) {
             'serve' => $actions->serve($isHelp),
             'routes' => $actions->routes($isHelp),
+            'migrate' => $actions->migrate($isHelp),
 
             'make:migration' => $actions->makeMigration($isHelp, $this->cleanArgsActions()),
             default => '',

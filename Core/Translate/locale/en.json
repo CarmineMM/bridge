@@ -25,6 +25,7 @@
     },
     "migrate": {
         "description": "Run the migrations",
+        "make-description": "Create a new migration",
         "name": "Table name (in plural). It can also be the full name of migration.",
         "required-name": "You must specify the name of the table or migration.",
         "created-in": "Migration created in the folder: {Folder}"

@@ -4,7 +4,7 @@ namespace Database;
 
 use Core\Database\MigrationHandler;
 
-class Migrations extends MigrationHandler
+class Migrator extends MigrationHandler
 {
     //..
 }

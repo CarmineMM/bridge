@@ -2,6 +2,7 @@
 
 namespace Core\Cli;
 
+use Core\Database\MigrationHandler;
 use Core\Foundation\Router;
 use Core\Loaders\Routes;
 use Core\Support\Collection;
@@ -116,8 +117,8 @@ class Actions extends Printer
     {
         if ($isHelp) {
             return $this->printHelp(
-                Lang::_get('migrate.description'),
-                'php jump migrate {table}',
+                Lang::_get('migrate.make-description'),
+                'php jump make:migration {table}',
                 Lang::_get('migrate.name')
             );
         }
@@ -133,5 +134,32 @@ class Actions extends Printer
         );
 
         return $this->toPrint();
+    }
+
+    /**
+     * Ejecuta las migraciones
+     *
+     * @param boolean $isHelp
+     * @return string
+     */
+    public function migrate(bool $isHelp): string
+    {
+        if ($isHelp) {
+            return $this->printHelp(
+                Lang::_get('migrate.description'),
+                'php jump migrate'
+            );
+        }
+
+        $class = 'Database\Migrator';
+        if (class_exists($class)) {
+            $handler = new $class;
+        } else {
+            $handler = new MigrationHandler;
+        }
+
+        $handler->getMigrationsFiles();
+
+        return '';
     }
 }
