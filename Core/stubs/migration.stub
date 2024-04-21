@@ -2,8 +2,8 @@
 
 namespace Database\Migrations;
 
-return new class extends \Core\Database\Table implements \Core\Implements\MigrateTable
-{
+class {className} extends \Core\Database\Table implements \Core\Implements\MigrateTable 
+{ 
     public function up(): void
     {
         # code...
@@ -13,4 +13,4 @@ return new class extends \Core\Database\Table implements \Core\Implements\Migrat
     {
         # code...
     }
-};
+}

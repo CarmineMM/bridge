@@ -3,6 +3,7 @@
 namespace Core\Foundation\Stubs;
 
 use Core\Foundation\Filesystem;
+use Core\Support\Str;
 
 class StubHandler extends Build
 {
@@ -21,17 +22,23 @@ class StubHandler extends Build
     public function publishMigration(string $name): string
     {
         $getContent = file_get_contents($this->stub_folder . $this->findStub['migration']);
+        $buildFileName = $this->buildFileName['migration'];
+        $name = new Str($name);
 
-        // Si no contiene un piso abajo, es que el usuario esta determinando el nombre de la tabla
-        if (str_contains($name, 'Create') || str_contains($name, 'Edit')) {
-            $name = $name;
+        // Esto entra aca si el usuario esta colocando manualmente el nombre
+        if ($name->contains(['Create', 'Edit'])) {
+            $name = $name->getString();
+            $buildFileName = $name . '.php';
+            $getContent = str_replace('{className}', $name, $getContent);
         } else {
-            // $name = str_replace(['{time}', '{table}'], [$time, $name], $this->buildFileName['migration']);
+            $name->upperFirst();
+            $buildFileName = str_replace('{table}', $name->getString(), $buildFileName);
+            $getContent = str_replace('{className}', str_replace('.php', '', $buildFileName), $getContent);
         }
 
         $fileSave = Filesystem::rootPath([
             $this->buildResultFolder['migration'],
-            $name . '.php'
+            $buildFileName
         ]);
 
         $file = fopen($fileSave, 'w');
