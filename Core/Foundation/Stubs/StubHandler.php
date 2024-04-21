@@ -41,6 +41,10 @@ class StubHandler extends Build
             $buildFileName
         ]);
 
+        if (file_exists($fileSave)) {
+            throw new \Exception("The file already exists: {$fileSave}");
+        }
+
         $file = fopen($fileSave, 'w');
 
         fwrite($file, $getContent);

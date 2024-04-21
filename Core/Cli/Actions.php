@@ -129,9 +129,15 @@ class Actions extends Printer
 
         $stubHandler = new \Core\Foundation\Stubs\StubHandler();
 
-        $this->color_green(
-            Lang::_get('migrate.created-in', ['folder' => $stubHandler->publishMigration($args[0])])
-        );
+        try {
+            $fileSaved = $stubHandler->publishMigration($args[0]);
+
+            $this->color_green(
+                Lang::_get('migrate.created-in', ['folder' => $fileSaved])
+            );
+        } catch (\Throwable $th) {
+            $this->color_red($th->getMessage());
+        }
 
         return $this->toPrint();
     }
