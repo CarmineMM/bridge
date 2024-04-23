@@ -132,4 +132,16 @@ class MigratePostgresSQL extends PostgresSQL
         $this->alterSql[] = "COMMENT ON COLUMN {$table_name}.{$this->columnName} IS '{$comment}';";
         return $this;
     }
+
+    /**
+     * Ejecutar la query, (Espacio inseguro, no usar en producción)
+     */
+    public function runQuery(string $sql): void
+    {
+        try {
+            $this->pdo->exec($sql);
+        } catch (\Throwable $th) {
+            throw new \Exception("The table could not be created: {$th->getMessage()}", 500);
+        }
+    }
 }

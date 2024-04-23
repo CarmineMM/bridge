@@ -8,11 +8,6 @@ use Database\Migrations;
 class MigrationHandler implements DatabaseMigrations
 {
     /**
-     * Indica si se debe crear la base de datos si no existe.
-     */
-    protected $create_database_if_not_exists = true;
-
-    /**
      * Path a la ubicación de las migraciones
      *
      * @var string
@@ -49,9 +44,7 @@ class MigrationHandler implements DatabaseMigrations
             $instance->boot();
             $instance->up();
             $sql = $instance->createSql();
-            // $return = $instance->driver->query($sql);
-
-            // dump($return);
+            $instance->driver->runQuery($sql);
         }
     }
 }

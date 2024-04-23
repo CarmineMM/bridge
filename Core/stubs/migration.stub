@@ -15,6 +15,6 @@ class {className} extends \Core\Database\Table implements MigrateTable
 
     public function down(): MigrateTable
     {
-        return $this->table({table}):
+        return $this->dropTable({table}):
     }
 }

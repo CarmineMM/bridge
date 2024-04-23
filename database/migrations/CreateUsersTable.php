@@ -16,6 +16,6 @@ class CreateUsersTable extends \Core\Database\Table implements \Core\Implements\
 
     public function down(): MigrateTable
     {
-        return $this->table('users');
+        return $this->dropTable('users');
     }
 }

@@ -81,6 +81,20 @@ class Table
     }
 
     /**
+     * Elimina la tabla
+     */
+    protected function dropTable(string $table_name = ''): static
+    {
+        if (!empty($table_name)) {
+            $this->table_name = $table_name;
+        }
+
+        $this->sql = "DROP TABLE IF EXISTS {$this->table_name};";
+
+        return $this;
+    }
+
+    /**
      * Agrega columna a la tabla
      */
     protected function column(callable $call): static
