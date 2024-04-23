@@ -18,12 +18,12 @@ class Table
     /**
      * Conexión en la lista de configuraciones
      */
-    protected string $connection = 'default';
+    protected ?string $connection = null;
 
     /**
      * Driver de conexión
      */
-    protected MigratePostgresSQL $driver;
+    protected ?MigratePostgresSQL $driver = null;
 
     /**
      * Listado del SQL para crear columnas
@@ -33,19 +33,19 @@ class Table
     /**
      * Creador de columnas
      */
-    private CreatorColumn $creatorColumn;
+    private ?CreatorColumn $creatorColumn = null;
 
     /**
      * Boot method
      *
      * @return void
      */
-    private function boot(): void
+    public function boot(): void
     {
         $this->connection = $this->connection ?? Config::get('database.default', 'pgsql');
         $connectionConfig = Config::get("database.connections.{$this->connection}");
 
-        $this->driver = match ($this->connection) {
+        $this->driver = match ($connectionConfig['driver']) {
             'pgsql' => new MigratePostgresSQL($connectionConfig, new Model),
             default => throw new Exception("No se ha definido la conexión {$this->connection}"),
         };

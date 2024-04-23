@@ -7,9 +7,9 @@ use Core\Database\Driver\MigratePostgresSQL;
 class CreatorColumn
 {
     /**
-     * SQL a generar
+     * Creator
      */
-    private string $sql = '{name} {type} {restrictions} {default}';
+    private MigratePostgresSQL $creator;
 
     /**
      * Constructor
@@ -28,40 +28,35 @@ class CreatorColumn
      */
     public function bigInt(string $name): static
     {
-        $this->sql = str_replace(
-            ['{name}', '{type}'],
-            [$name, 'BIGINT'],
-            $this->sql
-        );
-
+        $this->creator = $this->driver->bigInt($name);
         return $this;
     }
 
     /**
-     * Primary key a la columna actual
+     * Permite nulos
+     */
+    public function nullable(): static
+    {
+        $this->creator = $this->driver->nullable();
+        return $this;
+    }
+
+    /**
+     * Agregar primary key
      */
     public function primaryKey(): static
     {
-        $this->sql = str_replace(
-            ['{restrictions}'],
-            ['PRIMARY KEY {restrictions}'],
-            $this->sql
-        );
-
+        $this->creator = $this->driver->primaryKey();
         return $this;
     }
 
     /**
-     * Valor por default
+     * Obtiene el creator column
+     *
+     * @return MigratePostgresSQL
      */
-    public function default(string|int $default): static
+    public function _get(): MigratePostgresSQL
     {
-        $this->sql = str_replace(
-            ['{default}'],
-            ["DEFAULT {$default}"],
-            $this->sql
-        );
-
-        return $this;
+        return $this->creator;
     }
 }

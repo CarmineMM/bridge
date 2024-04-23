@@ -40,17 +40,17 @@ class MigrationHandler implements DatabaseMigrations
      */
     public function getMigrationsFiles(): void
     {
-        $files = glob(ROOT_PATH . $this->migration_path . '/*.php');
-        $class = 'Database\Migrations\CreateUsersTable';
+        $files = glob(ROOT_PATH . $this->migration_path . DIRECTORY_SEPARATOR . '*.php');
 
-        dump(class_exists($class));
+        foreach ($files as $file) {
+            $class = 'Database\\migrations\\' . pathinfo($file, PATHINFO_FILENAME);
 
-        // foreach ($files as $file) {
-        //     $class = 'Database\\migrations\\' . pathinfo($file, PATHINFO_FILENAME);
+            $instance = new $class;
+            $instance->boot();
 
-        //     $this->migration_instance[] = new $class;
-        // }
+            // $return = $instance->up();
 
-        // dump($this->migration_instance);
+            // dump($instance);
+        }
     }
 }

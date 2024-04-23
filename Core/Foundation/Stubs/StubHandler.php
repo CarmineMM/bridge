@@ -29,11 +29,19 @@ class StubHandler extends Build
         if ($name->contains(['Create', 'Edit'])) {
             $name = $name->getString();
             $buildFileName = $name . '.php';
-            $getContent = str_replace('{className}', $name, $getContent);
+            $getContent = str_replace(
+                ['{className}', '{table}'],
+                [$name, ''],
+                $getContent
+            );
         } else {
             $name->upperFirst();
             $buildFileName = str_replace('{table}', $name->getString(), $buildFileName);
-            $getContent = str_replace('{className}', str_replace('.php', '', $buildFileName), $getContent);
+            $getContent = str_replace(
+                ['{className}', '{table}'],
+                [str_replace('.php', '', $buildFileName), $name->lower()->getString()],
+                $getContent
+            );
         }
 
         $fileSave = Filesystem::rootPath([

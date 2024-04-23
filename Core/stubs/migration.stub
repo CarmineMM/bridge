@@ -2,15 +2,17 @@
 
 namespace Database\Migrations;
 
-class {className} extends \Core\Database\Table implements \Core\Implements\MigrateTable 
+use Core\Implements\MigrateTable;
+
+class {className} extends \Core\Database\Table implements MigrateTable 
 { 
-    public function up(): void
+    public function up(): MigrateTable
     {
-        # code...
+        return $this->table({table}):
     }
 
-    public function down(): void
+    public function down(): MigrateTable
     {
-        # code...
+        return $this->table({table}):
     }
 }

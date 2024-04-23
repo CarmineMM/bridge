@@ -158,6 +158,7 @@ class Actions extends Printer
         }
 
         $class = 'Database\Migrator';
+
         if (class_exists($class)) {
             $handler = new $class;
         } else {

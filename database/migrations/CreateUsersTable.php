@@ -2,15 +2,21 @@
 
 namespace Database\Migrations;
 
+use Core\Database\CreatorColumn;
+use Core\Implements\MigrateTable;
+
 class CreateUsersTable extends \Core\Database\Table implements \Core\Implements\MigrateTable
 {
-    public function up(): void
+    public function up(): MigrateTable
     {
-        # code...
+        return $this->table('users')
+            ->column(
+                fn (CreatorColumn $column) => $column->bigInt('id')->primaryKey()
+            );
     }
 
-    public function down(): void
+    public function down(): MigrateTable
     {
-        # code...
+        return $this->table('users');
     }
 }

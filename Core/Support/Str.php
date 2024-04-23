@@ -85,12 +85,19 @@ class Str
 
     /**
      * Lleva a mayúscula la primera letra de la cadena
-     *
-     * @return static
      */
     public function upperFirst(): static
     {
         $this->string = ucfirst($this->string);
+        return $this;
+    }
+
+    /**
+     * Llevar a minúscula la cadena
+     */
+    public function lower(): static
+    {
+        $this->string = strtolower($this->string);
         return $this;
     }
 }
