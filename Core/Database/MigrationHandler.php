@@ -17,15 +17,26 @@ class MigrationHandler implements DatabaseMigrations
     /**
      * Instancias de los archivos de migraciones
      *
-     * @var string
+     * @var Array<Database\Migrations>
      */
-    private array $migration_instance = [];
+    private array $migrations = [];
 
     /**
      * Ejecuta las Queries de migraciones
      */
-    private function runQueries()
+    public function runQueries(string $type = 'up')
     {
+        // Crear la tabla de migraciones
+        $migrationTable = new \Core\Database\Base\CreateMigrationTable();
+        $migrationTable->boot();
+        $migrationTable->up();
+
+        foreach ($this->migrations as $instance) {
+            $type === 'up' ? $instance['instance']->up() : $instance['instance']->down();
+
+            $sql = $instance['instance']->createSql();
+            $instance['instance']->driver->runQuery($sql);
+        }
     }
 
     /**
@@ -42,9 +53,12 @@ class MigrationHandler implements DatabaseMigrations
 
             $instance = new $class;
             $instance->boot();
-            $instance->up();
-            $sql = $instance->createSql();
-            $instance->driver->runQuery($sql);
+
+            $this->migrations[] = [
+                'instance'  => $instance,
+                'file_path' => $file,
+                'file_name' => pathinfo($file, PATHINFO_FILENAME)
+            ];
         }
     }
 }

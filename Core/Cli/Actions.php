@@ -148,12 +148,12 @@ class Actions extends Printer
      * @param boolean $isHelp
      * @return string
      */
-    public function migrate(bool $isHelp): string
+    public function migrate(bool $isHelp, $type = 'up'): string
     {
         if ($isHelp) {
             return $this->printHelp(
-                Lang::_get('migrate.description'),
-                'php jump migrate'
+                $type === 'up' ? Lang::_get('migrate.description') :  Lang::_get('migrate.description-rollback'),
+                $type === 'up' ? 'php jump migrate' : 'php jump migrate:rollback',
             );
         }
 
@@ -166,6 +166,7 @@ class Actions extends Printer
         }
 
         $handler->getMigrationsFiles();
+        $handler->runQueries($type);
 
         return '';
     }

@@ -6,6 +6,7 @@
         "server-start-in": "Servidor iniciando en {server}",
         "routes": "Listado de rutas disponibles",
         "migrate": "Ejecuta las migraciones.",
+        "migrate-rollback": "Elimina las migraciones del ultimo batch.",
         "make": {
             "migration": "Crea una nueva migración."
         }
@@ -25,6 +26,7 @@
     },
     "migrate": {
         "description": "Ejecuta las migraciones en la base de datos",
+        "description-rollback": "Hace rollback del ultimo batch en la base de datos",
         "make-description": "Crea una nueva migración",
         "name": "Nombre de la tabla (En plural). También puede ser el nombre completo de la migración.",
         "required-name": "Debe especificar el nombre de la tabla o migración.",

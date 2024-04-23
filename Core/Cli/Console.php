@@ -49,7 +49,9 @@ class Console extends Printer
             'list' => Lang::_get('console.list'),
             'serve' => Lang::_get('console.serve'),
             'routes' => Lang::_get('console.routes'),
+
             'migrate' => Lang::_get('console.migrate'),
+            'migrate:rollback' => Lang::_get('console.migrate-rollback'),
             'make:migration' => Lang::_get('console.make.migration'),
         ];
     }
@@ -73,6 +75,7 @@ class Console extends Printer
             'serve' => $actions->serve($isHelp),
             'routes' => $actions->routes($isHelp),
             'migrate' => $actions->migrate($isHelp),
+            'migrate:rollback' => $actions->migrate($isHelp, 'down'),
 
             'make:migration' => $actions->makeMigration($isHelp, $this->cleanArgsActions()),
             default => '',
