@@ -7,7 +7,7 @@ class MigratePostgresSQL extends PostgresSQL
     /**
      * SQL a generar
      */
-    protected string $sql = '{name} {type} {restrict} {default} {key}';
+    protected string $sql = '[name] [type] [restrict] [default] [restrictionKey]';
 
     /**
      * Alter SQL
@@ -23,8 +23,8 @@ class MigratePostgresSQL extends PostgresSQL
      */
     public function bigInt(string $name, bool $null = false): static
     {
-        $this->sql .= str_replace(
-            ['{name}', '{type}', '{restrict}'],
+        $this->sql = str_replace(
+            ['[name]', '[type]', '[restrict]'],
             [$name, 'BIGINT', $null ? 'NULL' : 'NOT NULL'],
             $this->sql
         );
@@ -40,7 +40,7 @@ class MigratePostgresSQL extends PostgresSQL
     public function nullable(): static
     {
         $this->sql = str_replace(
-            ['{restrict}', 'NOT NULL'],
+            ['[restrict]', 'NOT NULL'],
             ['NULL', 'NULL'],
             $this->sql
         );
@@ -53,7 +53,7 @@ class MigratePostgresSQL extends PostgresSQL
     public function primaryKey(): static
     {
         $this->sql = str_replace(
-            ['{key}'],
+            ['[restrictionKey]'],
             ['PRIMARY KEY'],
             $this->sql
         );
@@ -68,18 +68,50 @@ class MigratePostgresSQL extends PostgresSQL
      */
     public function id(): static
     {
-        $this->bigInt('id');
-        $this->sql = trim($this->sql, ',') . ' PRIMARY KEY,';
+        $this->bigInt('id')->primaryKey();
         return $this;
     }
 
     /**
      * Genera un varchar
      */
-    public function varchar(string $name, int $length = 255, $null = false): static
+    public function string(string $name, int $length = 255, $null = false): static
     {
-        $this->sql .= "{$name} VARCHAR({$length}) ";
-        $this->sql .= $null ? 'NULL,' : 'NOT NULL,';
+        $this->sql = str_replace(
+            ['[name]', '[type]', '[restrict]'],
+            [$name, "VARCHAR($length)", $null ? 'NULL' : 'NOT NULL'],
+            $this->sql
+        );
+
+        return $this;
+    }
+
+    /**
+     * SQL final
+     */
+    public function toSQL(): string
+    {
+        return trim(str_replace(
+            ['[name]', '[type]', '[restrict]', '[default]', '[restrictionKey]'],
+            ['', '', '', '', '', ''],
+            $this->sql
+        ));
+    }
+
+    /**
+     * Obtiene las alteraciones al SQL
+     */
+    public function getAlterSql(): array
+    {
+        return $this->alterSql;
+    }
+
+    /**
+     * Restablece el SQL
+     */
+    public function reset(): static
+    {
+        $this->sql = '[name] [type] [restrict] [default] [restrictionKey]';
         return $this;
     }
 }

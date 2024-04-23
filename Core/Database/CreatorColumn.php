@@ -7,11 +7,6 @@ use Core\Database\Driver\MigratePostgresSQL;
 class CreatorColumn
 {
     /**
-     * Creator
-     */
-    private MigratePostgresSQL $creator;
-
-    /**
      * Constructor
      */
     public function __construct(
@@ -28,7 +23,7 @@ class CreatorColumn
      */
     public function bigInt(string $name): static
     {
-        $this->creator = $this->driver->bigInt($name);
+        $this->driver->bigInt($name);
         return $this;
     }
 
@@ -37,7 +32,7 @@ class CreatorColumn
      */
     public function nullable(): static
     {
-        $this->creator = $this->driver->nullable();
+        $this->driver->nullable();
         return $this;
     }
 
@@ -46,17 +41,43 @@ class CreatorColumn
      */
     public function primaryKey(): static
     {
-        $this->creator = $this->driver->primaryKey();
+        $this->driver->primaryKey();
+        return $this;
+    }
+
+    /**
+     * ID en bigInt
+     */
+    public function id(): static
+    {
+        $this->driver->bigInt('id')->primaryKey();
+        return $this;
+    }
+
+    /**
+     * Crea un Varchar
+     */
+    public function string(string $name, int $length = 255, $null = false): static
+    {
+        $this->driver->string($name, $length, $null);
         return $this;
     }
 
     /**
      * Obtiene el creator column
-     *
-     * @return MigratePostgresSQL
      */
-    public function _get(): MigratePostgresSQL
+    public function _get(): string
     {
-        return $this->creator;
+        $sql = $this->driver->toSQL();
+        $this->driver->reset();
+        return $sql;
+    }
+
+    /**
+     * Alteraciones al SQL
+     */
+    public function getAlterSql(): array
+    {
+        return $this->driver->getAlterSql();
     }
 }

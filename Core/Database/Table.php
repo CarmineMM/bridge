@@ -16,6 +16,11 @@ class Table
     private string $sql = '';
 
     /**
+     * Alteraciones a la trabla
+     */
+    private array $alterSql = [];
+
+    /**
      * Conexión en la lista de configuraciones
      */
     protected ?string $connection = null;
@@ -34,6 +39,11 @@ class Table
      * Creador de columnas
      */
     private ?CreatorColumn $creatorColumn = null;
+
+    /**
+     * Nombre de la tabla
+     */
+    protected string $table_name = '';
 
     /**
      * Boot method
@@ -59,9 +69,13 @@ class Table
      * @param string $table_name
      * @return static
      */
-    protected function table(string $table_name): static
+    protected function table(string $table_name = ''): static
     {
-        $this->sql = "CREATE TABLE IF NOT EXISTS {$table_name} ({columns})";
+        if (!empty($table_name)) {
+            $this->table_name = $table_name;
+        }
+
+        $this->sql = "CREATE TABLE IF NOT EXISTS {$this->table_name} ([columns]);";
         return $this;
     }
 
@@ -70,7 +84,18 @@ class Table
      */
     protected function column(callable $call): static
     {
-        $this->columnsCreated[] = $call($this->creatorColumn);
+        $callable = $call($this->creatorColumn);
+        $this->columnsCreated[] = $callable->_get();
+        $this->alterSql = array_merge($this->alterSql, $callable->getAlterSql());
         return $this;
+    }
+
+    /**
+     * Crea el SQL final
+     */
+    public function createSql(): string
+    {
+        $this->sql = str_replace('[columns]', implode(', ', $this->columnsCreated), $this->sql);
+        return $this->sql;
     }
 }

@@ -131,4 +131,13 @@ class CarryOut
     {
         return $this->sql;
     }
+
+    /**
+     * Restablece el SQL
+     */
+    public function reset(): static
+    {
+        $this->sql = '';
+        return $this;
+    }
 }

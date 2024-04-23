@@ -10,9 +10,8 @@ class CreateUsersTable extends \Core\Database\Table implements \Core\Implements\
     public function up(): MigrateTable
     {
         return $this->table('users')
-            ->column(
-                fn (CreatorColumn $column) => $column->bigInt('id')->primaryKey()
-            );
+            ->column(fn (CreatorColumn $column) => $column->id())
+            ->column(fn (CreatorColumn $column) => $column->string('name', 100));
     }
 
     public function down(): MigrateTable
