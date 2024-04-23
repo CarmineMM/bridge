@@ -11,7 +11,7 @@ class CreateUsersTable extends \Core\Database\Table implements \Core\Implements\
     {
         return $this->table('users')
             ->column(fn (CreatorColumn $column) => $column->id())
-            ->column(fn (CreatorColumn $column) => $column->string('name', 100));
+            ->column(fn (CreatorColumn $column) => $column->string('name', 100)->comment('nombre del usuario'));
     }
 
     public function down(): MigrateTable

@@ -15,6 +15,11 @@ class MigratePostgresSQL extends PostgresSQL
     private array $alterSql = [];
 
     /**
+     * Nombre de la columna
+     */
+    private string $columnName = '';
+
+    /**
      * Genera un primary key
      *
      * @param string $name Nombre de la columna
@@ -23,6 +28,8 @@ class MigratePostgresSQL extends PostgresSQL
      */
     public function bigInt(string $name, bool $null = false): static
     {
+        $this->columnName = $name;
+
         $this->sql = str_replace(
             ['[name]', '[type]', '[restrict]'],
             [$name, 'BIGINT', $null ? 'NULL' : 'NOT NULL'],
@@ -77,6 +84,8 @@ class MigratePostgresSQL extends PostgresSQL
      */
     public function string(string $name, int $length = 255, $null = false): static
     {
+        $this->columnName = $name;
+
         $this->sql = str_replace(
             ['[name]', '[type]', '[restrict]'],
             [$name, "VARCHAR($length)", $null ? 'NULL' : 'NOT NULL'],
@@ -112,6 +121,15 @@ class MigratePostgresSQL extends PostgresSQL
     public function reset(): static
     {
         $this->sql = '[name] [type] [restrict] [default] [restrictionKey]';
+        return $this;
+    }
+
+    /**
+     * Comentarios sobre la columna
+     */
+    public function comment(string $comment, string $table_name): static
+    {
+        $this->alterSql[] = "COMMENT ON COLUMN {$table_name}.{$this->columnName} IS '{$comment}';";
         return $this;
     }
 }

@@ -13,9 +13,24 @@ class CreatorColumn
         /**
          * Driver
          */
-        private MigratePostgresSQL $driver
+        private MigratePostgresSQL $driver,
+        /**
+         * Nombre de la tabla sobre la que se crean las columnas
+         */
+        private string $table_name = ''
     ) {
         //...
+    }
+
+    /**
+     * Establece el nombre de la tabla
+     *
+     * @param string $table
+     * @return void
+     */
+    public function setTableName(string $table): void
+    {
+        $this->table_name = $table;
     }
 
     /**
@@ -79,5 +94,14 @@ class CreatorColumn
     public function getAlterSql(): array
     {
         return $this->driver->getAlterSql();
+    }
+
+    /**
+     * Comentario sobre la columna
+     */
+    public function comment(string $comment): static
+    {
+        $this->driver->comment($comment, $this->table_name);
+        return $this;
     }
 }

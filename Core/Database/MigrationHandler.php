@@ -49,8 +49,9 @@ class MigrationHandler implements DatabaseMigrations
             $instance->boot();
             $instance->up();
             $sql = $instance->createSql();
+            // $return = $instance->driver->query($sql);
 
-            dump($sql);
+            // dump($return);
         }
     }
 }

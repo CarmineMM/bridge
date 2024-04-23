@@ -140,4 +140,16 @@ class CarryOut
         $this->sql = '';
         return $this;
     }
+
+    /**
+     * Ejecuta una query manualmente
+     *
+     * @param string $query
+     * @return mixed El retorno puede estar condicionado a la query requerida
+     */
+    public function query(string $query): mixed
+    {
+        $this->sql = $query;
+        return $this->exec('manually', $this->model->connection, []);
+    }
 }

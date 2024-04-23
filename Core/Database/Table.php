@@ -16,7 +16,7 @@ class Table
     private string $sql = '';
 
     /**
-     * Alteraciones a la trabla
+     * Alteraciones a la tabla
      */
     private array $alterSql = [];
 
@@ -28,7 +28,7 @@ class Table
     /**
      * Driver de conexión
      */
-    protected ?MigratePostgresSQL $driver = null;
+    public ?MigratePostgresSQL $driver = null;
 
     /**
      * Listado del SQL para crear columnas
@@ -76,6 +76,7 @@ class Table
         }
 
         $this->sql = "CREATE TABLE IF NOT EXISTS {$this->table_name} ([columns]);";
+        $this->creatorColumn->setTableName($this->table_name);
         return $this;
     }
 
@@ -96,6 +97,7 @@ class Table
     public function createSql(): string
     {
         $this->sql = str_replace('[columns]', implode(', ', $this->columnsCreated), $this->sql);
+        $this->sql .= implode(' ', $this->alterSql);
         return $this->sql;
     }
 }
