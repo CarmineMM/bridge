@@ -20,11 +20,7 @@ class MigratePostgresSQL extends PostgresSQL
     private string $columnName = '';
 
     /**
-     * Genera un primary key
-     *
-     * @param string $name Nombre de la columna
-     * @param bool $null 
-     * @return static
+     * Genera un BigInt
      */
     public function bigInt(string $name, bool $null = false): static
     {
@@ -33,6 +29,22 @@ class MigratePostgresSQL extends PostgresSQL
         $this->sql = str_replace(
             ['[name]', '[type]', '[restrict]'],
             [$name, 'BIGINT', $null ? 'NULL' : 'NOT NULL'],
+            $this->sql
+        );
+
+        return $this;
+    }
+
+    /**
+     * Genera un BigInt
+     */
+    public function bigSerial(string $name, bool $null = false): static
+    {
+        $this->columnName = $name;
+
+        $this->sql = str_replace(
+            ['[name]', '[type]', '[restrict]'],
+            [$name, 'BIGSERIAL', $null ? 'NULL' : 'NOT NULL'],
             $this->sql
         );
 
@@ -75,8 +87,7 @@ class MigratePostgresSQL extends PostgresSQL
      */
     public function id(): static
     {
-        $this->bigInt('id')->primaryKey();
-        return $this;
+        return $this->bigSerial('id')->primaryKey();
     }
 
     /**

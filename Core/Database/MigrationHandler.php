@@ -2,6 +2,7 @@
 
 namespace Core\Database;
 
+use Core\Database\Base\DB;
 use Core\Implements\DatabaseMigrations;
 use Database\Migrations;
 
@@ -30,6 +31,7 @@ class MigrationHandler implements DatabaseMigrations
         $migrationTable = new \Core\Database\Base\CreateMigrationTable();
         $migrationTable->boot();
         $migrationTable->up();
+        $migrateDb = DB::make('migrations');
 
         foreach ($this->migrations as $instance) {
             $type === 'up' ? $instance['instance']->up() : $instance['instance']->down();

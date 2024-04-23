@@ -101,7 +101,16 @@ class CreatorColumn
      */
     public function comment(string $comment): static
     {
-        $this->driver->comment($comment, $this->table_name);
+        $this->driver?->comment($comment, $this->table_name);
+        return $this;
+    }
+
+    /**
+     * BigSerial. (Solo disponible para PostgresSQL).
+     */
+    public function bigSerial(string $name, bool $null = false): static
+    {
+        $this->driver?->bigSerial($name, $null);
         return $this;
     }
 }
