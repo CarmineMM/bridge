@@ -145,6 +145,52 @@ class MigratePostgresSQL extends PostgresSQL
     }
 
     /**
+     * Establece un valor por default
+     */
+    public function default(string|int $default): static
+    {
+        $this->sql = str_replace(
+            ['[default]'],
+            ["DEFAULT $default"],
+            $this->sql
+        );
+
+        return $this;
+    }
+
+    /**
+     * Crea un campo timestamp
+     */
+    public function timestamp(string $name, bool $null = false): static
+    {
+        $this->columnName = $name;
+
+        $this->sql = str_replace(
+            ['[name]', '[type]', '[restrict]'],
+            [$name, 'TIMESTAMP', $null ? 'NULL' : 'NOT NULL'],
+            $this->sql
+        );
+
+        return $this;
+    }
+
+    /**
+     * Created at y updated at
+     */
+    public function timestamps(string $created_at = 'created_at', string $updated_at = 'updated_at'): static
+    {
+        if (!empty($created_at)) {
+            $this->timestamp($created_at, false)->default('CURRENT_TIMESTAMP');
+        }
+
+        if (!empty($updated_at)) {
+            $this->timestamp($updated_at, false)->default('CURRENT_TIMESTAMP');
+        }
+
+        return $this;
+    }
+
+    /**
      * Ejecutar la query, (Espacio inseguro, no usar en producción)
      */
     public function runQuery(string $sql): void

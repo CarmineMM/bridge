@@ -113,4 +113,31 @@ class CreatorColumn
         $this->driver?->bigSerial($name, $null);
         return $this;
     }
+
+    /**
+     * Agrega un campo de tipo timestamp
+     */
+    public function timestamp(string $name, bool $null = false): static
+    {
+        $this->driver?->timestamp($name, $null);
+        return $this;
+    }
+
+    /**
+     * Agrega un campo de tipo timestamp
+     */
+    public function timestamps(string $created_at = 'created_at', string $updated_at = 'updated_at'): static
+    {
+        $this->driver?->timestamps($created_at, $updated_at);
+        return $this;
+    }
+
+    /**
+     * Asigna un default
+     */
+    public function default(string|int $default): static
+    {
+        $this->driver?->default($default);
+        return $this;
+    }
 }

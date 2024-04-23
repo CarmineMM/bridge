@@ -32,9 +32,14 @@ class MigrationHandler implements DatabaseMigrations
         $migrationTable->boot();
         $migrationTable->up();
         $migrateDb = DB::make('migrations');
+        $migrationList = $migrateDb->all();
 
         foreach ($this->migrations as $instance) {
-            $type === 'up' ? $instance['instance']->up() : $instance['instance']->down();
+            if ($type === 'up') {
+                $instance['instance']->up();
+            } else if ($type === 'down') {
+                $instance['instance']->down();
+            }
 
             $sql = $instance['instance']->createSql();
             $instance['instance']->driver->runQuery($sql);
