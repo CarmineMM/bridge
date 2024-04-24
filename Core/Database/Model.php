@@ -175,11 +175,12 @@ class Model
 
     /**
      * Crea un nuevo registro
+     * 
+     * @return array Devuelve el elemento creado
      */
-    public function create(array $data): static
+    public function create(array $data): array
     {
-        $this->driver->create($data, $this->fillable, $this->casts);
-        return $this;
+        return $this->driver->create($data, $this->fillable, $this->casts);
     }
 
     /**
@@ -189,10 +190,9 @@ class Model
      * 
      * @return array de igual forma que el método "create", este devuelve los placeholders a insertar.
      */
-    public function insert(array $data): static
+    public function insert(array $data): array
     {
-        $this->driver->insert($data);
-        return $this;
+        return $this->driver->insert($data);
     }
 
     /**
@@ -201,5 +201,15 @@ class Model
     public function toSQL(): string
     {
         return $this->driver->toSQL();
+    }
+
+    /**
+     * Elimina un elemento(s)
+     * 
+     * @return array Devuelve los id de los elementos eliminados
+     */
+    public function delete(string $where = '', string|int $value = ''): array
+    {
+        return $this->driver->delete($where, $value);
     }
 }

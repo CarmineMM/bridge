@@ -121,4 +121,18 @@ class SQLBaseDriver extends CarryOut
 
         return $values;
     }
+
+    /**
+     * Elimina un registro
+     */
+    public function delete(string $where = '', string|int $value = ''): array
+    {
+        if ($where && $value) {
+            $this->where($where, $value);
+        }
+
+        $this->instance('delete');
+
+        return [];
+    }
 }

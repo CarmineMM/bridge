@@ -2,6 +2,7 @@
 
 namespace Core\Cli;
 
+use Core\Foundation\Application;
 use Core\Foundation\Kernel;
 
 /**
@@ -12,7 +13,7 @@ class Printer
     /**
      * Version del CLI
      */
-    private $versionCli = '1.2.0';
+    private $versionCli = '1.2.1';
 
     /**
      * Colores de letra
@@ -260,8 +261,8 @@ class Printer
      */
     public function toPrint(string $toPrint = ''): string
     {
-        echo "\e[0m - CLI version " . $this->versionCli;
-        // echo "\nPor: \e[0;36m". self::frameworkDeveloper . "\e[0m\n\n";
+        echo "\e[0;36m" . Application::FrameworkName . ' V ' . Application::FrameworkVersion . "\e[0m";
+        echo "- \e[0m - CLI V " . $this->versionCli;
         echo "\n\n";
 
         print($toPrint ? $toPrint : $this->sentence_to_print);

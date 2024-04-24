@@ -77,6 +77,8 @@ class MigrationHandler implements DatabaseMigrations
 
             if ($type === 'up') {
                 $instance['instance']->up();
+            } else if ($type === 'down') {
+                $instance['instance']->down();
             }
 
             $sql = $instance['instance']->createSql();
@@ -88,11 +90,14 @@ class MigrationHandler implements DatabaseMigrations
                     'batch'     => $next_batch
                 ]);
 
-                $printer->color_green('Migrate: ' . $instance['file_name'])->toPrint();
+                $printer->color_cyan("\n- Migrate: " . $instance['file_name'])->toPrint();
+            } else if ($type === 'down') {
+                $migrateDb->delete('migration', $instance['file_name']);
+                $printer->color_cyan("\n- Rollback: " . $instance['file_name'])->toPrint();
             }
         }
 
-        $printer->color_green(Lang::_get('migrate.completed'))->toPrint();
+        $printer->color_green("\n\n" . Lang::_get('migrate.completed'))->toPrint();
     }
 
     /**

@@ -47,11 +47,7 @@ class CarryOut
             $startMemory = memory_get_usage();
         }
 
-        // $this->pdo->beginTransaction();
-
-        if (strpos($this->sql, 'SELECT') !== false) {
-            $this->prepareSelect();
-        }
+        $this->prepareSql();
 
         $query = $this->pdo->prepare($this->sql);
         $data = [];
@@ -59,7 +55,6 @@ class CarryOut
         try {
             $query->execute($params);
         } catch (\Throwable $th) {
-            // $this->pdo->rollBack();
             // 0. El tipo del error
             // 1. Código del error
             // 2. Mensaje del error
@@ -75,6 +70,13 @@ class CarryOut
         if (strpos($this->sql, 'INSERT') !== false) {
             $data = $this->data;
 
+            if (!Config::get('framework.consoleMode', false)) {
+                $data[$this->model->getPrimaryKey()] = $this->pdo->lastInsertId();
+            }
+        }
+
+        // DELETE
+        if (strpos($this->sql, 'DELETE') !== false) {
             if (!Config::get('framework.consoleMode', false)) {
                 $data[$this->model->getPrimaryKey()] = $this->pdo->lastInsertId();
             }
@@ -110,7 +112,7 @@ class CarryOut
      *
      * @return void
      */
-    private function prepareSelect(): void
+    private function prepareSql(): void
     {
         $columns = implode(', ', $this->columns);
         $this->sql = str_replace('{column}', $columns, $this->sql);

@@ -106,4 +106,17 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
             $values
         );
     }
+
+    /**
+     * Elimina un archivo
+     */
+    public function delete(string $where = '', string|int $value = ''): array
+    {
+        parent::delete($where, $value);
+
+        return $this->exec(
+            'pgsql',
+            $this->model->connection
+        );
+    }
 }
