@@ -87,4 +87,22 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
             $values
         );
     }
+
+    /**
+     * El insert sencillamente realiza un insert de los datos,
+     * Sin embargo, no ejecuta los casts ni tiene en cuenta los fillable.
+     * Esencialmente es un método potencialmente peligroso.
+     * 
+     * @return array de igual forma que el método "create", este devuelve los placeholders a insertar.
+     */
+    public function insert(array $data): array
+    {
+        $values = parent::insert($data);
+
+        return $this->exec(
+            'pgsql',
+            $this->model->connection,
+            $values
+        );
+    }
 }

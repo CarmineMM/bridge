@@ -23,18 +23,47 @@ class MigrationHandler implements DatabaseMigrations
     private array $migrations = [];
 
     /**
+     * Crear la tabla de migraciones
+     */
+    public function createMigrationsTable(): array
+    {
+        // Crea la tabla de control de migraciones
+        $migrationTable = new \Core\Database\Base\CreateMigrationsTable;
+        $migrationTable->boot();
+        $migrationTable->up();
+        $sqlNewMigrationsTable = $migrationTable->createSql();
+        $migrationTable->driver->runQuery($sqlNewMigrationsTable);
+
+        $migrateDb = DB::make('migrations');
+        $migrationList = $migrateDb->all();
+        $batch = $migrationList->count() < 1 ? 1 : $migrationList->get('batch') + 1;
+
+        return [
+            'migrationList' => $migrationList,
+            'batch'         => $batch,
+            'migrateDb'     => $migrateDb,
+        ];
+    }
+
+    /**
      * Ejecuta las Queries de migraciones
      */
     public function runQueries(string $type = 'up')
     {
         // Crear la tabla de migraciones
-        $migrationTable = new \Core\Database\Base\CreateMigrationTable();
-        $migrationTable->boot();
-        $migrationTable->up();
-        $migrateDb = DB::make('migrations');
-        $migrationList = $migrateDb->all();
+        [
+            'migrationList' => $migrationList,
+            'batch' => $batch,
+            'migrateDb' => $migrateDb
+        ] = $this->createMigrationsTable();
+
 
         foreach ($this->migrations as $instance) {
+            // No generar una nueva migración si ya existe
+            if ($migrationList->where('migration', $instance['file_name'])) {
+                continue;
+            }
+
             if ($type === 'up') {
                 $instance['instance']->up();
             } else if ($type === 'down') {
@@ -43,6 +72,11 @@ class MigrationHandler implements DatabaseMigrations
 
             $sql = $instance['instance']->createSql();
             $instance['instance']->driver->runQuery($sql);
+
+            $migrateDb->insert([
+                'migration' => $instance['file_name'],
+                'batch'     => $batch
+            ]);
         }
     }
 

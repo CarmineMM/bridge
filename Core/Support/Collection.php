@@ -204,4 +204,27 @@ class Collection
 
         return trim($attributes, ' ');
     }
+
+    /**
+     * Busca en los elementos una coincidencia,
+     * si no la encuentra regresa null
+     * 
+     * @return mixed Null en caso de no encontrar coincidencia
+     */
+    public function where(string $name, mixed $value): mixed
+    {
+        $get = $this->get($name);
+        if ($get === $value) {
+            return $get;
+        }
+        return null;
+    }
+
+    /**
+     * Realiza un conteo en los datos
+     */
+    public function count(): int
+    {
+        return count($this->data);
+    }
 }

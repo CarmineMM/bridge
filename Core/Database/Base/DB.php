@@ -27,8 +27,10 @@ class DB extends Model
     /**
      * Make a DB instance
      */
-    public static function make(string $table_name = '', ?string $connection = null): static
-    {
+    public static function make(
+        string $table_name = '',
+        ?string $connection = null
+    ): static {
         return new static($connection, $table_name);
     }
 }

@@ -98,4 +98,31 @@ class SQLBaseDriver extends CarryOut
 
         return $values;
     }
+
+    /**
+     * El insert sencillamente realiza un insert de los datos,
+     * Sin embargo, no ejecuta los casts ni tiene en cuenta los fillable.
+     * Esencialmente es un método potencialmente peligroso.
+     * 
+     * @return array de igual forma que el método "create", este devuelve los placeholders a insertar.
+     */
+    public function insert(array $data): array
+    {
+        $this->instance('insert');
+
+        $keys = [];
+        $values = [];
+        $placeholders = [];
+
+        foreach ($data as $key => $value) {
+            $keys[] = $key;
+            $values[] = $value;
+            $placeholders[] = '?';
+        }
+
+        $this->sql = str_replace('{keys}', implode(', ', $keys), $this->sql);
+        $this->sql = str_replace('{values}', implode(', ', $placeholders), $this->sql);
+
+        return $values;
+    }
 }

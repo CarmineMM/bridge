@@ -170,7 +170,7 @@ class Model
      */
     public function query(string $query): array
     {
-        return $this->driver->excQuery($query);
+        return $this->driver->query($query);
     }
 
     /**
@@ -179,6 +179,19 @@ class Model
     public function create(array $data): static
     {
         $this->driver->create($data, $this->fillable, $this->casts);
+        return $this;
+    }
+
+    /**
+     * El insert sencillamente realiza un insert de los datos,
+     * Sin embargo, no ejecuta los casts ni tiene en cuenta los fillable.
+     * Esencialmente es un método potencialmente peligroso.
+     * 
+     * @return array de igual forma que el método "create", este devuelve los placeholders a insertar.
+     */
+    public function insert(array $data): static
+    {
+        $this->driver->insert($data);
         return $this;
     }
 

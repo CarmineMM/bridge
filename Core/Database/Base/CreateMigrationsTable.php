@@ -5,7 +5,7 @@ namespace Core\Database\Base;
 use Core\Database\CreatorColumn;
 use Core\Implements\MigrateTable;
 
-class CreateMigrationTable extends \Core\Database\Table implements MigrateTable
+class CreateMigrationsTable extends \Core\Database\Table implements MigrateTable
 {
     public function up(): MigrateTable
     {
