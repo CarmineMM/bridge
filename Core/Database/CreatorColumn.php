@@ -65,16 +65,16 @@ class CreatorColumn
      */
     public function id(): static
     {
-        $this->driver->bigInt('id')->primaryKey();
+        $this->driver->bigSerial('id')->primaryKey();
         return $this;
     }
 
     /**
      * Crea un Varchar
      */
-    public function string(string $name, int $length = 255, $null = false): static
+    public function string(string $name, int $length = 255): static
     {
-        $this->driver->string($name, $length, $null);
+        $this->driver->string($name, $length);
         return $this;
     }
 
@@ -108,18 +108,18 @@ class CreatorColumn
     /**
      * BigSerial. (Solo disponible para PostgresSQL).
      */
-    public function bigSerial(string $name, bool $null = false): static
+    public function bigSerial(string $name): static
     {
-        $this->driver?->bigSerial($name, $null);
+        $this->driver?->bigSerial($name);
         return $this;
     }
 
     /**
      * Agrega un campo de tipo timestamp
      */
-    public function timestamp(string $name, bool $null = false): static
+    public function timestamp(string $name): static
     {
-        $this->driver?->timestamp($name, $null);
+        $this->driver?->timestamp($name);
         return $this;
     }
 
@@ -138,6 +138,15 @@ class CreatorColumn
     public function default(string|int $default): static
     {
         $this->driver?->default($default);
+        return $this;
+    }
+
+    /**
+     * Asigna un default
+     */
+    public function required(): static
+    {
+        $this->driver?->required();
         return $this;
     }
 }

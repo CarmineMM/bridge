@@ -25,7 +25,10 @@ class Debug
      */
     public static function dump(...$vars): void
     {
-        echo '<pre>';
+        $backtrace = debug_backtrace();
+        $file = $backtrace[0]['file'];
+        $line = $backtrace[0]['line'];
+
         foreach ($vars as $var) {
             if ($var instanceof Collection) {
                 var_dump([

@@ -73,16 +73,15 @@ class CarryOut
 
         // Insert
         if (strpos($this->sql, 'INSERT') !== false) {
-            $data = [
-                $this->model->getPrimaryKey() => $this->pdo->lastInsertId(
-                    $this->model->getPrimaryKey()
-                ),
-                ...$this->data,
-            ];
+            $data = $this->data;
+
+            if (!Config::get('framework.consoleMode', false)) {
+                $data[$this->model->getPrimaryKey()] = $this->pdo->lastInsertId();
+            }
         }
 
         // Debug
-        if (Config::get('app.debug', false)) {
+        if (Config::get('app.debug', false) && !Config::get('framework.consoleMode', false)) {
             $context = new Context;
             $context->setState(
                 'bridge:query',

@@ -22,13 +22,13 @@ class MigratePostgresSQL extends PostgresSQL
     /**
      * Genera un BigInt
      */
-    public function bigInt(string $name, bool $null = false): static
+    public function bigInt(string $name): static
     {
         $this->columnName = $name;
 
         $this->sql = str_replace(
-            ['[name]', '[type]', '[restrict]'],
-            [$name, 'BIGINT', $null ? 'NULL' : 'NOT NULL'],
+            ['[name]', '[type]'],
+            [$name, 'BIGINT'],
             $this->sql
         );
 
@@ -38,13 +38,13 @@ class MigratePostgresSQL extends PostgresSQL
     /**
      * Genera un BigInt
      */
-    public function bigSerial(string $name, bool $null = false): static
+    public function bigSerial(string $name): static
     {
         $this->columnName = $name;
 
         $this->sql = str_replace(
-            ['[name]', '[type]', '[restrict]'],
-            [$name, 'BIGSERIAL', $null ? 'NULL' : 'NOT NULL'],
+            ['[name]', '[type]'],
+            [$name, 'BIGSERIAL'],
             $this->sql
         );
 
@@ -63,6 +63,22 @@ class MigratePostgresSQL extends PostgresSQL
             ['NULL', 'NULL'],
             $this->sql
         );
+        return $this;
+    }
+
+    /**
+     * Permite nulos
+     *
+     * @return static
+     */
+    public function required(): static
+    {
+        $this->sql = str_replace(
+            ['[restrict]'],
+            ['NOT NULL'],
+            $this->sql
+        );
+
         return $this;
     }
 
@@ -93,13 +109,13 @@ class MigratePostgresSQL extends PostgresSQL
     /**
      * Genera un varchar
      */
-    public function string(string $name, int $length = 255, $null = false): static
+    public function string(string $name, int $length = 255): static
     {
         $this->columnName = $name;
 
         $this->sql = str_replace(
-            ['[name]', '[type]', '[restrict]'],
-            [$name, "VARCHAR($length)", $null ? 'NULL' : 'NOT NULL'],
+            ['[name]', '[type]'],
+            [$name, "VARCHAR($length)"],
             $this->sql
         );
 
@@ -112,8 +128,8 @@ class MigratePostgresSQL extends PostgresSQL
     public function toSQL(): string
     {
         return trim(str_replace(
-            ['[name]', '[type]', '[restrict]', '[default]', '[restrictionKey]'],
-            ['', '', '', '', '', ''],
+            ['[name]', '[type]', '[default]', '[restrictionKey]', '[restrict]'],
+            ['', '', '', '', '', '', ''],
             $this->sql
         ));
     }
@@ -166,8 +182,8 @@ class MigratePostgresSQL extends PostgresSQL
         $this->columnName = $name;
 
         $this->sql = str_replace(
-            ['[name]', '[type]', '[restrict]'],
-            [$name, 'TIMESTAMP', $null ? 'NULL' : 'NOT NULL'],
+            ['[name]', '[type]'],
+            [$name, 'TIMESTAMP'],
             $this->sql
         );
 
