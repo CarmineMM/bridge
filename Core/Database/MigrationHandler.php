@@ -2,6 +2,7 @@
 
 namespace Core\Database;
 
+use Core\Cli\Printer;
 use Core\Database\Base\DB;
 use Core\Implements\DatabaseMigrations;
 use Database\Migrations;
@@ -48,7 +49,7 @@ class MigrationHandler implements DatabaseMigrations
     /**
      * Ejecuta las Queries de migraciones
      */
-    public function runQueries(string $type = 'up')
+    public function runQueries(string $type = 'up', Printer $printer)
     {
         // Crear la tabla de migraciones
         [
@@ -60,23 +61,27 @@ class MigrationHandler implements DatabaseMigrations
 
         foreach ($this->migrations as $instance) {
             // No generar una nueva migración si ya existe
-            if ($migrationList->where('migration', $instance['file_name'])) {
+            if ($migrationList->where('migration', $instance['file_name']) && $type === 'up') {
                 continue;
             }
 
             if ($type === 'up') {
                 $instance['instance']->up();
-            } else if ($type === 'down') {
+            } else if ($type === 'down' && $migrationList->where('migration', $instance['file_name'])) {
                 $instance['instance']->down();
             }
 
             $sql = $instance['instance']->createSql();
             $instance['instance']->driver->runQuery($sql);
 
-            $migrateDb->insert([
-                'migration' => $instance['file_name'],
-                'batch'     => $batch
-            ]);
+            if ($type === 'up') {
+                $migrateDb->insert([
+                    'migration' => $instance['file_name'],
+                    'batch'     => $batch
+                ]);
+
+                $printer->color_green('Migrate ' . $instance['file_name'])->toPrint();
+            }
         }
     }
 

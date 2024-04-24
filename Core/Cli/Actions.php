@@ -166,7 +166,7 @@ class Actions extends Printer
         }
 
         $handler->getMigrationsFiles();
-        $handler->runQueries($type);
+        $handler->runQueries($type, $this);
 
         return '';
     }
