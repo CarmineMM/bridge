@@ -18,8 +18,8 @@ class Collection
     /**
      * Construct
      *
-     * @param array $el Elementos mutables dentro de la clase
-     * @param bool $convertAttributes Defina si se convierten los atributos a parte del objeto
+     * @param array|object $data Elementos mutables dentro de la clase
+     * @param bool $canBeRefactor Defina si se puede restablecer con "origin"
      */
     public function __construct(
         public array|object $data = [],
@@ -209,15 +209,27 @@ class Collection
      * Busca en los elementos una coincidencia,
      * si no la encuentra regresa null
      * 
-     * @return mixed Null en caso de no encontrar coincidencia
+     * @return Collection
      */
-    public function where(string $name, mixed $value): mixed
+    public function where(string $name, mixed $value): static
     {
-        $get = $this->get($name);
-        if ($get === $value) {
-            return $get;
+        $finds = [];
+
+        if ($this->isAssoc()) {
+            $get = $this->get($name);
+
+            if ($get === $value) {
+                $finds[] = $get;
+            }
         }
-        return null;
+
+        foreach ($this->data as $item) {
+            if (isset($item[$name]) && $item[$name] === $value) {
+                $finds[] = $item;
+            }
+        }
+
+        return new Collection($finds);
     }
 
     /**
@@ -226,5 +238,13 @@ class Collection
     public function count(): int
     {
         return count($this->data);
+    }
+
+    /**
+     * Obtiene el primer elemento
+     */
+    public function first(): static
+    {
+        return new Collection($this->data[0] ?? [], false);
     }
 }

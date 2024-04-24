@@ -18,7 +18,7 @@ class SQLBaseDriver extends CarryOut
         'select' => 'SELECT {column} {innerQuery} FROM {table} {where} {group} {order} {limit} {offset}',
         'insert' => 'INSERT INTO {table} ({keys}) VALUES ({values})',
         //'update' => 'UPDATE %s SET %s',
-        //'delete' => 'DELETE FROM %s',
+        'delete' => 'DELETE FROM {table} {where}',
     ];
 
     /**
@@ -27,11 +27,9 @@ class SQLBaseDriver extends CarryOut
      * @param string $type
      * @return void
      */
-    protected function instance(string $type): void
+    protected function instance(string $type = ''): void
     {
-        if (!$this->sql) {
-            $this->sql = str_replace('{table}', $this->model->getTable(), $this->layout[$type]);
-        }
+        $this->sql = str_replace('{table}', $this->model->getTable(), $this->layout[$type]);
     }
 
     /**
@@ -51,11 +49,11 @@ class SQLBaseDriver extends CarryOut
      */
     public function where(string $column, string $sentence, string $three = ''): static
     {
-        $this->instance('select');
-
-        $this->sql = $three
-            ? str_replace('{where}', "WHERE {$column} {$sentence} {$three} {where}", $this->sql)
-            : str_replace('{where}', "WHERE {$column} = '{$sentence}' {where}", $this->sql);
+        foreach ($this->layout as $key => $value) {
+            $this->layout[$key] = $three
+                ? str_replace('{where}', "WHERE {$column} {$sentence} {$three} {where}", $value)
+                : str_replace('{where}', "WHERE {$column} = '{$sentence}' {where}", $value);
+        }
 
         return $this;
     }
@@ -65,8 +63,6 @@ class SQLBaseDriver extends CarryOut
      */
     public function orWhere(string $column, string $sentence, string $three = ''): static
     {
-        $this->instance('select');
-
         $this->sql = $three
             ? str_replace('{where}', "OR WHERE {$column} {$sentence} {$three} {where}", $this->sql)
             : str_replace('{where}', "OR WHERE {$column} = '{$sentence}' {where}", $this->sql);

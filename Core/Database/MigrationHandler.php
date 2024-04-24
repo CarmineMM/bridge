@@ -5,6 +5,7 @@ namespace Core\Database;
 use Core\Cli\Printer;
 use Core\Database\Base\DB;
 use Core\Implements\DatabaseMigrations;
+use Core\Translate\Lang;
 use Database\Migrations;
 
 class MigrationHandler implements DatabaseMigrations
@@ -37,11 +38,20 @@ class MigrationHandler implements DatabaseMigrations
 
         $migrateDb = DB::make('migrations');
         $migrationList = $migrateDb->all();
-        $batch = $migrationList->count() < 1 ? 1 : $migrationList->get('batch') + 1;
+        $current_batch = 0;
+
+        // Determinar el batch actual
+        foreach ($migrationList->toArray() as $migration) {
+            if ($migration['batch'] > $current_batch) {
+                $current_batch = $migration['batch'];
+            }
+        }
+
 
         return [
             'migrationList' => $migrationList,
-            'batch'         => $batch,
+            'next_batch'    => $current_batch + 1,
+            'current_batch' => $current_batch,
             'migrateDb'     => $migrateDb,
         ];
     }
@@ -54,21 +64,19 @@ class MigrationHandler implements DatabaseMigrations
         // Crear la tabla de migraciones
         [
             'migrationList' => $migrationList,
-            'batch' => $batch,
-            'migrateDb' => $migrateDb
+            'next_batch'    => $next_batch,
+            'current_batch' => $current_batch,
+            'migrateDb'     => $migrateDb
         ] = $this->createMigrationsTable();
-
 
         foreach ($this->migrations as $instance) {
             // No generar una nueva migración si ya existe
-            if ($migrationList->where('migration', $instance['file_name']) && $type === 'up') {
+            if ($migrationList->where('migration', $instance['file_name'])->count() > 0 && $type === 'up') {
                 continue;
             }
 
             if ($type === 'up') {
                 $instance['instance']->up();
-            } else if ($type === 'down' && $migrationList->where('migration', $instance['file_name'])) {
-                $instance['instance']->down();
             }
 
             $sql = $instance['instance']->createSql();
@@ -77,12 +85,14 @@ class MigrationHandler implements DatabaseMigrations
             if ($type === 'up') {
                 $migrateDb->insert([
                     'migration' => $instance['file_name'],
-                    'batch'     => $batch
+                    'batch'     => $next_batch
                 ]);
 
-                $printer->color_green('Migrate ' . $instance['file_name'])->toPrint();
+                $printer->color_green('Migrate: ' . $instance['file_name'])->toPrint();
             }
         }
+
+        $printer->color_green(Lang::_get('migrate.completed'))->toPrint();
     }
 
     /**

@@ -29,6 +29,7 @@ class Debug
         $file = $backtrace[0]['file'];
         $line = $backtrace[0]['line'];
 
+        echo '<pre>';
         foreach ($vars as $var) {
             if ($var instanceof Collection) {
                 var_dump([

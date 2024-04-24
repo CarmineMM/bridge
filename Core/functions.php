@@ -1,6 +1,7 @@
 <?php
 
 use Core\Foundation\Filesystem;
+use Core\Support\Collection;
 use Core\Support\Debug;
 
 if (!function_exists('__')) {
@@ -68,5 +69,15 @@ if (!function_exists('config')) {
     function config(string $key, mixed $default = null): mixed
     {
         return Core\Loaders\Config::get($key, $default);
+    }
+}
+
+if (!function_exists('collection')) {
+    /**
+     * Objectos collections
+     */
+    function collection(array|object $data): Collection
+    {
+        return new Collection($data);
     }
 }

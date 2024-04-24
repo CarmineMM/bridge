@@ -40,7 +40,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
      */
     public function all(array $columns = ['*']): array
     {
-        $this->sql = str_replace('{table}', $this->model->getTable(), $this->layout['select']);
+        $this->instance('select');
 
         $this->columns = $columns;
 
@@ -66,6 +66,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
      */
     public function get(array $columns = ['*']): array
     {
+        $this->instance('select');
         $this->columns = $columns;
 
         return $this->exec(
