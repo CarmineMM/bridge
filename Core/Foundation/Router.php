@@ -37,7 +37,8 @@ class Router extends Middlewares
             'name'       => $name,
             'middleware' => $middleware,
             'method'     => 'GET',
-            'rate_limit' => Config::get('security.rate_limit.limit', 60)
+            'rate_limit' => false,
+            'ban_time'   => false,
         ];
 
         self::$routes['GET'][] = self::$lastRoute;
@@ -60,7 +61,8 @@ class Router extends Middlewares
             'name'       => $name,
             'middleware' => $middleware,
             'method'     => 'POST',
-            'rate_limit' => Config::get('security.rate_limit.limit', 60)
+            'rate_limit' => false,
+            'ban_time'   => false,
         ];
 
         self::$routes['POST'][] = self::$lastRoute;
@@ -77,6 +79,26 @@ class Router extends Middlewares
     public function name(string $name): Router
     {
         return $this->__setProp('name', $name);
+    }
+
+    /**
+     * Establece un rate limit para la ruta
+     * 
+     * @param int $limit Cantidad de peticiones por minuto
+     */
+    public function rateLimit(int $limit): Router
+    {
+        return $this->__setProp('rate_limit', $limit);
+    }
+
+    /**
+     * Establece el tiempo de ban para la ruta
+     * 
+     * @param int $time El tiempo de ban en segundos
+     */
+    public function banTime(int $time): Router
+    {
+        return $this->__setProp('ban_time', $time);
     }
 
     /**
