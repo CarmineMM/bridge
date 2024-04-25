@@ -111,13 +111,15 @@ class Application
         if (!$isConsole) {
             // Este try esta vinculado al manejo de los controladores
             try {
-                $rateLimit = new RateLimit(
-                    Config::get('security.rate_limit.driver', 'session'),
-                    Config::get('security.rate_limit.limit', 60),
-                    Config::get('security.rate_limit.ban_time', 3600)
-                );
+                if (Config::get('security.rate_limit.enabled', true)) {
+                    $rateLimit = new RateLimit(
+                        Config::get('security.rate_limit.driver', 'session'),
+                        Config::get('security.rate_limit.limit', 60),
+                        Config::get('security.rate_limit.ban_time', 3600)
+                    );
 
-                $rateLimit->roadmap();
+                    $rateLimit->roadmap();
+                }
 
                 $route = $app->coincidenceRoute();
 

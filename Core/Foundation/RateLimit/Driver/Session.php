@@ -5,6 +5,7 @@ namespace Core\Foundation\RateLimit\Driver;
 use Core\Foundation\RateLimit\Base\RateLimitBaseDriver;
 use Core\Foundation\Request;
 use Core\Implements\RateLimitDriver;
+use Dotenv\Util\Regex;
 
 class Session extends RateLimitBaseDriver implements RateLimitDriver
 {
@@ -17,10 +18,8 @@ class Session extends RateLimitBaseDriver implements RateLimitDriver
      * Crea el registro por primera vez en caso de no existir.
      * En otras palabras para usuarios nuevos
      */
-    private function create(): void
+    private function create(Request $request): void
     {
-        $request = Request::make();
-
         $_SESSION[$this->key] = [
             'count'      => 0,
             'time'       => time() + $this->timeRoadmap,
@@ -34,14 +33,14 @@ class Session extends RateLimitBaseDriver implements RateLimitDriver
     /**
      * Verifica las peticiones, dispara una exception si se ha superado el limite
      */
-    public function check(): void
+    public function check(Request $request): void
     {
         if (!isset($_SESSION[$this->key])) {
-            $this->create();
+            $this->create($request);
             return;
         }
 
-        $this->reset();
+        $this->reset($request);
 
         if ($_SESSION[$this->key]['count'] >= $this->limit) {
             $this->banned();
@@ -64,14 +63,14 @@ class Session extends RateLimitBaseDriver implements RateLimitDriver
     /**
      * El reset verifica si ha pasado el tiempo de espera y reset el contador
      */
-    public function reset(): void
+    public function reset(Request $request): void
     {
         if (
             (time() > $_SESSION[$this->key]['time'] && $_SESSION[$this->key]['ban_until'] === false) ||
             (time() > $_SESSION[$this->key]['ban_until'] && $_SESSION[$this->key]['ban_until'] !== false)
         ) {
             unset($_SESSION[$this->key]);
-            $this->create();
+            $this->create($request);
         }
     }
 

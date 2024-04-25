@@ -36,7 +36,7 @@ return [
         /**
          * Cantidad de peticiones permitidas por minuto
          */
-        'limit' => 60,
+        'limit' => 2,
 
         /**
          * Los driver de manejo de rate limit
@@ -49,6 +49,6 @@ return [
         /**
          * Tiempo de ban expresado en segundos.
          */
-        'ban_time' => 3600
+        'ban_time' => 5
     ],
 ];

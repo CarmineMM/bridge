@@ -9,6 +9,9 @@ class RateLimitBaseDriver
      */
     protected int $timeRoadmap = 60 * 60; # Por minuto
 
+    /**
+     * Construct
+     */
     public function __construct(
         /**
          * Limite por Minuto
