@@ -129,6 +129,11 @@ class ExceptionHandle
         static::addExceptionList($error);
         $code = $error->getCode();
 
+        if ($code < 500 && $code >= 400) {
+            ExceptionHandle::isHttpExceptions($error, $through, $app);
+            return;
+        }
+
         Response::make()->setStatusCode($code > 550 || $code < 300 ? 500 : $code);
 
         Response::send();

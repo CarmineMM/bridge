@@ -14,19 +14,26 @@ class RateLimit
 
     /**
      * Driver
-     *
-     * @var integer
      */
-    private ?mixed $driver;
+    private ?Session $driver;
 
     /**
      * Construct
      */
-    public function __construct(string $useDriver)
+    public function __construct(string $useDriver, int $limit, int $banTime = 0)
     {
         $this->driver = match ($useDriver) {
-            'session' => new Session,
+            'session' => new Session($limit, $banTime),
             default => throw new \Exception("Driver {$useDriver} not found", 500),
         };
+    }
+
+    /**
+     * Verifica si el usuario ha alcanzado el limite de peticiones
+     */
+    public function roadmap(): void
+    {
+        $this->driver->check();
+        $this->driver->increment();
     }
 }

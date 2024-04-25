@@ -3,6 +3,7 @@
 namespace Core\Foundation;
 
 use Core\Exception\ExceptionHandle;
+use Core\Foundation\RateLimit\RateLimit;
 use Core\Loaders\Config;
 use Core\Loaders\Routes;
 use Core\Support\Collection;
@@ -108,10 +109,18 @@ class Application
         $app = new static($isConsole);
 
         if (!$isConsole) {
-            $route = $app->coincidenceRoute();
-
             // Este try esta vinculado al manejo de los controladores
             try {
+                $rateLimit = new RateLimit(
+                    Config::get('security.rate_limit.driver', 'session'),
+                    Config::get('security.rate_limit.limit', 60),
+                    Config::get('security.rate_limit.ban_time', 3600)
+                );
+
+                $rateLimit->roadmap();
+
+                $route = $app->coincidenceRoute();
+
                 $through = new CarryThrough($route);
 
                 // Try interno para manejos de excepciones HTTP

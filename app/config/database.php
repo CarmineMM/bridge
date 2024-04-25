@@ -11,7 +11,7 @@ return [
     /**
      * Controlador de migraciones de migraciones
      */
-    'migration_handler' => \Database\Migrations::class,
+    'migration_handler' => \Database\Migrator::class,
 
     /**
      * Listado de conexiones administrable por base de datos

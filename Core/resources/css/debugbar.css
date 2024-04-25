@@ -259,6 +259,10 @@
 	width: 100%;
 }
 
+.debug-handle p {
+	font-size: 1em;
+}
+
 .debug-handle table {
 	vertical-align: top;
 	display: table;

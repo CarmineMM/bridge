@@ -9,12 +9,12 @@ class {className} extends \Core\Database\Table implements MigrateTable
 { 
     public function up(): MigrateTable
     {
-        return $this->table({table})
+        return $this->table('{table}')
              ->column(fn (CreatorColumn $column) => $column->id());
     }
 
     public function down(): MigrateTable
     {
-        return $this->dropTable({table}):
+        return $this->dropTable('{table}');
     }
 }

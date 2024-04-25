@@ -15,5 +15,6 @@ return [
         400 => false,
         404 => false,
         429 => false,
+        500 => false,
     ],
 ];

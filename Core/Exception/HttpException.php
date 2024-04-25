@@ -17,6 +17,7 @@ class HttpException
     private array $listExceptionActions = [
         400 => 'use-internal',
         404 => 'use-internal',
+        429 => 'use-internal',
         500 => 'use-internal',
     ];
 

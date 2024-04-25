@@ -48,8 +48,8 @@ use Core\Loaders\Config;
 
 <body>
     <hgroup>
-        <h1>404</h1>
-        <p>Page Not Found</p>
+        <h1>429</h1>
+        <p>Rate limit exceeded</p>
     </hgroup>
 </body>
 
