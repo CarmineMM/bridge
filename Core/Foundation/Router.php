@@ -92,7 +92,8 @@ class Router extends Middlewares
     }
 
     /**
-     * Establece el tiempo de ban para la ruta
+     * Establece el tiempo de ban para la ruta,
+     * para que el ban time de resultado, a la ruta se le debe establecer un rate limit.
      * 
      * @param int $time El tiempo de ban en segundos
      */
