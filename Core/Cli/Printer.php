@@ -262,7 +262,7 @@ class Printer
     public function toPrint(string $toPrint = ''): string
     {
         echo "\e[0;36m" . Application::FrameworkName . ' V ' . Application::FrameworkVersion . "\e[0m";
-        echo "- \e[0m - CLI V " . $this->versionCli;
+        echo "\e[0m - CLI V " . $this->versionCli;
         echo "\n\n";
 
         print($toPrint ? $toPrint : $this->sentence_to_print);

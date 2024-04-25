@@ -177,7 +177,7 @@ class MigratePostgresSQL extends PostgresSQL
     /**
      * Crea un campo timestamp
      */
-    public function timestamp(string $name, bool $null = false): static
+    public function timestamp(string $name): static
     {
         $this->columnName = $name;
 
@@ -186,6 +186,110 @@ class MigratePostgresSQL extends PostgresSQL
             [$name, 'TIMESTAMP'],
             $this->sql
         );
+
+        return $this;
+    }
+
+    /**
+     * Column text
+     */
+    public function text(string $name): static
+    {
+        $this->columnName = $name;
+
+        $this->sql = str_replace(
+            ['[name]', '[type]'],
+            [$name, 'TEXT'],
+            $this->sql
+        );
+
+        return $this;
+    }
+
+    /**
+     * Date column
+     */
+    public function date(string $name): static
+    {
+        $this->columnName = $name;
+
+        $this->sql = str_replace(
+            ['[name]', '[type]'],
+            [$name, 'DATE'],
+            $this->sql
+        );
+
+        return $this;
+    }
+
+    /**
+     * Column Time
+     */
+    public function time(string $name): static
+    {
+        $this->columnName = $name;
+
+        $this->sql = str_replace(
+            ['[name]', '[type]'],
+            [$name, 'TIME'],
+            $this->sql
+        );
+
+        return $this;
+    }
+
+    /**
+     * Json Column
+     */
+    public function json(string $name): static
+    {
+        $this->columnName = $name;
+
+        $this->sql = str_replace(
+            ['[name]', '[type]'],
+            [$name, 'JSON'],
+            $this->sql
+        );
+
+        return $this;
+    }
+
+    /**
+     * Boolean column
+     */
+    public function boolean(string $name): static
+    {
+        $this->columnName = $name;
+
+        $this->sql = str_replace(
+            ['[name]', '[type]'],
+            [$name, 'BOOLEAN'],
+            $this->sql
+        );
+
+        return $this;
+    }
+
+    /**
+     * Integer column
+     */
+    public function integer(string $name, bool $unsigned = false): static
+    {
+        $this->columnName = $name;
+
+        $this->sql = str_replace(
+            ['[name]', '[type]'],
+            [$name, 'INTEGER'],
+            $this->sql
+        );
+
+        if ($unsigned) {
+            $this->sql = str_replace(
+                ['[restrict]'],
+                [" CHECK ({$name} >= 0)"],
+                $this->sql
+            );
+        }
 
         return $this;
     }

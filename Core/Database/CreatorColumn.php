@@ -149,4 +149,58 @@ class CreatorColumn
         $this->driver?->required();
         return $this;
     }
+
+    /**
+     * Text Column
+     */
+    public function text(string $name): static
+    {
+        $this->driver?->text($name);
+        return $this;
+    }
+
+    /**
+     * Date Column
+     */
+    public function date(string $name): static
+    {
+        $this->driver?->date($name);
+        return $this;
+    }
+
+    /**
+     * Time Column
+     */
+    public function time(string $name): static
+    {
+        $this->driver?->time($name);
+        return $this;
+    }
+
+    /**
+     * Json column
+     */
+    public function json(string $name): static
+    {
+        $this->driver?->json($name);
+        return $this;
+    }
+
+    /**
+     * Boolean column
+     */
+    public function boolean(string $name): static
+    {
+        $this->driver?->boolean($name);
+        return $this;
+    }
+
+    /**
+     * Integer column
+     */
+    public function integer(string $name, bool $unsigned): static
+    {
+        $this->driver?->integer($name, $unsigned);
+        return $this;
+    }
 }

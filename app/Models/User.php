@@ -6,10 +6,21 @@ use Core\Database\Model;
 
 class User extends Model
 {
+    /**
+     * Hidden attributes
+     */
     protected array $hidden = ['password'];
+
+    /**
+     * Casts
+     */
     protected array $casts = [
         'name' => 'collection',
         'created_at' => 'datetime'
     ];
+
+    /**
+     * Elements that can be filled
+     */
     protected array $fillable = ['name', 'email', 'password'];
 }
