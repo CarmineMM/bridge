@@ -162,7 +162,17 @@ class Actions extends Printer
 
         $stubHandler = new \Core\Foundation\Stubs\StubHandler();
 
-        $fileSaved = $stubHandler->publishMigration($args[0]);
+        try {
+            $fileSaved = $stubHandler->publishController($args[0]);
+
+            $this->color_green(
+                Lang::_get('controller.created-in', ['folder' => $fileSaved])
+            );
+        } catch (\Throwable $th) {
+            $this->color_red($th->getMessage());
+        }
+
+        return $this->toPrint();
     }
 
     /**

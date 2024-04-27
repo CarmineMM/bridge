@@ -48,10 +48,10 @@ class Console extends Printer
         $this->commands = [
             'list' => Lang::_get('console.list'),
             'serve' => Lang::_get('console.serve'),
-            'routes' => Lang::_get('console.routes'),
+            'routes' => Lang::_get('console.routes') . "\n",
 
             'migrate' => Lang::_get('console.migrate'),
-            'migrate:rollback' => Lang::_get('console.migrate-rollback'),
+            'migrate:rollback' => Lang::_get('console.migrate-rollback') . "\n",
 
             'make:migration' => Lang::_get('console.make.migration'),
             'make:controller' => Lang::_get('console.make.controller'),
@@ -80,7 +80,7 @@ class Console extends Printer
             'migrate:rollback' => $actions->migrate($isHelp, 'down'),
 
             'make:migration' => $actions->makeMigration($isHelp, $this->cleanArgsActions()),
-            'make:controller' => $actions->makeMigration($isHelp, $this->cleanArgsActions()),
+            'make:controller' => $actions->makeController($isHelp, $this->cleanArgsActions()),
             default => '',
         };
 

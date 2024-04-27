@@ -44,8 +44,31 @@ class StubHandler extends Build
             );
         }
 
+        return $this->createFile($buildFileName, $getContent, 'migrations');
+    }
+
+    /**
+     * Publish controller
+     */
+    public function publishController(string $name): string
+    {
+        $getContent = file_get_contents($this->stub_folder . $this->findStub['controller']);
+        $buildFileName = str_replace('{controller_name}', $name, $this->buildFileName['controller']);
+        $getContent = str_replace('{controller_name}', $name, $getContent);
+
+        return $this->createFile($buildFileName, $getContent, 'controller');
+    }
+
+    /**
+     * Crea el documento
+     *
+     * @param [type] $fileSave
+     * @return string Devuelve el archivo creado
+     */
+    public function createFile(string $buildFileName, string $content, string $resultFolder): string
+    {
         $fileSave = Filesystem::rootPath([
-            $this->buildResultFolder['migration'],
+            $this->buildResultFolder[$resultFolder],
             $buildFileName
         ]);
 
@@ -55,18 +78,8 @@ class StubHandler extends Build
 
         $file = fopen($fileSave, 'w');
 
-        fwrite($file, $getContent);
+        fwrite($file, $content);
 
         return $fileSave;
-    }
-
-    /**
-     * Crea el documento
-     *
-     * @param [type] $fileSave
-     * @return string Devuelve el archivo creado
-     */
-    public function createFile(string $fileSave): void
-    {
     }
 }

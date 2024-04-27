@@ -37,6 +37,7 @@
     "controller": {
         "make-description": "Crea un nuevo controlador",
         "name": "Nombre del controlador",
-        "required-name": "Debe especificar el nombre del controlador."
+        "required-name": "Debe especificar el nombre del controlador.",
+        "created-in": "Controlador creado en la carpeta: {folder}"
     }
 }
