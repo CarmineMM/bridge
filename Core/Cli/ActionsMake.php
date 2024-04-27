@@ -43,26 +43,35 @@ trait ActionsMake
      */
     public function makeController(bool $isHelp, array $args = []): string
     {
+        return $this->autoMake($isHelp, $args, 'controller', 'publishController');
+    }
+
+    /**
+     * Auto make, hecho para los archivos que solo requieren un nombre y ya.
+     * Como los controladores, modelos, etc.
+     */
+    private function autoMake(bool $isHelp, array $args = [], string $getFor, string $call): string
+    {
         if ($isHelp) {
             return $this->printHelp(
-                Lang::_get('controller.make-description'),
-                'php jump make:controller {controller_name}',
-                Lang::_get('controller.name')
+                Lang::_get("{$getFor}.make-description"),
+                "php jump make:{$getFor} {name}",
+                Lang::_get("{$getFor}.name")
             );
         }
 
 
         if (count($args) < 1) {
-            return $this->printArgsRequired(Lang::_get('controller.required-name'));
+            return $this->printArgsRequired(Lang::_get("{$getFor}.required-name"));
         }
 
         $stubHandler = new \Core\Foundation\Stubs\StubHandler();
 
         try {
-            $fileSaved = $stubHandler->publishController($args[0]);
+            $fileSaved = $stubHandler->{$call}($args[0]);
 
             $this->color_green(
-                Lang::_get('controller.created-in', ['folder' => $fileSaved])
+                Lang::_get("{$getFor}.created-in", ['folder' => $fileSaved])
             );
         } catch (\Throwable $th) {
             $this->color_red($th->getMessage());
