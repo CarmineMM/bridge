@@ -12,19 +12,22 @@ class Build
      */
     protected array $buildFileName = [
         'migration' => 'Create{table}Table.php',
+        'controller' => '{controller_name}.php',
     ];
 
     /**
      * Carpeta de destino para los archivos
      */
     protected array $buildResultFolder = [
-        'migration' => 'database/migrations',
+        'migration'  => 'database/migrations',
+        'controller' => 'app/Controllers',
     ];
 
     /**
      * Nombre del stub a buscar
      */
     protected array $findStub = [
-        'migration' => 'migration.stub',
+        'migration'  => 'migration.stub',
+        'controller' => 'controller.stub',
     ];
 }

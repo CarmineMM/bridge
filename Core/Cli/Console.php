@@ -52,7 +52,9 @@ class Console extends Printer
 
             'migrate' => Lang::_get('console.migrate'),
             'migrate:rollback' => Lang::_get('console.migrate-rollback'),
+
             'make:migration' => Lang::_get('console.make.migration'),
+            'make:controller' => Lang::_get('console.make.controller'),
         ];
     }
 
@@ -78,6 +80,7 @@ class Console extends Printer
             'migrate:rollback' => $actions->migrate($isHelp, 'down'),
 
             'make:migration' => $actions->makeMigration($isHelp, $this->cleanArgsActions()),
+            'make:controller' => $actions->makeMigration($isHelp, $this->cleanArgsActions()),
             default => '',
         };
 

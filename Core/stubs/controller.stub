@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Controllers;
+
+use Core\Foundation\BaseController;
+
+class {controller_name} extends BaseController
+{
+    //...
+}

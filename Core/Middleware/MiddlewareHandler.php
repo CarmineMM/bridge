@@ -15,12 +15,35 @@ class MiddlewareHandler
     {
         $request = Request::make();
 
-        foreach ($middlewares as $middleware) {
-            $instance = new $middleware();
+        $middlewareStack = static::createStack($middlewares);
 
-            if (method_exists($instance, 'handle')) {
-                $instance->handle($request);
-            }
+        $middlewareStack($request);
+    }
+
+    /**
+     * Stacks the middlewares
+     *
+     * @param array $middlewares
+     * @return void
+     */
+    protected static function createStack(array $middlewares)
+    {
+        $next = function ($request) {
+            //...
+        };
+
+        while ($middleware = array_pop($middlewares)) {
+            $next = function ($request) use ($middleware, $next) {
+                $instance = new $middleware();
+
+                if (method_exists($instance, 'handle')) {
+                    return $instance->handle($request, $next);
+                }
+
+                return $next($request);
+            };
         }
+
+        return $next;
     }
 }

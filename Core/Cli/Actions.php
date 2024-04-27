@@ -143,6 +143,29 @@ class Actions extends Printer
     }
 
     /**
+     * Crea un nuevo controlador
+     */
+    public function makeController(bool $isHelp, array $args = []): string
+    {
+        if ($isHelp) {
+            return $this->printHelp(
+                Lang::_get('controller.make-description'),
+                'php jump make:controller {controller_name}',
+                Lang::_get('controller.name')
+            );
+        }
+
+
+        if (count($args) < 1) {
+            return $this->printArgsRequired(Lang::_get('controller.required-name'));
+        }
+
+        $stubHandler = new \Core\Foundation\Stubs\StubHandler();
+
+        $fileSaved = $stubHandler->publishMigration($args[0]);
+    }
+
+    /**
      * Ejecuta las migraciones
      *
      * @param boolean $isHelp
