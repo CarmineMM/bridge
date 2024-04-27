@@ -72,4 +72,12 @@ class HttpException
 
         return $app->runRender($through);
     }
+
+    /**
+     * Aborta la solicitud actual y lanza una excepción
+     */
+    public function abort(string $message, int $code = 400): void
+    {
+        throw new \Exception($message, $code);
+    }
 }

@@ -5,7 +5,7 @@ namespace Core\Foundation;
 use Core\Loaders\Config;
 use Exception;
 
-class Router extends Middlewares
+class Router
 {
     /**
      * Instance

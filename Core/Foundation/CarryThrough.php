@@ -32,9 +32,15 @@ class CarryThrough
          */
         public array $route = []
     ) {
-        if (!empty($this->route)) {
-            $this->toRender = $this->call($route['callback']);
-        }
+    }
+
+    /**
+     * Llama a la instancia
+     */
+    public function callIf(): CarryThrough
+    {
+        $this->toRender = $this->call($this->route['callback']);
+        return $this;
     }
 
     /**
@@ -148,6 +154,7 @@ class CarryThrough
             'request' => Request::make()->toArray(),
             'response' => Response::make()->toArray(),
         ]);
+
 
         if ($app->isDebug) {
             Debugging::renderDebugBar($app, $renderHtml);

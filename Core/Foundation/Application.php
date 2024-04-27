@@ -6,10 +6,10 @@ use Core\Exception\ExceptionHandle;
 use Core\Foundation\RateLimit\RateLimit;
 use Core\Loaders\Config;
 use Core\Loaders\Routes;
+use Core\Middleware\MiddlewareHandler;
 use Core\Support\Collection;
 use Core\Support\Debug;
 use Core\Support\Env;
-use Core\Translate\Lang;
 use Core\Translate\Translate;
 use Exception;
 
@@ -131,7 +131,9 @@ class Application
                         throw new \Exception('Not found', 404);
                     }
 
-                    $render = $app->runRender($through);
+                    MiddlewareHandler::applyMiddleware($route['middleware'] ?? []);
+
+                    $render = $app->runRender($through->callIf());
 
                     Response::send();
 
