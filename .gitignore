@@ -2,3 +2,5 @@
 .env
 .vscode
 /.vscode
+composer.lock
+/composer.lock

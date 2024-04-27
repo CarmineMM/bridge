@@ -18,7 +18,6 @@ class Routes
             foreach ($value['files'] as $file) {
                 require_once $file;
             }
-
             foreach (Router::$routes as $key => $route) {
                 Router::$routes[$key] = array_map(function ($route) use ($value) {
                     if ($route['hasLoad'] ?? false) {

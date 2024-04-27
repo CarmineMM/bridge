@@ -55,7 +55,8 @@ class Debug
             },
             'name' => 'js-deps',
             'middleware' => [],
-            'method' => 'GET'
+            'method' => 'GET',
+            'hasLoad' => true,
         ];
 
         Router::$routes['GET'][] = [
@@ -66,7 +67,8 @@ class Debug
             },
             'name' => 'debugging.css',
             'middleware' => [],
-            'method' => 'GET'
+            'method' => 'GET',
+            'hasLoad' => true,
         ];
 
         Router::$routes['GET'][] = [
@@ -77,7 +79,8 @@ class Debug
             },
             'name' => 'debugging.js',
             'middleware' => [],
-            'method' => 'GET'
+            'method' => 'GET',
+            'hasLoad' => true,
         ];
     }
 }
