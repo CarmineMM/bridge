@@ -49,6 +49,9 @@ class Config
      */
     public bool $wasLoad = false;
 
+    /**
+     * Construct
+     */
     public function __construct()
     {
         $this->config = [

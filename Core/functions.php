@@ -1,6 +1,7 @@
 <?php
 
 use Core\Foundation\Filesystem;
+use Core\Foundation\Router;
 use Core\Support\Collection;
 use Core\Support\Debug;
 
@@ -79,5 +80,18 @@ if (!function_exists('collection')) {
     function collection(array|object $data): Collection
     {
         return new Collection($data);
+    }
+}
+
+if (!function_exists('route')) {
+    /**
+     * Obtiene la url hacia una ruta nombrada
+     *
+     * @param string $name Nombre de la ruta
+     * @return string Si la ruta no existe, devuelve una excepción
+     */
+    function route(string $name): string
+    {
+        return Router::routeTo($name);
     }
 }

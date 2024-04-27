@@ -2,6 +2,8 @@
 
 namespace Core\Foundation;
 
+use Core\Loaders\Config;
+
 /**
  * Esta clase contiene las configuraciones de la aplicación,
  * como el lenguaje, zona horaria, etc.
@@ -13,4 +15,11 @@ namespace Core\Foundation;
  */
 class AppConfig
 {
+    /**
+     * Devuelve el url de la aplicación, o construida por una ruta pasada.
+     */
+    public  static function url(string $route = ''): string
+    {
+        return Config::get('app.url') . '/' . trim($route, '/');
+    }
 }

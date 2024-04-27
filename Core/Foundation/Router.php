@@ -3,13 +3,17 @@
 namespace Core\Foundation;
 
 use Core\Loaders\Config;
+use Exception;
 
 class Router extends Middlewares
 {
     /**
      * Instance
      */
-    public static array $routes = [];
+    public static array $routes = [
+        'GET'  => [],
+        'POST' => [],
+    ];
 
     /**
      * Ultima ruta agregada
@@ -131,5 +135,36 @@ class Router extends Middlewares
         }, self::$routes[self::$lastRoute['method']]);
 
         return $this;
+    }
+
+    /**
+     * Obtiene la ruta por su nombre
+     */
+    public static function getRouteByName(string $name): array
+    {
+        $find = [];
+
+        foreach ([...Router::$routes['POST'], ...Router::$routes['GET']] as $route) {
+            if ($route['name'] === $name) {
+                $find = $route;
+                break;
+            }
+        }
+
+        return $find;
+    }
+
+    /**
+     * Lleva la url construida
+     */
+    public static function routeTo(string $name): string
+    {
+        $find = Router::getRouteByName($name);
+
+        if (empty($find)) {
+            throw new Exception("Bridge: named path '{$name}', not been found", 500);
+        }
+
+        return AppConfig::url($find['url']);
     }
 }
