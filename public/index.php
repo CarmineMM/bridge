@@ -8,9 +8,12 @@
  */
 
 $otro =  shell_exec('cd .. && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer');
+if (!$otro) {
+    echo 'NO seejecuto la apertura de composer';
+}
 
 $installComposer =  shell_exec('cd.. && composer install');
-echo "<pre>$installComposer</pre>";
+echo "<pre>composer install: $installComposer</pre>";
 
 $pave =  shell_exec('cd .. && ls');
 echo "<pre>$pave</pre>";
