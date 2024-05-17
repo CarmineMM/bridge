@@ -146,7 +146,7 @@ class Collection
     {
         $newObject = [];
 
-        foreach ($this->toArray() as $key => $value) {
+        foreach ($this->data as $key => $value) {
             $newObject[$key] = $call($value, $key);
         }
 
