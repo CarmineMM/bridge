@@ -7,19 +7,23 @@
  * @version 1.0.0
  */
 
-$otro =  shell_exec('composer');
+$otro =  shell_exec('cd.. && composer');
+if (!$otro) {
+    echo 'No se ejecuto el composer';
+}
 echo "<pre>$otro</pre>";
 
-$otro =  shell_exec('composer install');
-echo "<pre>$otro</pre>";
+$heyheyhey =  shell_exec('cd.. && composer install');
+if (!$heyheyhey) {
+    echo 'No se ejecuto el composer install';
+}
+echo "<pre>$heyheyhey</pre>";
 
 $otro =  shell_exec('ls');
 echo "<pre>$otro</pre>";
 
-$pave =  shell_exec('cd ../html && ls');
+$pave =  shell_exec('cd .. && ls');
 echo "<pre>$pave</pre>";
-
-phpinfo();
 
 // require_once __DIR__ . '/../vendor/autoload.php';
 
