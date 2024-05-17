@@ -2,6 +2,7 @@
 
 namespace Core\Support;
 
+use Core\Exception\ExceptionHandler;
 use Dotenv\Dotenv;
 
 class Env
@@ -13,8 +14,12 @@ class Env
      */
     public static function load(): void
     {
-        $dotenv = Dotenv::createImmutable(ROOT_PATH);
-        $dotenv->load();
+        try {
+            $dotenv = Dotenv::createImmutable(ROOT_PATH);
+            $dotenv->load();
+        } catch (\Throwable $th) {
+            ExceptionHandler::addExceptionList($th);
+        }
     }
 
     /**

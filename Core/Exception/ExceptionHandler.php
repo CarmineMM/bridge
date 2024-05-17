@@ -7,7 +7,7 @@ use Core\Foundation\CarryThrough;
 use Core\Foundation\Response;
 use Core\Loaders\Config;
 
-class ExceptionHandle
+class ExceptionHandler
 {
     /**
      * Instance
@@ -21,12 +21,12 @@ class ExceptionHandle
      *
      * @var Container|null
      */
-    private static ?ExceptionHandle $instance = null;
+    private static ?ExceptionHandler $instance = null;
 
     /**
      * Establece la instancia
      */
-    public static function setInstance(): ?ExceptionHandle
+    public static function setInstance(): ?ExceptionHandler
     {
         if (is_null(self::$instance)) {
             $self = new self();
@@ -109,7 +109,7 @@ class ExceptionHandle
     public static function saveWarnings(): void
     {
         set_error_handler(function (...$params) {
-            ExceptionHandle::addWarningList($params);
+            ExceptionHandler::addWarningList($params);
         });
     }
 
@@ -117,7 +117,7 @@ class ExceptionHandle
      * Ejecuta un exception handle view para ver lo errores de una mejor forma.
      * O ejecuta un error 500 en caso de tener el debug apagado
      */
-    public static function runExceptionHandleView(\Throwable $error, Application $app): void
+    public static function runExceptionHandlerView(\Throwable $error, Application $app): void
     {
         $through = new CarryThrough();
 
@@ -129,7 +129,7 @@ class ExceptionHandle
         $code = $error->getCode();
 
         if ($code <= 500 && $code >= 400) {
-            ExceptionHandle::isHttpExceptions($error, $through, $app);
+            ExceptionHandler::isHttpExceptions($error, $through, $app);
             return;
         }
 
@@ -139,6 +139,6 @@ class ExceptionHandle
 
         Response::send();
 
-        echo $through->renderExceptionHandler($app, $error);
+        echo $through->renderExceptionHandlerr($app, $error);
     }
 }

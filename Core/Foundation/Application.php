@@ -2,7 +2,7 @@
 
 namespace Core\Foundation;
 
-use Core\Exception\ExceptionHandle;
+use Core\Exception\ExceptionHandler;
 use Core\Foundation\RateLimit\RateLimit;
 use Core\Loaders\Config;
 use Core\Loaders\Routes;
@@ -63,7 +63,7 @@ class Application
         Kernel::loadFunctionsFile();
         Env::load();
         Config::load();
-        ExceptionHandle::saveWarnings();
+        ExceptionHandler::saveWarnings();
         $this->isDebug = Config::get('app.debug', false);
 
         if ($this->isDebug) {
@@ -139,10 +139,10 @@ class Application
 
                     echo $render;
                 } catch (\Throwable $th) {
-                    ExceptionHandle::isHttpExceptions($th, $through, $app);
+                    ExceptionHandler::isHttpExceptions($th, $through, $app);
                 }
             } catch (\Throwable $th) {
-                ExceptionHandle::runExceptionHandleView($th, $app);
+                ExceptionHandler::runExceptionHandlerView($th, $app);
                 return '';
             }
         }

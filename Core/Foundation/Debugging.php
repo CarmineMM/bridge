@@ -2,7 +2,7 @@
 
 namespace Core\Foundation;
 
-use Core\Exception\ExceptionHandle;
+use Core\Exception\ExceptionHandler;
 use Core\Loaders\Config;
 use Core\Loaders\HtmlInject;
 use Core\Support\Debug;
@@ -50,7 +50,7 @@ class Debugging
         $queries = (new Context)->getState('bridge:query', []);
         $exceptions = [];
 
-        foreach (ExceptionHandle::getList() as $item) {
+        foreach (ExceptionHandler::getList() as $item) {
             $exceptions[] = $item;
         }
 
