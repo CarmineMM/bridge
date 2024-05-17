@@ -14,9 +14,6 @@ class Kernel
      */
     public static function initConstants(): array
     {
-        if (defined('ROOT_PATH')) {
-            throw new \Exception('The Constants have be declared', 521);
-        }
         $timer = microtime(true);
         $memory = memory_get_usage();
 
@@ -24,12 +21,14 @@ class Kernel
             session_start();
         }
 
-        $array = explode(DIRECTORY_SEPARATOR, PUBLIC_PATH);
-        array_pop($array);
+        if (!defined('ROOT_PATH')) {
+            $array = explode(DIRECTORY_SEPARATOR, PUBLIC_PATH);
+            array_pop($array);
 
-        // Define la ruta de carpetas de la raíz
-        define('ROOT_PATH', implode(DIRECTORY_SEPARATOR, $array) . DIRECTORY_SEPARATOR);
-        unset($array);
+            // Define la ruta de carpetas de la raíz
+            define('ROOT_PATH', implode(DIRECTORY_SEPARATOR, $array) . DIRECTORY_SEPARATOR);
+            unset($array);
+        }
 
         return [$timer, $memory];
     }

@@ -2,7 +2,6 @@
 
 namespace Core\Support;
 
-use Core\Loaders\Config;
 use Dotenv\Dotenv;
 
 class Env
