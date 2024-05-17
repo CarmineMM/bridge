@@ -6,13 +6,14 @@
  * @package Bridge
  * @version 1.0.0
  */
-$output = shell_exec('cd ../ && ls');
-echo "<pre>$output</pre>";
 
-$otro =  shell_exec('composer');
+$otro =  shell_exec('composer install');
 echo "<pre>$otro</pre>";
 
-// require_once __DIR__ . '/../vendor/autoload.php';
+$pave =  shell_exec('cd ../html && ls');
+echo "<pre>$pave</pre>";
+
+require_once __DIR__ . '/../vendor/autoload.php';
 
 
 if (phpversion() < 8.2) {
