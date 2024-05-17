@@ -7,20 +7,10 @@
  * @version 1.0.0
  */
 
-$otro =  shell_exec('cd.. && composer');
-if (!$otro) {
-    echo 'No se ejecuto el composer';
-}
-echo "<pre>$otro</pre>";
+$otro =  shell_exec('cd .. && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer');
 
-$heyheyhey =  shell_exec('cd.. && composer install');
-if (!$heyheyhey) {
-    echo 'No se ejecuto el composer install';
-}
-echo "<pre>$heyheyhey</pre>";
-
-$otro =  shell_exec('ls');
-echo "<pre>$otro</pre>";
+$installComposer =  shell_exec('cd.. && composer install');
+echo "<pre>$installComposer</pre>";
 
 $pave =  shell_exec('cd .. && ls');
 echo "<pre>$pave</pre>";
