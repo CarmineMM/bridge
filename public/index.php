@@ -7,13 +7,21 @@
  * @version 1.0.0
  */
 
+$otro =  shell_exec('composer');
+echo "<pre>$otro</pre>";
+
 $otro =  shell_exec('composer install');
+echo "<pre>$otro</pre>";
+
+$otro =  shell_exec('ls');
 echo "<pre>$otro</pre>";
 
 $pave =  shell_exec('cd ../html && ls');
 echo "<pre>$pave</pre>";
 
-require_once __DIR__ . '/../vendor/autoload.php';
+phpinfo();
+
+// require_once __DIR__ . '/../vendor/autoload.php';
 
 
 if (phpversion() < 8.2) {
