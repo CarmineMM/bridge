@@ -18,10 +18,7 @@ class View
      */
     protected function getFilePath(string $view): string
     {
-        $viewRender = Filesystem::constructPath([
-            Config::get($this->config_view_path),
-            ...Filesystem::explodeStringPath($view)
-        ]);
+        $viewRender = Config::get($this->config_view_path) . Filesystem::constructPath(Filesystem::explodeStringPath($view));
 
         // Agregar el .php en caso de no tenerlo
         if (substr($viewRender, -4) !== '.php') {

@@ -141,7 +141,7 @@ class CarryThrough
      * @param \Throwable $error
      * @return string
      */
-    public function renderExceptionHandlerr(Application $app, \Throwable $error): string
+    public function renderExceptionHandler(Application $app, \Throwable $error): string
     {
 
         $render = new Render;

@@ -139,6 +139,6 @@ class ExceptionHandler
 
         Response::send();
 
-        echo $through->renderExceptionHandlerr($app, $error);
+        echo $through->renderExceptionHandler($app, $error);
     }
 }
