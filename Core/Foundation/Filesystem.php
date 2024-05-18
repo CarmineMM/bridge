@@ -12,7 +12,7 @@ class Filesystem
      */
     public static function constructPath(array $array): string
     {
-        return implode(
+        return DIRECTORY_SEPARATOR . implode(
             DIRECTORY_SEPARATOR,
             array_map(fn ($item) => trim($item, '/\\'), $array)
         );
