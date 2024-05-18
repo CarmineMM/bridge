@@ -97,7 +97,7 @@ class Config
         $add = [];
 
         foreach ($config->files as $path => $file) {
-            $getFile = ROOT_PATH . Filesystem::constructPath(explode('/', $file));
+            $getFile = Filesystem::rootPath(explode('/', $file));
 
             if (file_exists($getFile)) {
                 $add[$path] = include $getFile;

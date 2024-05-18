@@ -12,7 +12,7 @@ class Filesystem
      */
     public static function constructPath(array $array): string
     {
-        return DIRECTORY_SEPARATOR . implode(
+        return implode(
             DIRECTORY_SEPARATOR,
             array_map(fn ($item) => trim($item, '/\\'), $array)
         );
@@ -23,7 +23,7 @@ class Filesystem
      */
     public static function rootPath(array $construct = []): string
     {
-        return self::constructPath([ROOT_PATH, ...$construct]);
+        return ROOT_PATH . DIRECTORY_SEPARATOR . self::constructPath($construct);
     }
 
     /**
@@ -31,7 +31,7 @@ class Filesystem
      */
     public static function appPath(array $construct = []): string
     {
-        return self::constructPath([ROOT_PATH, 'app', ...$construct]);
+        return ROOT_PATH . DIRECTORY_SEPARATOR . self::constructPath(['app', ...$construct]);
     }
 
     /**
@@ -39,7 +39,7 @@ class Filesystem
      */
     public static function publicPath(array $construct = []): string
     {
-        return self::constructPath([PUBLIC_PATH, ...$construct]);
+        return PUBLIC_PATH . DIRECTORY_SEPARATOR . self::constructPath($construct);
     }
 
     /**
