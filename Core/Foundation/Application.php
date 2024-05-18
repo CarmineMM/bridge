@@ -59,11 +59,11 @@ class Application
      */
     public function __construct($consoleMode = false)
     {
+        ExceptionHandler::saveWarnings();
         [$timer, $memory] = Kernel::initConstants();
         Kernel::loadFunctionsFile();
         Env::load();
         Config::load();
-        ExceptionHandler::saveWarnings();
         $this->isDebug = Config::get('app.debug', false);
 
         if ($this->isDebug) {

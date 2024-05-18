@@ -40,8 +40,12 @@ class Kernel
      */
     public static function loadFunctionsFile(): void
     {
-        if (file_exists(ROOT_PATH . 'Core/functions.php')) {
-            require_once Filesystem::rootPath(['Core', 'functions.php']);
+        $loadFile = Filesystem::rootPath(['Core', 'functions.php']);
+
+        if (file_exists($loadFile)) {
+            require_once $loadFile;
+        } else {
+            echo "No se cargaron los archivos de funciones: {$loadFile}";
         }
     }
 
