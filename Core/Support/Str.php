@@ -100,4 +100,14 @@ class Str
         $this->string = strtolower($this->string);
         return $this;
     }
+
+    /**
+     * Elimina los espacios en blanco al inicio y final de la cadena,
+     * o cualquier carácter especificado.
+     */
+    public function trimEnd(string $characters = " \n\r\t\v\0"): static
+    {
+        $this->string = rtrim($this->string, $characters);
+        return $this;
+    }
 }
