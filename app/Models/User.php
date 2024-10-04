@@ -15,7 +15,6 @@ class User extends Model
      * Casts
      */
     protected array $casts = [
-        'name' => 'collection',
         'created_at' => 'datetime'
     ];
 

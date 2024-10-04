@@ -143,6 +143,17 @@ class Model
     }
 
     /**
+     * Primer registro
+     */
+    public function first(array $columns = ['*']): Collection
+    {
+        return $this
+            ->limit(1)
+            ->get($columns)
+            ->first();
+    }
+
+    /**
      * Filtro a las columnas durante los get,
      * es usa para aplicar los hidden, los casts y los appends
      */

@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use Core\Foundation\BaseController;
-use Core\Foundation\Router;
 
 class HomeController extends BaseController
 {
