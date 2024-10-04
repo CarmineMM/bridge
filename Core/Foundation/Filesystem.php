@@ -31,7 +31,7 @@ class Filesystem
      */
     public static function appPath(array $construct = []): string
     {
-        return ROOT_PATH . DIRECTORY_SEPARATOR . self::constructPath(['app', ...$construct]);
+        return ROOT_PATH . self::constructPath(['app', ...$construct]);
     }
 
     /**
