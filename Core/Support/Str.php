@@ -2,6 +2,8 @@
 
 namespace Core\Support;
 
+use Normalizer;
+
 class Str
 {
     /**
@@ -10,12 +12,41 @@ class Str
     private string $original;
 
     /**
+     * Palabras para pluralizar,
+     * siendo la primera palabra en singular,
+     * la segunda en plural.
+     */
+    private array $pluralWords = [
+        // English
+        ['child', 'children'],
+        ['foot', 'feet'],
+        ['goose', 'geese'],
+        ['tooth', 'teeth'],
+        ['quiz', 'quizzes'],
+        ['person', 'people'],
+        ['man', 'men'],
+        ['woman', 'women'],
+        ['sheep', 'sheep'],
+        ['category', 'categories'],
+
+        // Spanish
+        ['persona', 'personas'],
+        ['categoría', 'categorías'],
+    ];
+
+    /**
      * String
      */
     public function __construct(
         private string $string
     ) {
         $this->original = $this->string;
+    }
+
+    public function resetOriginal(): static
+    {
+        $this->string = $this->original;
+        return $this;
     }
 
     /**
@@ -108,6 +139,22 @@ class Str
     public function trimEnd(string $characters = " \n\r\t\v\0"): static
     {
         $this->string = rtrim($this->string, $characters);
+        return $this;
+    }
+
+    public function normalize(int $from = Normalizer::FORM_D): static
+    {
+        $this->string = Normalizer::normalize($this->string, $from);
+        return $this;
+    }
+
+    /**
+     * Pluraliza el string
+     *
+     * @return static
+     */
+    public function pluralize(): static
+    {
         return $this;
     }
 }

@@ -23,23 +23,23 @@ class StubHandler extends Build
     {
         $getContent = file_get_contents($this->stub_folder . $this->findStub['migration']);
         $buildFileName = $this->buildFileName['migration'];
-        $name = new Str($name);
+        $strName = new Str($name);
 
         // Esto entra aca si el usuario esta colocando manualmente el nombre
-        if ($name->contains(['Create', 'Edit'])) {
-            $name = $name->getString();
+        if ($strName->contains(['Create', 'Edit'])) {
+            $name = $strName->getString();
             $buildFileName = $name . '.php';
             $getContent = str_replace(
                 ['{className}', '{table}'],
-                [$name, ''],
+                [$name, $strName->lower()->replace(['create', 'table', 'edit'], '')->pluralize()->getString()],
                 $getContent
             );
         } else {
-            $name->upperFirst();
-            $buildFileName = str_replace('{table}', $name->getString(), $buildFileName);
+            $strName->upperFirst();
+            $buildFileName = str_replace('{table}', $strName->getString(), $buildFileName);
             $getContent = str_replace(
                 ['{className}', '{table}'],
-                [str_replace('.php', '', $buildFileName), $name->lower()->getString()],
+                [str_replace('.php', '', $buildFileName), $strName->lower()->getString()],
                 $getContent
             );
         }
