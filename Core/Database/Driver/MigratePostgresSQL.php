@@ -356,4 +356,10 @@ class MigratePostgresSQL extends PostgresSQL
 
         return $this;
     }
+
+    public function float(string $name, bool $unsigned, int $precision = 8, int $scale = 2): static
+    {
+        
+        return $this;
+    }
 }

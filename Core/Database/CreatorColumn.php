@@ -222,4 +222,13 @@ class CreatorColumn
         $this->driver?->autoincrement();
         return $this;
     }
+
+    /**
+     * Float column
+     */
+    public function float(string $name, bool $unsigned, int $precision = 8, int $scale = 2): static
+    {
+        $this->driver?->float($name, $unsigned, $precision, $scale);
+        return $this;
+    }
 }
