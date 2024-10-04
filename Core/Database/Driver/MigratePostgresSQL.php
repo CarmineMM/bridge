@@ -141,6 +141,19 @@ class MigratePostgresSQL extends PostgresSQL
     }
 
     /**
+     * Auto increment column
+     */
+    public function autoincrement(): static
+    {
+        $this->sql = str_replace(
+            ['[restrict]'],
+            ['AUTO_INCREMENT'],
+            $this->sql
+        );
+        return $this;
+    }
+
+    /**
      * Obtiene las alteraciones al SQL
      */
     public function getAlterSql(): array

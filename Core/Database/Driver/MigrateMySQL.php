@@ -41,6 +41,9 @@ class MigrateMySQL extends MySQL
         return $this;
     }
 
+    /**
+     * Auto increment column
+     */
     public function autoincrement(): static
     {
         $this->sql = str_replace(

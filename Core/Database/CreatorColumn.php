@@ -213,4 +213,13 @@ class CreatorColumn
         $this->driver?->unique();
         return $this;
     }
+
+    /**
+     * Auto increment column
+     */
+    public function autoincrement(): static
+    {
+        $this->driver?->autoincrement();
+        return $this;
+    }
 }
