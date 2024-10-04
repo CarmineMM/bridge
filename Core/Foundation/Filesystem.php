@@ -14,7 +14,7 @@ class Filesystem
     {
         return implode(
             DIRECTORY_SEPARATOR,
-            array_map(fn ($item) => trim($item, '/\\'), $array)
+            array_map(fn($item) => trim($item, '/\\'), $array)
         );
     }
 

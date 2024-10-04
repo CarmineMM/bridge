@@ -1,5 +1,6 @@
 <?php
 
+use Core\Foundation\Context;
 use Core\Foundation\Filesystem;
 use Core\Foundation\Router;
 use Core\Support\Collection;
@@ -93,5 +94,17 @@ if (!function_exists('route')) {
     function route(string $name): string
     {
         return Router::routeTo($name);
+    }
+}
+
+if (!function_exists('context')) {
+    /**
+     * Store and state
+     *
+     * @return Context
+     */
+    function context(): Context
+    {
+        return new Core\Foundation\Context();
     }
 }
