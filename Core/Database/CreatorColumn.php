@@ -2,6 +2,7 @@
 
 namespace Core\Database;
 
+use Core\Database\Driver\MigrateMySQL;
 use Core\Database\Driver\MigratePostgresSQL;
 
 class CreatorColumn
@@ -13,7 +14,7 @@ class CreatorColumn
         /**
          * Driver
          */
-        private MigratePostgresSQL $driver,
+        private MigratePostgresSQL|MigrateMySQL $driver,
         /**
          * Nombre de la tabla sobre la que se crean las columnas
          */
@@ -65,7 +66,11 @@ class CreatorColumn
      */
     public function id(): static
     {
-        $this->driver->bigSerial('id')->primaryKey();
+        if ($this->driver instanceof MigratePostgresSQL) {
+            $this->driver->bigSerial('id')->primaryKey();
+        } else if ($this->driver instanceof MigrateMySQL) {
+            $this->driver->bigInt('id')->primaryKey();
+        }
         return $this;
     }
 

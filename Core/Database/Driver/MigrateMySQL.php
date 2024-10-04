@@ -13,7 +13,7 @@ class MigrateMySQL extends MySQL
     /**
      * SQL a generar
      */
-    protected string $sql = '[name] [type] [restrict] [default] [restrictionKey]';
+    protected string $sql = '[name] [type] [restrict] [default] [restrictionKey] [comment]';
 
     /**
      * Alter SQL
@@ -146,7 +146,11 @@ class MigrateMySQL extends MySQL
      */
     public function comment(string $comment, string $table_name): static
     {
-        $this->alterSql[] = "COMMENT '{$comment}';";
+        $this->sql = str_replace(
+            ['[comment]'],
+            ["COMMENT $comment"],
+            $this->sql
+        );
         return $this;
     }
 

@@ -2,6 +2,7 @@
 
 namespace Core\Database;
 
+use Core\Database\Driver\MigrateMySQL;
 use Core\Database\Driver\MigratePostgresSQL;
 use Core\Loaders\Config;
 use Exception;
@@ -28,7 +29,7 @@ class Table
     /**
      * Driver de conexión
      */
-    public ?MigratePostgresSQL $driver = null;
+    public $driver = null;
 
     /**
      * Listado del SQL para crear columnas
@@ -57,7 +58,8 @@ class Table
 
         $this->driver = match ($connectionConfig['driver']) {
             'pgsql' => new MigratePostgresSQL($connectionConfig, new Model),
-            default => throw new Exception("No se ha definido la conexión {$this->connection}"),
+            'mysql' => new MigrateMySQL($connectionConfig, new Model),
+            default => throw new Exception("No se ha definido la conexión. Code: {$this->connection}"),
         };
 
         $this->creatorColumn = new CreatorColumn($this->driver);
@@ -113,5 +115,15 @@ class Table
         $this->sql = str_replace('[columns]', implode(', ', $this->columnsCreated), $this->sql);
         $this->sql .= implode(' ', $this->alterSql);
         return $this->sql;
+    }
+
+    public function comment(string $comment): static
+    {
+        if ($this->driver instanceof MigrateMySQL) {
+            $this->alterSql[] = "COMMENT '{$comment}';";
+        } else if ($this->driver instanceof MigratePostgresSQL) {
+            $this->alterSql[] = "COMMENT ON TABLE {$this->table_name} IS '{$comment}';";
+        }
+        return $this;
     }
 }

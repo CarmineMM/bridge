@@ -21,7 +21,7 @@ class MySQL extends SQLBaseDriver implements DatabaseDriver
          */
         Model $model
     ) {
-        $dsn = "pgsql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']}";
+        $dsn = "mysql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']}";
 
         try {
             $this->pdo = new \PDO($dsn, $this->config['username'], $this->config['password'], $this->config['options'] ?? []);
@@ -42,8 +42,20 @@ class MySQL extends SQLBaseDriver implements DatabaseDriver
         $this->columns = $columns;
 
         return $this->exec(
-            'pgsql',
+            'mysql',
             $this->model->connection
         );
+    }
+
+
+    /**
+     * Adjunta un WHERE a la query, limitando al primary key
+     */
+    public function find(string|int $find): array
+    {
+        return $this
+            ->where($this->model->getPrimaryKey(), $find)
+            ->limit(1)
+            ->get();
     }
 }
