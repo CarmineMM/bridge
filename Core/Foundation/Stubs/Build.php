@@ -19,7 +19,7 @@ class Build
      * Carpeta de destino para los archivos
      */
     protected array $buildResultFolder = [
-        'migration'  => 'database/migrations',
+        'migrations'  => 'database/migrations',
         'controller' => 'app/Controllers',
     ];
 
