@@ -7,7 +7,7 @@ use Core\Database\CreatorColumn;
 
 class {className} extends \Core\Database\Table implements MigrateTable 
 { 
-    private string $table = '{table}';
+    private string $table_name = '{table}';
 
     public function up(): MigrateTable
     {

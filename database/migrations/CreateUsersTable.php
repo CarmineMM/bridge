@@ -7,14 +7,18 @@ use Core\Database\CreatorColumn;
 
 class CreateUsersTable extends \Core\Database\Table implements MigrateTable
 {
+    protected string $table_name = 'users';
+
     public function up(): MigrateTable
     {
-        return $this->table('users')
-            ->column(fn (CreatorColumn $column) => $column->id());
+        return $this->table($this->table_name)
+            ->column(fn(CreatorColumn $column) => $column->id())
+            ->column(fn(CreatorColumn $column) => $column->string('email')->unique())
+            ->column(fn(CreatorColumn $column) => $column->string('password', 160));
     }
 
     public function down(): MigrateTable
     {
-        return $this->dropTable('users');
+        return $this->dropTable($this->table_name);
     }
 }

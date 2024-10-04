@@ -203,4 +203,13 @@ class CreatorColumn
         $this->driver?->integer($name, $unsigned);
         return $this;
     }
+
+    /**
+     * Unique column
+     */
+    public function unique(): static
+    {
+        $this->driver?->unique();
+        return $this;
+    }
 }

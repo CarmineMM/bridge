@@ -321,4 +321,20 @@ class MigratePostgresSQL extends PostgresSQL
             throw new \Exception("The table could not be created: {$th->getMessage()}", 500);
         }
     }
+
+    /**
+     * Constraint Unique
+     *
+     * @return static
+     */
+    public function unique(): static
+    {
+        $this->sql = str_replace(
+            ['[restrictionKey]'],
+            ["UNIQUE"],
+            $this->sql
+        );
+
+        return $this;
+    }
 }
