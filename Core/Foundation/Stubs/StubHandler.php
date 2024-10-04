@@ -31,7 +31,7 @@ class StubHandler extends Build
             $buildFileName = $name . '.php';
             $getContent = str_replace(
                 ['{className}', '{table}'],
-                [$name, $strName->lower()->replace(['create', 'table', 'edit'], '')->pluralize()->getString()],
+                [$name, $strName->lower()->replace(['create', 'table', 'edit'], '')->getString()],
                 $getContent
             );
         } else {

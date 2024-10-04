@@ -16,22 +16,98 @@ class Str
      * siendo la primera palabra en singular,
      * la segunda en plural.
      */
-    private array $pluralWords = [
-        // English
-        ['child', 'children'],
-        ['foot', 'feet'],
-        ['goose', 'geese'],
-        ['tooth', 'teeth'],
-        ['quiz', 'quizzes'],
-        ['person', 'people'],
-        ['man', 'men'],
-        ['woman', 'women'],
-        ['sheep', 'sheep'],
-        ['category', 'categories'],
-
-        // Spanish
-        ['persona', 'personas'],
-        ['categoría', 'categorías'],
+    private array $dictionary = [
+        // Regla para palabras que terminan en 'a'
+        '/a$/i' => [
+            's' => 'as',
+            'x' => 'ices',
+            'z' => 'ces',
+            'o' => 'oes',
+            'e' => 'es',
+            'i' => 'is',
+            'u' => 'ues'
+        ],
+        // Regla para palabras que terminan en 'a'
+        '/e$/i' => [
+            's' => 'es',
+            'x' => 'ices',
+            'z' => 'ces',
+            'o' => 'oes',
+            'e' => 'es',
+            'i' => 'ies',
+            'u' => 'ues'
+        ],
+        // Regla para palabras que terminan en 'o'
+        '/o$/i' => [
+            's' => 'os',
+            'x' => 'ices',
+            'z' => 'ces',
+            'o' => 'os',
+            'e' => 'es',
+            'i' => 'is',
+            'u' => 'ues'
+        ],
+        // Regla para palabras que terminan en 'i'
+        '/i$/i' => [
+            's' => 'is',
+            'x' => 'ices',
+            'z' => 'ces',
+            'o' => 'oes',
+            'e' => 'es',
+            'i' => 'is',
+            'u' => 'ues'
+        ],
+        // Regla para palabras que terminan en 'u'
+        '/u$/i' => [
+            's' => 'ues',
+            'x' => 'ices',
+            'z' => 'ces',
+            'o' => 'oes',
+            'e' => 'es',
+            'i' => 'is',
+            'u' => 'ues'
+        ],
+        // Regla para palabras que terminan en 'n'
+        '/n$/i' => [
+            'a' => 'as',
+            's' => 'es',
+            'x' => 'ices',
+            'z' => 'ces',
+            'o' => 'ones',
+            'e' => 'nes',
+            'i' => 'nis',
+            'u' => 'nues'
+        ],
+        // Regla para palabras que terminan en consonante
+        '[^aeiou]$' => [
+            's' => '$',
+            'x' => 'ices',
+            'z' => 'ces',
+            'o' => '$',
+            'e' => '$',
+            'i' => '$',
+            'u' => '$'
+        ],
+        // Regla para palabras que terminan en vocal seguida de consonante
+        '[aeiou][^aeiou]$' => [
+            's' => '$',
+            'x' => 'ices',
+            'z' => 'ces',
+            'o' => '$',
+            'e' => '$',
+            'i' => '$',
+            'u' => '$'
+        ],
+        // Regla para palabras que terminan en consonante seguida de vocal
+        '[^aeiou][aeiou]$' => [
+            's' => 'es',
+            'x' => 'ices',
+            'z' => 'ces',
+            'o' => 'oes',
+            'e' => 'es',
+            'i' => 'is',
+            'u' => 'ues'
+        ]
     ];
 
     /**
@@ -149,12 +225,37 @@ class Str
     }
 
     /**
-     * Pluraliza el string
+     * Pluraliza el string.
+     * Solo funciona con palabras en español.
      *
      * @return static
      */
     public function pluralize(): static
     {
+        if (!in_array(config('app.locale'), ['es'])) {
+            return $this;
+        }
+
+        // En ingles y español las palabras que terminen en "y" no tienen un plural y 
+        // las que terminan en "s" tienen un plural por defecto
+        if (str_ends_with($this->string, 'y') || str_ends_with($this->string, 's')) {
+            return $this;
+        }
+
+        // Obtener la última letra de la palabra
+        $last_letter = substr($this->string, -1);
+
+        // Obtener el resto de la palabra
+        $rest_word = substr($this->string, 0, -1);
+
+        // Buscar la regla que se aplique a la palabra
+        foreach ($this->dictionary as $regex => $plural) {
+            if (preg_match($regex, $rest_word)) {
+                $this->string = $rest_word . $plural[$last_letter];
+                break;
+            }
+        }
+
         return $this;
     }
 }
