@@ -12,6 +12,11 @@ use Core\Implements\DatabaseDriver;
 class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
 {
     /**
+     * Driver para PostgreSQL
+     */
+    private string $driverName = 'pgsql';
+
+    /**
      * Constructor
      */
     public function __construct(
@@ -24,7 +29,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
          */
         Model $model
     ) {
-        $dsn = "pgsql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']}";
+        $dsn = "{$this->driverName}:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']}";
 
         try {
             $this->pdo = new \PDO($dsn, $this->config['username'], $this->config['password'], $this->config['options'] ?? []);
@@ -45,7 +50,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
         $this->columns = $columns;
 
         return $this->exec(
-            'pgsql',
+            $this->driverName,
             $this->model->connection
         );
     }
@@ -70,7 +75,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
         $this->columns = $columns;
 
         return $this->exec(
-            'pgsql',
+            $this->driverName,
             $this->model->connection
         );
     }
@@ -83,7 +88,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
         $values = parent::create($data, $fillable, $casts);
 
         return $this->exec(
-            'pgsql',
+            $this->driverName,
             $this->model->connection,
             $values
         );
@@ -101,7 +106,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
         $values = parent::insert($data);
 
         return $this->exec(
-            'pgsql',
+            $this->driverName,
             $this->model->connection,
             $values
         );
@@ -115,7 +120,7 @@ class PostgresSQL extends SQLBaseDriver implements DatabaseDriver
         parent::delete($where, $value);
 
         return $this->exec(
-            'pgsql',
+            $this->driverName,
             $this->model->connection
         );
     }

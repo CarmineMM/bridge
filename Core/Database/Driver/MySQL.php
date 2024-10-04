@@ -9,6 +9,11 @@ use Core\Implements\DatabaseDriver;
 class MySQL extends SQLBaseDriver implements DatabaseDriver
 {
     /**
+     * Driver para MySQL
+     */
+    private string $driverName = 'mysql';
+
+    /**
      * Constructor
      */
     public function __construct(
@@ -21,7 +26,7 @@ class MySQL extends SQLBaseDriver implements DatabaseDriver
          */
         Model $model
     ) {
-        $dsn = "mysql:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']}";
+        $dsn = "{$this->driverName}:host={$this->config['host']};port={$this->config['port']};dbname={$this->config['database']}";
 
         try {
             $this->pdo = new \PDO($dsn, $this->config['username'], $this->config['password'], $this->config['options'] ?? []);
@@ -42,7 +47,7 @@ class MySQL extends SQLBaseDriver implements DatabaseDriver
         $this->columns = $columns;
 
         return $this->exec(
-            'mysql',
+            $this->driverName,
             $this->model->connection
         );
     }
@@ -56,7 +61,7 @@ class MySQL extends SQLBaseDriver implements DatabaseDriver
         $this->columns = $columns;
 
         return $this->exec(
-            'mysql',
+            $this->driverName,
             $this->model->connection
         );
     }
@@ -70,5 +75,37 @@ class MySQL extends SQLBaseDriver implements DatabaseDriver
             ->where($this->model->getPrimaryKey(), $find)
             ->limit(1)
             ->get();
+    }
+
+    /**
+     * El insert sencillamente realiza un insert de los datos,
+     * Sin embargo, no ejecuta los casts ni tiene en cuenta los fillable.
+     * Esencialmente es un método potencialmente peligroso.
+     * 
+     * @return array de igual forma que el método "create", este devuelve los placeholders a insertar.
+     */
+    public function insert(array $data): array
+    {
+        $values = parent::insert($data);
+
+        return $this->exec(
+            $this->driverName,
+            $this->model->connection,
+            $values
+        );
+    }
+
+
+    /**
+     * Elimina un archivo
+     */
+    public function delete(string $where = '', string|int $value = ''): array
+    {
+        parent::delete($where, $value);
+
+        return $this->exec(
+            $this->driverName,
+            $this->model->connection
+        );
     }
 }

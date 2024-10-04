@@ -41,6 +41,16 @@ class MigrateMySQL extends MySQL
         return $this;
     }
 
+    public function autoincrement(): static
+    {
+        $this->sql = str_replace(
+            ['[restrict]'],
+            ['AUTO_INCREMENT'],
+            $this->sql
+        );
+        return $this;
+    }
+
     /**
      * Permite nulos
      *
@@ -93,7 +103,7 @@ class MigrateMySQL extends MySQL
      */
     public function id(): static
     {
-        return $this->bigInt('id')->primaryKey();
+        return $this->bigInt('id')->autoincrement()->primaryKey();
     }
 
     /**
