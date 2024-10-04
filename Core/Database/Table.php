@@ -117,6 +117,9 @@ class Table
         return $this->sql;
     }
 
+    /**
+     * Comentarios a la tabla
+     */
     public function comment(string $comment): static
     {
         if ($this->driver instanceof MigrateMySQL) {

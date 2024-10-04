@@ -59,7 +59,7 @@ class MigrationHandler implements DatabaseMigrations
     /**
      * Ejecuta las Queries de migraciones
      */
-    public function runQueries(string $type = 'up', Printer $printer)
+    public function runQueries(string $type = 'up', Printer $printer): void
     {
         // Crear la tabla de migraciones
         [

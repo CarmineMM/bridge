@@ -93,7 +93,7 @@ class MigrateMySQL extends MySQL
      */
     public function id(): static
     {
-        return $this->bigSerial('id')->primaryKey();
+        return $this->bigInt('id')->primaryKey();
     }
 
     /**
@@ -118,8 +118,8 @@ class MigrateMySQL extends MySQL
     public function toSQL(): string
     {
         return trim(str_replace(
-            ['[name]', '[type]', '[default]', '[restrictionKey]', '[restrict]'],
-            ['', '', '', '', '', '', ''],
+            ['[name]', '[type]', '[default]', '[restrictionKey]', '[restrict]', '[comment]'],
+            ['', '', '', '', '', '', '', ''],
             $this->sql
         ));
     }

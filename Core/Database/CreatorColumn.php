@@ -66,11 +66,7 @@ class CreatorColumn
      */
     public function id(): static
     {
-        if ($this->driver instanceof MigratePostgresSQL) {
-            $this->driver->bigSerial('id')->primaryKey();
-        } else if ($this->driver instanceof MigrateMySQL) {
-            $this->driver->bigInt('id')->primaryKey();
-        }
+        $this->driver->id();
         return $this;
     }
 

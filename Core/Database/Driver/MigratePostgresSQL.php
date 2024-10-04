@@ -134,8 +134,8 @@ class MigratePostgresSQL extends PostgresSQL
     public function toSQL(): string
     {
         return trim(str_replace(
-            ['[name]', '[type]', '[default]', '[restrictionKey]', '[restrict]'],
-            ['', '', '', '', '', '', ''],
+            ['[name]', '[type]', '[default]', '[restrictionKey]', '[restrict]', '[comment]'],
+            ['', '', '', '', '', '', '', ''],
             $this->sql
         ));
     }

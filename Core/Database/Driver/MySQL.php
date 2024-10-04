@@ -47,6 +47,19 @@ class MySQL extends SQLBaseDriver implements DatabaseDriver
         );
     }
 
+    /**
+     * Obtener los resultados
+     */
+    public function get(array $columns = ['*']): array
+    {
+        $this->instance('select');
+        $this->columns = $columns;
+
+        return $this->exec(
+            'mysql',
+            $this->model->connection
+        );
+    }
 
     /**
      * Adjunta un WHERE a la query, limitando al primary key
