@@ -3,12 +3,12 @@
 namespace Core\Database\Driver;
 
 /**
- * Creador de migraciones para PostgresSQL
+ * Creador de migraciones para MySQL
  * 
  * @author Carmine Maggio <carminemaggiom@gmail.com>
  * @version 1.0.0
  */
-class MigratePostgresSQL extends PostgresSQL
+class MigrateMySQL extends MySQL
 {
     /**
      * SQL a generar
@@ -35,22 +35,6 @@ class MigratePostgresSQL extends PostgresSQL
         $this->sql = str_replace(
             ['[name]', '[type]'],
             [$name, 'BIGINT'],
-            $this->sql
-        );
-
-        return $this;
-    }
-
-    /**
-     * Genera un BigInt
-     */
-    public function bigSerial(string $name): static
-    {
-        $this->columnName = $name;
-
-        $this->sql = str_replace(
-            ['[name]', '[type]'],
-            [$name, 'BIGSERIAL'],
             $this->sql
         );
 
@@ -162,7 +146,7 @@ class MigratePostgresSQL extends PostgresSQL
      */
     public function comment(string $comment, string $table_name): static
     {
-        $this->alterSql[] = "COMMENT ON COLUMN {$table_name}.{$this->columnName} IS '{$comment}';";
+        $this->alterSql[] = "COMMENT '{$comment}';";
         return $this;
     }
 

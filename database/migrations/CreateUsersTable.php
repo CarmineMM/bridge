@@ -14,7 +14,8 @@ class CreateUsersTable extends \Core\Database\Table implements MigrateTable
         return $this->table($this->table_name)
             ->column(fn(CreatorColumn $column) => $column->id())
             ->column(fn(CreatorColumn $column) => $column->string('email')->unique())
-            ->column(fn(CreatorColumn $column) => $column->string('password', 160));
+            ->column(fn(CreatorColumn $column) => $column->string('password', 160))
+            ->column(fn(CreatorColumn $column) => $column->timestamps());
     }
 
     public function down(): MigrateTable
