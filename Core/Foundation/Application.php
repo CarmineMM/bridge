@@ -165,10 +165,14 @@ class Application
             Kernel::runBootServiceProvider($this->providers);
         }
 
+        // Render JSON en caso de ser una respuesta para la API
         if ((is_array($through->toRender) || is_object($through->toRender) || $through->toRender instanceof Collection)) {
+            MiddlewareHandler::runMiddlewaresFromConfig('middlewares.api');
             return $through->renderJson();
         } else {
             $renderHtml = '';
+
+            MiddlewareHandler::runMiddlewaresFromConfig('middleware.web');
 
             if (is_string($through->toRender)) {
                 $renderHtml = $through->renderString();

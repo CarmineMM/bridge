@@ -6,6 +6,7 @@ use Core\Foundation\Application;
 use Core\Foundation\Filesystem;
 use Core\Loaders\FilesLoad\ConfigAppFile;
 use Core\Loaders\FilesLoad\ConfigDatabaseFile;
+use Core\Loaders\FilesLoad\ConfigMiddlewareFile;
 use Core\Loaders\FilesLoad\ConfigResourcesFile;
 use Core\Loaders\FilesLoad\ConfigRoutesFile;
 use Core\Loaders\FilesLoad\ConfigSecurityFile;
@@ -19,7 +20,7 @@ use Core\Support\Collection;
  */
 class Config
 {
-    use ConfigAppFile, ConfigRoutesFile, ConfigResourcesFile, ConfigDatabaseFile, ConfigSecurityFile;
+    use ConfigAppFile, ConfigRoutesFile, ConfigResourcesFile, ConfigDatabaseFile, ConfigSecurityFile, ConfigMiddlewareFile;
 
     /**
      * Archivos de configuración
@@ -30,6 +31,7 @@ class Config
         'resources' => 'app/config/resources.php',
         'database' => 'app/config/database.php',
         'security' => 'app/config/security.php',
+        'middleware' => 'app/config/middleware.php'
     ];
 
     /**
@@ -76,6 +78,7 @@ class Config
             self::$instance->config['resources'] = self::$instance->resourcesConfig();
             self::$instance->config['database'] = self::$instance->databaseConfig();
             self::$instance->config['security'] = self::$instance->securityConfig();
+            self::$instance->config['middleware'] = self::$instance->middlewareConfig();
         }
 
         return self::$instance;

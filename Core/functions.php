@@ -1,5 +1,6 @@
 <?php
 
+use Core\Exception\HttpException;
 use Core\Foundation\Context;
 use Core\Foundation\Filesystem;
 use Core\Foundation\Router;
@@ -106,5 +107,15 @@ if (!function_exists('context')) {
     function context(): Context
     {
         return new Core\Foundation\Context();
+    }
+}
+
+if (!function_exists('abort')) {
+    /**
+     * Exceptions abort
+     */
+    function abort(string $message, int $code = 400): void
+    {
+        (new HttpException())->abort($message, $code);
     }
 }

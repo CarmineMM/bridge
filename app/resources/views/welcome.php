@@ -44,6 +44,7 @@
 
 <body>
     <hgroup>
+        <?php dump('hola desde la vista'); ?>
         <h1>Bridge Framework</h1>
     </hgroup>
 </body>

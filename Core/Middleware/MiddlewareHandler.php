@@ -3,6 +3,7 @@
 namespace Core\Middleware;
 
 use Core\Foundation\Request;
+use Core\Loaders\Config;
 
 class MiddlewareHandler
 {
@@ -45,5 +46,15 @@ class MiddlewareHandler
         }
 
         return $next;
+    }
+
+    /**
+     * Ejecuta middlewares desde una configuración
+     */
+    public static function runMiddlewaresFromConfig(string $config): void
+    {
+        $middlewares = Config::get($config, []);
+
+        static::applyMiddleware($middlewares);
     }
 }
