@@ -11,6 +11,15 @@ use Core\Translate\Lang;
 class Debugging
 {
     /**
+     * Debug routes para excluir
+     */
+    public static $debugRoutes = [
+        '/__bridge-debugbar-css',
+        '/__bridge-debugbar-js',
+        '/__bridge-deps-js'
+    ];
+
+    /**
      * Rendering el debug bar
      *
      * @lifecycle 12: Render Debug Bar

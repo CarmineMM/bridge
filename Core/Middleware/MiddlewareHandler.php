@@ -2,6 +2,7 @@
 
 namespace Core\Middleware;
 
+use Core\Foundation\Debugging;
 use Core\Foundation\Request;
 use Core\Loaders\Config;
 
@@ -16,9 +17,11 @@ class MiddlewareHandler
     {
         $request = Request::make();
 
-        $middlewareStack = static::createStack($middlewares);
-
-        $middlewareStack($request);
+        // Debug routes excluida de la aplicación de middlewares
+        if (!in_array($request->uri, Debugging::$debugRoutes)) {
+            $middlewareStack = static::createStack($middlewares);
+            $middlewareStack($request);
+        }
     }
 
     /**

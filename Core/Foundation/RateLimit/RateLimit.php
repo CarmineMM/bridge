@@ -2,6 +2,7 @@
 
 namespace Core\Foundation\RateLimit;
 
+use Core\Foundation\Debugging;
 use Core\Foundation\RateLimit\Driver\Session;
 use Core\Foundation\Request;
 
@@ -11,17 +12,6 @@ class RateLimit
      * Driver
      */
     private ?Session $driver;
-
-    /**
-     * Excluir rutas
-     *
-     * @var array
-     */
-    protected array $excludeRoutes = [
-        '/__bridge-debugbar-css',
-        '/__bridge-debugbar-js',
-        '/__bridge-deps-js'
-    ];
 
     /**
      * Construct
@@ -41,7 +31,7 @@ class RateLimit
     {
         $request = Request::make();
 
-        if (in_array($request->uri, $this->excludeRoutes)) {
+        if (in_array($request->uri, Debugging::$debugRoutes)) {
             return;
         }
 
