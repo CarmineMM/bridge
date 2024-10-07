@@ -94,6 +94,7 @@ class ExceptionHandler
             }
 
             // Render de un error 500
+            echo '<h1>500 Internal Server Error</h1>';
         }
 
         if ($app->isDebug) {

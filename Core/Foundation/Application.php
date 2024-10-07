@@ -127,7 +127,7 @@ class Application
 
                 // Try interno para manejos de excepciones HTTP
                 try {
-                    MiddlewareHandler::runMiddlewaresFromConfig('middlewares.app');
+                    MiddlewareHandler::runMiddlewaresFromConfig('middleware.app');
 
                     if (empty($route)) {
                         throw new \Exception('Not found', 404);
@@ -136,10 +136,10 @@ class Application
                     MiddlewareHandler::applyMiddleware($route['middleware'] ?? []);
 
                     // Ejecutar los middlewares según sea el caso
-                    if (!Request::$instance->isAjax) {
-                        MiddlewareHandler::runMiddlewaresFromConfig('middlewares.api');
+                    if (Request::make()->isAjax) {
+                        MiddlewareHandler::runMiddlewaresFromConfig('middleware.api');
                     } else {
-                        MiddlewareHandler::runMiddlewaresFromConfig('middlewares.web');
+                        MiddlewareHandler::runMiddlewaresFromConfig('middleware.web');
                     }
 
                     // Ejecutar el renderizado de la aplicación

@@ -24,8 +24,6 @@ class Debugging
         $render = new Render;
         $render->config_view_path = 'framework.view_path';
 
-
-
         $renderHtml = $htmlInject
             ->headBot("
                 <link rel='stylesheet' href='/{$cssDebug}'>
@@ -34,9 +32,6 @@ class Debugging
             ")
             ->bodyBot($render->view('debugbar', ['app' => $app]))
             ->getHtml();
-
-        // echo "<br><br>Execution Time: {$execution_time} seconds";
-        // echo "<br>Memory Usage: " . UnitsConversion::make($memory, 'Bytes')->display('KB');
     }
 
     /**

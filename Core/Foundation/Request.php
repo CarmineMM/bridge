@@ -5,9 +5,12 @@ namespace Core\Foundation;
 use Core\Loaders\Config;
 use Core\Support\Collection;
 use Core\Support\Http;
+use Core\Support\RequestHelpers;
 
 class Request
 {
+    use RequestHelpers;
+
     /**
      * Método del request
      *
