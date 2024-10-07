@@ -39,4 +39,24 @@ class Security
         $context->setStore($token_name, bin2hex(random_bytes(32)));
         $context->setStore("{$token_name}_EXPIRE", time() + Config::get('security.token_expire', 3600));
     }
+
+    /**
+     * Valida que el CSRF que incluye la petición sea correcto
+     */
+    public static function ValidateCsrfToken(Request $request): bool
+    {
+        $context = new Context;
+        $token_name = Config::get('security.token_name', 'CSRF_TOKEN');
+        $token = $context->getStore($token_name, null);
+
+        if (!$token || empty($token)) {
+            return false;
+        }
+
+        if ($request->getParams('{$token_name}', null) !== $token) {
+            return false;
+        }
+
+        return true;
+    }
 }

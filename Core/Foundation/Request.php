@@ -13,15 +13,11 @@ class Request
 
     /**
      * Método del request
-     *
-     * @var string
      */
     public string $method = 'GET';
 
     /**
      * Variables del request son post
-     *
-     * @var array
      */
     private array|Collection $vars = [];
 
@@ -131,16 +127,5 @@ class Request
             'isAjax' => $this->isAjax,
             'ip' => $this->ip,
         ];
-    }
-
-    /**
-     * Comprueba si la uri actual concuerda con el parámetro
-     *
-     * @param string $string URI a comparar
-     * @return boolean
-     */
-    public function isUri(string $string): bool
-    {
-        return trim($this->uri, '/') === trim($string, '/');
     }
 }
