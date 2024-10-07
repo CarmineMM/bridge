@@ -127,12 +127,22 @@ class Application
 
                 // Try interno para manejos de excepciones HTTP
                 try {
+                    MiddlewareHandler::runMiddlewaresFromConfig('middlewares.app');
+
                     if (empty($route)) {
                         throw new \Exception('Not found', 404);
                     }
 
                     MiddlewareHandler::applyMiddleware($route['middleware'] ?? []);
 
+                    // Ejecutar los middlewares según sea el caso
+                    if (!Request::$instance->isAjax) {
+                        MiddlewareHandler::runMiddlewaresFromConfig('middlewares.api');
+                    } else {
+                        MiddlewareHandler::runMiddlewaresFromConfig('middlewares.web');
+                    }
+
+                    // Ejecutar el renderizado de la aplicación
                     $render = $app->runRender($through->callIf());
 
                     Response::send();
@@ -167,12 +177,9 @@ class Application
 
         // Render JSON en caso de ser una respuesta para la API
         if ((is_array($through->toRender) || is_object($through->toRender) || $through->toRender instanceof Collection)) {
-            MiddlewareHandler::runMiddlewaresFromConfig('middlewares.api');
             return $through->renderJson();
         } else {
             $renderHtml = '';
-
-            MiddlewareHandler::runMiddlewaresFromConfig('middleware.web');
 
             if (is_string($through->toRender)) {
                 $renderHtml = $through->renderString();
