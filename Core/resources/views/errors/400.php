@@ -1,10 +1,15 @@
+<?php
+
+use Core\Loaders\Config;
+
+?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= config('app.name') ?></title>
+    <title><?= Config::get('app.name') ?> - 400 Bad Request</title>
     <style>
         :root {
             --debug-bar-primary: #fe5f00;
@@ -23,11 +28,10 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: var(--debug-bar-light);
-            font-size: 16px;
         }
 
         h1 {
-            font-size: 6rem;
+            font-size: 10rem;
             color: var(--debug-bar-primary);
         }
 
@@ -44,7 +48,8 @@
 
 <body>
     <hgroup>
-        <h1>Bridge Framework</h1>
+        <h1>400</h1>
+        <p>Bad Request</p>
     </hgroup>
 </body>
 
