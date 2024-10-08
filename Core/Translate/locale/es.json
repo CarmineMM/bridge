@@ -39,5 +39,8 @@
         "name": "Nombre del controlador",
         "required-name": "Debe especificar el nombre del controlador.",
         "created-in": "Controlador creado en la carpeta: {folder}"
+    },
+    "rate-limit": {
+        "list": "Listado de elementos que están afectados por el Rate Limit"
     }
 }

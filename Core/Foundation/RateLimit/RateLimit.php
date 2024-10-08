@@ -2,6 +2,7 @@
 
 namespace Core\Foundation\RateLimit;
 
+use Core\Exception\HttpException;
 use Core\Foundation\Debugging;
 use Core\Foundation\RateLimit\Driver\Session;
 use Core\Foundation\Request;
@@ -20,7 +21,7 @@ class RateLimit
     {
         $this->driver = match ($useDriver) {
             'session' => new Session($limit, $banTime),
-            default => throw new \Exception("Driver {$useDriver} not found", 500),
+            default => (new HttpException)->abort("Driver {$useDriver} not found", 500),
         };
     }
 

@@ -83,4 +83,9 @@ class Session extends RateLimitBaseDriver implements RateLimitDriver
     {
         $_SESSION[$this->key]['ban_until'] = time() + $this->banTime;
     }
+
+    public function list(): array
+    {
+        return [];
+    }
 }

@@ -140,4 +140,15 @@ class Actions extends Printer
 
         return '';
     }
+
+    /**
+     * Lista los elementos que fueron afectados por el rate limit
+     *
+     * @param boolean $isHelp
+     * @return string
+     */
+    public function rateLimitList(bool $isHelp): string
+    {
+        return '';
+    }
 }
