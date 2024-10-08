@@ -22,7 +22,7 @@ class Build
     protected array $buildResultFolder = [
         'migrations'  => 'database/migrations',
         'controller' => 'app/Controllers',
-        'model' => 'app/Model',
+        'model' => 'app/Models',
     ];
 
     /**

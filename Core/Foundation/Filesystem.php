@@ -23,7 +23,7 @@ class Filesystem
      */
     public static function rootPath(array $construct = []): string
     {
-        return ROOT_PATH . DIRECTORY_SEPARATOR . self::constructPath($construct);
+        return ROOT_PATH . self::constructPath($construct);
     }
 
     /**

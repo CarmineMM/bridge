@@ -48,5 +48,11 @@
     "rate-limit": {
         "list": "Listado de elementos que están afectados por el Rate Limit",
         "reset": "Hace un reset de la lista de elementos afectados por el Rate Limit"
+    },
+    "model": {
+        "make-description": "Crea un nuevo modelo",
+        "name": "Nombre del modelo",
+        "required-name": "Debe especificar el nombre del modelo.",
+        "created-in": "Modelo creado en: {folder}"
     }
 }

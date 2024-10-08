@@ -2,6 +2,7 @@
 
 namespace Core\Foundation\Stubs;
 
+use Core\Cli\Printer;
 use Core\Foundation\Filesystem;
 use Core\Support\Str;
 
@@ -60,6 +61,17 @@ class StubHandler extends Build
     }
 
     /**
+     * Publicar un modelo
+     */
+    public function publishModel(string $name): string
+    {
+        $getContent = file_get_contents($this->stub_folder . $this->findStub['model']);
+        $buildFileName = str_replace('{model_name}', $name, $this->buildFileName['model']);
+        $getContent = str_replace('{modelName}', $name, $getContent);
+        return $this->createFile($buildFileName, $getContent, 'model');
+    }
+
+    /**
      * Crea el documento
      *
      * @param [type] $fileSave
@@ -71,14 +83,25 @@ class StubHandler extends Build
             $this->buildResultFolder[$resultFolder],
             $buildFileName
         ]);
-
         if (file_exists($fileSave)) {
             throw new \Exception("The file already exists: {$fileSave}");
         }
 
         $file = fopen($fileSave, 'w');
 
-        fwrite($file, $content);
+        if ($file) {
+            fwrite($file, $content);
+        } else {
+            (new Printer)
+                ->color_magenta('Es posible que el directorio no exista, se intentara crear el directorio para salvar el archivo')
+                ->toPrint();
+            if (!file_exists(dirname($fileSave))) {
+                mkdir(dirname($fileSave), 0777, true);
+            }
+
+            file_put_contents($fileSave, $content);
+        }
+
 
         return $fileSave;
     }
