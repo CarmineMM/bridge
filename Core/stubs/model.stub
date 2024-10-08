@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Core\Database\Model;
+
+class {modelName} extends Model
+{
+    /**
+     * Casts
+     */
+    protected array $casts = [];
+
+    /**
+     * Elements that can be filled
+     */
+    protected array $fillable = [];
+}

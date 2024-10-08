@@ -49,6 +49,11 @@ trait ActionsMake
     /**
      * Auto make, hecho para los archivos que solo requieren un nombre y ya.
      * Como los controladores, modelos, etc.
+     * 
+     * @param bool $isHelp Bool de conseguir ayuda del comando
+     * @param array $args Argumentos del comando
+     * @param string $getFor El stub de donde viene el controller
+     * @param string $call Ruta del controlador
      */
     private function autoMake(bool $isHelp, array $args = [], string $getFor, string $call): string
     {
@@ -78,5 +83,10 @@ trait ActionsMake
         }
 
         return $this->toPrint();
+    }
+
+    public function makeModel(bool $isHelp, array $args = []): string
+    {
+        return $this->autoMake($isHelp, $args, 'model', 'publishModel');
     }
 }

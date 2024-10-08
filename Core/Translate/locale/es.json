@@ -9,7 +9,8 @@
         "migrate-rollback": "Elimina las migraciones del ultimo batch.",
         "make": {
             "migration": "Crea una nueva migración.",
-            "controller": "Crea un nuevo controlador"
+            "controller": "Crea un nuevo controlador",
+            "model": "Crea un nuevo modelo"
         },
         "rate-limit": {
             "list": "Lista de elementos en el Rate Limit",

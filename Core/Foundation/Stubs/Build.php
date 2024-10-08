@@ -13,6 +13,7 @@ class Build
     protected array $buildFileName = [
         'migration' => 'Create{table}Table.php',
         'controller' => '{controller_name}.php',
+        'model' => '{model_name}.php',
     ];
 
     /**
@@ -21,6 +22,7 @@ class Build
     protected array $buildResultFolder = [
         'migrations'  => 'database/migrations',
         'controller' => 'app/Controllers',
+        'model' => 'app/Model',
     ];
 
     /**
@@ -29,5 +31,6 @@ class Build
     protected array $findStub = [
         'migration'  => 'migration.stub',
         'controller' => 'controller.stub',
+        'model' => 'model.stub',
     ];
 }

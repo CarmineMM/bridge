@@ -61,6 +61,7 @@ class Console extends Printer
             // Make functions
             'make:migration' => Lang::_get('console.make.migration'),
             'make:controller' => Lang::_get('console.make.controller'),
+            'make:model' => Lang::_get('console.make.model'),
         ];
     }
 
@@ -87,6 +88,7 @@ class Console extends Printer
 
             'make:migration' => $actions->makeMigration($isHelp, $this->cleanArgsActions()),
             'make:controller' => $actions->makeController($isHelp, $this->cleanArgsActions()),
+            'make:model' => $actions->makeModel($isHelp, $this->cleanArgsActions()),
 
             // Rate limit actions
             'rate-limit:list' => $actions->rateLimitList($isHelp),
