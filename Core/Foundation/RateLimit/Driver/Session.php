@@ -12,7 +12,7 @@ class Session extends RateLimitBaseDriver implements RateLimitDriver
     /**
      * Key para acceder al session controller
      */
-    private string $key = 'bridge_sessions';
+    public static string $key = 'bridge_sessions';
 
     /**
      * Crea el registro por primera vez en caso de no existir.
@@ -20,7 +20,7 @@ class Session extends RateLimitBaseDriver implements RateLimitDriver
      */
     private function create(Request $request): void
     {
-        $_SESSION[$this->key + '_' + $request->ip] = [
+        $_SESSION[static::$key][$request->ip] = [
             'count'      => 0,
             'time'       => time() + $this->timeRoadmap,
             'ip'         => $request->ip,
@@ -35,19 +35,19 @@ class Session extends RateLimitBaseDriver implements RateLimitDriver
      */
     public function check(Request $request): void
     {
-        if (!isset($_SESSION[$this->key + '_' + $request->ip])) {
+        if (!isset($_SESSION[static::$key][$request->ip])) {
             $this->create($request);
             return;
         }
 
         $this->reset($request);
 
-        if ($_SESSION[$this->key + '_' + $request->ip]['count'] >= $this->limit) {
+        if ($_SESSION[static::$key][$request->ip]['count'] >= $this->limit) {
             $this->banned();
         }
 
         // Si se ha superado el limite disparar un error
-        if ($_SESSION[$this->key + '_' + $request->ip]['ban_until'] > time()) {
+        if ($_SESSION[static::$key][$request->ip]['ban_until'] > time()) {
             throw new \Exception("Rate limit exceeded", 429);
         }
     }
@@ -58,7 +58,7 @@ class Session extends RateLimitBaseDriver implements RateLimitDriver
     public function increment(): void
     {
         $request = Request::make();
-        $_SESSION[$this->key + '_' + $request->ip]['count'] = $_SESSION[$this->key + '_' + $request->ip]['count'] + 1;
+        $_SESSION[static::$key][$request->ip]['count'] = $_SESSION[static::$key][$request->ip]['count'] + 1;
     }
 
     /**
@@ -67,10 +67,10 @@ class Session extends RateLimitBaseDriver implements RateLimitDriver
     public function reset(Request $request): void
     {
         if (
-            (time() > $_SESSION[$this->key + '_' + $request->ip]['time'] && $_SESSION[$this->key + '_' + $request->ip]['ban_until'] === false) ||
-            (time() > $_SESSION[$this->key + '_' + $request->ip]['ban_until'] && $_SESSION[$this->key + '_' + $request->ip]['ban_until'] !== false)
+            (time() > $_SESSION[static::$key][$request->ip]['time'] && $_SESSION[static::$key][$request->ip]['ban_until'] === false) ||
+            (time() > $_SESSION[static::$key][$request->ip]['ban_until'] && $_SESSION[static::$key][$request->ip]['ban_until'] !== false)
         ) {
-            unset($_SESSION[$this->key + '_' + $request->ip]);
+            unset($_SESSION[static::$key][$request->ip]);
             $this->create($request);
         }
     }
@@ -83,11 +83,24 @@ class Session extends RateLimitBaseDriver implements RateLimitDriver
     public function banned(): void
     {
         $request = Request::make();
-        $_SESSION[$this->key + '_' + $request->ip]['ban_until'] = time() + $this->banTime;
+        $_SESSION[static::$key][$request->ip]['ban_until'] = time() + $this->banTime;
     }
 
-    public function list(): array
+    /**
+     * Lista de ban times
+     */
+    public static function list(): array
     {
-        return [];
+        return $_SESSION[Session::$key] ?? [];
+    }
+
+    /**
+     * Reset toda la lista,
+     * En caso del session no funcionara, porque las sesiones son independiente por navegador
+     * y por tanto no se restablecen, sin embargo puede incurrir la acción desde el cliente.
+     */
+    public static function resetAllKeys(): void
+    {
+        $_SESSION[Session::$key] = [];
     }
 }

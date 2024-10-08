@@ -39,4 +39,26 @@ class RateLimit
         $this->driver->check($request);
         $this->driver->increment();
     }
+
+    /**
+     * Lista de seguimiento
+     */
+    public static function list(string $useDriver): array
+    {
+        return match ($useDriver) {
+            'session' => Session::list(),
+            default => (new HttpException)->abort("Driver {$useDriver} not found", 500),
+        };
+    }
+
+    /**
+     * Restablece la lista de seguimiento
+     */
+    public static function reset(string $useDriver): void
+    {
+        match ($useDriver) {
+            'session' => Session::resetAllKeys(),
+            default => (new HttpException)->abort("Driver {$useDriver} not found", 500),
+        };
+    }
 }

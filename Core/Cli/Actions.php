@@ -3,7 +3,9 @@
 namespace Core\Cli;
 
 use Core\Database\MigrationHandler;
+use Core\Foundation\RateLimit\RateLimit;
 use Core\Foundation\Router;
+use Core\Loaders\Config;
 use Core\Loaders\Routes;
 use Core\Support\Collection;
 use Core\Translate\Lang;
@@ -149,6 +151,31 @@ class Actions extends Printer
      */
     public function rateLimitList(bool $isHelp): string
     {
+        foreach (RateLimit::list(Config::get('security.rate_limit.driver', 'session')) as $rateLimit) {
+            dump($rateLimit);
+        }
+        return '';
+    }
+
+    /**
+     * Lista los elementos que fueron afectados por el rate limit
+     *
+     * @param boolean $isHelp
+     * @return string
+     */
+    public function resetRateLimit(bool $isHelp): string
+    {
+        if ($isHelp) {
+            return $this->printHelp(
+                Lang::_get('rate-limit.reset'),
+                'php jump rate-limit:reset',
+            );
+        }
+
+        RateLimit::reset(
+            Config::get('security.rate_limit.driver', 'session')
+        );
+
         return '';
     }
 }

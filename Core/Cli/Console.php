@@ -51,7 +51,8 @@ class Console extends Printer
             'routes' => Lang::_get('console.routes') . "\n",
 
             // Rate Limit actions
-            'rate-limit:list' => Lang::_get('console.rate-limit.list') . "\n",
+            'rate-limit:list' => Lang::_get('console.rate-limit.list'),
+            'rate-limit:reset' => Lang::_get('console.rate-limit.reset') . "\n",
 
             // Migrations and migrate
             'migrate' => Lang::_get('console.migrate'),
@@ -87,7 +88,9 @@ class Console extends Printer
             'make:migration' => $actions->makeMigration($isHelp, $this->cleanArgsActions()),
             'make:controller' => $actions->makeController($isHelp, $this->cleanArgsActions()),
 
+            // Rate limit actions
             'rate-limit:list' => $actions->rateLimitList($isHelp),
+            'rate-limit:reset' => $actions->resetRateLimit($isHelp),
             default => '',
         };
 

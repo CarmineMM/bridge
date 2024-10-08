@@ -10,6 +10,10 @@
         "make": {
             "migration": "Crea una nueva migración.",
             "controller": "Crea un nuevo controlador"
+        },
+        "rate-limit": {
+            "list": "Lista de elementos en el Rate Limit",
+            "reset": "Restablece todos los elementos en el Rate Limit"
         }
     },
     "description": "Descripción",
@@ -41,6 +45,7 @@
         "created-in": "Controlador creado en la carpeta: {folder}"
     },
     "rate-limit": {
-        "list": "Listado de elementos que están afectados por el Rate Limit"
+        "list": "Listado de elementos que están afectados por el Rate Limit",
+        "reset": "Hace un reset de la lista de elementos afectados por el Rate Limit"
     }
 }
