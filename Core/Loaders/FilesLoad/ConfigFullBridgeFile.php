@@ -8,8 +8,9 @@ trait ConfigFullBridgeFile
      * Default app config
      */
     private array $fullBridge = [
-        'enabled' => false,
+        'enable' => false,
         'namespace' => 'App\FullBridge',
+        'url-post' => '/full-bridge-actions',
     ];
 
     /**

@@ -10,7 +10,8 @@
         "make": {
             "migration": "Crea una nueva migración.",
             "controller": "Crea un nuevo controlador",
-            "model": "Crea un nuevo modelo"
+            "model": "Crea un nuevo modelo",
+            "fullbridge-component": "Crea un nuevo componente Full Bridge"
         },
         "rate-limit": {
             "list": "Lista de elementos en el Rate Limit",

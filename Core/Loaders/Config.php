@@ -33,7 +33,7 @@ class Config
         'database' => 'app/config/database.php',
         'security' => 'app/config/security.php',
         'middleware' => 'app/config/middleware.php',
-        'fullbridge' => 'app/config/full-bridge.php',
+        'fullbridge' => 'app/config/fullbridge.php',
     ];
 
     /**
