@@ -57,5 +57,9 @@
         "name": "Nombre del modelo",
         "required-name": "Debe especificar el nombre del modelo.",
         "created-in": "Modelo creado en: {folder}"
+    },
+    "full-bridge": {
+        "name": "Full Bridge",
+        "install": "Instala Full Bridge e inicializa su archivo de configuración"
     }
 }

@@ -85,8 +85,26 @@ trait ActionsMake
         return $this->toPrint();
     }
 
+    /**
+     * Crea un nuevo modelos
+     */
     public function makeModel(bool $isHelp, array $args = []): string
     {
         return $this->autoMake($isHelp, $args, 'model', 'publishModel');
+    }
+
+    /**
+     * Instala fullbridge
+     */
+    public function fullBridgeInstall(bool $isHelp): string
+    {
+        if ($isHelp) {
+            return $this->printHelp(
+                Lang::_get("full-bridge.install"),
+                "php jump install:fullbridge",
+            );
+        }
+
+        return $this->autoMake($isHelp, [], 'install:fullbridge', 'publishConfigFullBridgeFile');
     }
 }

@@ -107,6 +107,9 @@ class Console extends Printer
             // Rate limit actions
             'rate-limit:list' => $actions->rateLimitList($isHelp),
             'rate-limit:reset' => $actions->resetRateLimit($isHelp),
+
+            // Full Bridge
+            'fullbridge:install' => $actions->fullBridgeInstall($isHelp),
             default => '',
         };
 

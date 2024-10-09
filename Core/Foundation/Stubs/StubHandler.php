@@ -105,4 +105,14 @@ class StubHandler extends Build
 
         return $fileSave;
     }
+
+    /**
+     * Crea un full bridge config file
+     */
+    public function publishConfigFullBridgeFile(): string
+    {
+        $getContent = file_get_contents($this->stub_folder . $this->findStub['install:fullbridge']);
+        $buildFileName =  $this->buildFileName['install:fullbridge'];
+        return $this->createFile($buildFileName, $getContent, 'config');
+    }
 }

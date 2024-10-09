@@ -14,6 +14,7 @@ class Build
         'migration' => 'Create{table}Table.php',
         'controller' => '{controller_name}.php',
         'model' => '{model_name}.php',
+        'install:fullbridge' => 'fullbridge.php',
     ];
 
     /**
@@ -23,6 +24,7 @@ class Build
         'migrations'  => 'database/migrations',
         'controller' => 'app/Controllers',
         'model' => 'app/Models',
+        'config' => 'app/config',
     ];
 
     /**
@@ -32,5 +34,6 @@ class Build
         'migration'  => 'migration.stub',
         'controller' => 'controller.stub',
         'model' => 'model.stub',
+        'install:fullbridge' => 'fullbridge-config.stub',
     ];
 }
