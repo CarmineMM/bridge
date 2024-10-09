@@ -61,8 +61,22 @@ class Console extends Printer
             // Make functions
             'make:migration' => Lang::_get('console.make.migration'),
             'make:controller' => Lang::_get('console.make.controller'),
-            'make:model' => Lang::_get('console.make.model'),
+            'make:model' => Lang::_get('console.make.model') . "\n",
+
+            // Bridge Wire
+            'fullbridge:install' => Lang::_get('console.full-bridge.install'),
         ];
+
+        // Limpiar los comandos para los que no se tiene activación o permisos
+        $activateRateLimit = Config::get('security.rate_limit.enable', false);
+
+        $this->commands =  array_filter($this->commands, function ($command) use ($activateRateLimit) {
+            if (!$activateRateLimit && strpos($command, 'rate-limit') !== false) {
+                return false;
+            }
+
+            return true;
+        }, ARRAY_FILTER_USE_KEY);
     }
 
     /**
@@ -119,7 +133,7 @@ class Console extends Printer
         );
 
         foreach ($this->commands as $command => $help) {
-            $this->color_light_green(sprintf("\n  %-17s", $command));
+            $this->color_light_green(sprintf("\n  %-19s", $command));
             $this->color_unset($help);
         }
 

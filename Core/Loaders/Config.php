@@ -5,8 +5,8 @@ namespace Core\Loaders;
 use Core\Foundation\Application;
 use Core\Foundation\Filesystem;
 use Core\Loaders\FilesLoad\ConfigAppFile;
-use Core\Loaders\FilesLoad\ConfigBridgeWireFile;
 use Core\Loaders\FilesLoad\ConfigDatabaseFile;
+use Core\Loaders\FilesLoad\ConfigFullBridgeFile;
 use Core\Loaders\FilesLoad\ConfigMiddlewareFile;
 use Core\Loaders\FilesLoad\ConfigResourcesFile;
 use Core\Loaders\FilesLoad\ConfigRoutesFile;
@@ -21,7 +21,7 @@ use Core\Support\Collection;
  */
 class Config
 {
-    use ConfigAppFile, ConfigRoutesFile, ConfigResourcesFile, ConfigDatabaseFile, ConfigSecurityFile, ConfigMiddlewareFile, ConfigBridgeWireFile;
+    use ConfigAppFile, ConfigRoutesFile, ConfigResourcesFile, ConfigDatabaseFile, ConfigSecurityFile, ConfigMiddlewareFile, ConfigFullBridgeFile;
 
     /**
      * Archivos de configuración
@@ -33,7 +33,7 @@ class Config
         'database' => 'app/config/database.php',
         'security' => 'app/config/security.php',
         'middleware' => 'app/config/middleware.php',
-        'bridge-wire' => 'app/config/bridge-wire.php',
+        'fullbridge' => 'app/config/full-bridge.php',
     ];
 
     /**
@@ -81,7 +81,7 @@ class Config
             self::$instance->config['database'] = self::$instance->databaseConfig();
             self::$instance->config['security'] = self::$instance->securityConfig();
             self::$instance->config['middleware'] = self::$instance->middlewareConfig();
-            self::$instance->config['bridge-wire'] = self::$instance->bridgeWireConfig();
+            self::$instance->config['fullbridge'] = self::$instance->fullBridgeConfig();
         }
 
         return self::$instance;

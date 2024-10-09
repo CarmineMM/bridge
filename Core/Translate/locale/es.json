@@ -15,6 +15,9 @@
         "rate-limit": {
             "list": "Lista de elementos en el Rate Limit",
             "reset": "Restablece todos los elementos en el Rate Limit"
+        },
+        "full-bridge": {
+            "install": "Instala Full Bridge"
         }
     },
     "description": "Descripción",

@@ -247,4 +247,16 @@ class Collection
     {
         return new Collection($this->data[0] ?? [], false);
     }
+
+    /**
+     * Filter elements
+     * 
+     * @param callable $call ($value, $key) => bool
+     * @return static
+     */
+    public function filter(callable $call): static
+    {
+        $this->data = array_filter($this->data, $call, ARRAY_FILTER_USE_BOTH);
+        return $this;
+    }
 }
