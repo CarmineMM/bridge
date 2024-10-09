@@ -58,10 +58,18 @@ class Debugging
             $exceptions[] = $item;
         }
 
+        // Filtra las configuraciones que no deberían ser mostradas
+        $allConfig = Config::all()->filter(function ($item, $key) {
+            if ($key === 'fullbridge' && $item['enabled'] === false) {
+                return false;
+            }
+            return $item;
+        });
+
         $list = [
             'config' => [
                 'title' => Lang::_get('configurations', [], 'Config'),
-                'elements' => static::splitFormatFiles(Config::all()->toArray(), ['view_path', 'providers']),
+                'elements' => static::splitFormatFiles($allConfig->toArray(), ['view_path', 'providers', 'migration_handler', 'namespace']),
                 'tabs' => [],
             ],
             'queries' => [
