@@ -7,6 +7,7 @@
         "routes": "Listado de rutas disponibles",
         "migrate": "Ejecuta las migraciones.",
         "migrate-rollback": "Elimina las migraciones del ultimo batch.",
+        "create-component": "Es posible que el directorio no exista, se intentara crear el directorio para salvar el archivo",
         "make": {
             "migration": "Crea una nueva migración.",
             "controller": "Crea un nuevo controlador",
@@ -63,5 +64,11 @@
         "name": "Full Bridge",
         "install": "Instala Full Bridge e inicializa su archivo de configuración",
         "created-in": "Archivo de configuración creado en: {folder}"
+    },
+    "bridge-component": {
+        "make-description": "Crea un nuevo componente de Full Bridge",
+        "name": "Nombre del componente",
+        "created-in": "Componente creado en: {folder}",
+        "required-name": "Debe especificar el nombre del componente."
     }
 }

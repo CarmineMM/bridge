@@ -6,6 +6,7 @@ use Core\Cli\Printer;
 use Core\Foundation\Filesystem;
 use Core\Loaders\Config;
 use Core\Support\Str;
+use Core\Translate\Lang;
 
 class StubHandler extends Build
 {
@@ -99,7 +100,8 @@ class StubHandler extends Build
             fwrite($file, $content);
         } else {
             (new Printer)
-                ->color_magenta('Es posible que el directorio no exista, se intentara crear el directorio para salvar el archivo')
+                ->color_red(Lang::_get("console.create-component"))
+                ->bg_green()
                 ->toPrint();
             if (!file_exists(dirname($fileSave))) {
                 mkdir(dirname($fileSave), 0777, true);
