@@ -113,6 +113,6 @@ trait ActionsMake
      */
     public function makeBridgeComponent(bool $isHelp, array $args = []): string
     {
-        return '';
+        return $this->autoMake($isHelp, $args, 'model', 'createBridgeComponent');
     }
 }

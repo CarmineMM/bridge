@@ -15,6 +15,7 @@ class Build
         'controller' => '{controller_name}.php',
         'model' => '{model_name}.php',
         'install:fullbridge' => 'fullbridge.php',
+        'fullbridge:component' => '{component_name}.php',
     ];
 
     /**
@@ -35,5 +36,6 @@ class Build
         'controller' => 'controller.stub',
         'model' => 'model.stub',
         'install:fullbridge' => 'fullbridge-config.stub',
+        'fullbridge:component' => 'fullbridge-component.stub',
     ];
 }

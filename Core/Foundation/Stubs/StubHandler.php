@@ -4,6 +4,7 @@ namespace Core\Foundation\Stubs;
 
 use Core\Cli\Printer;
 use Core\Foundation\Filesystem;
+use Core\Loaders\Config;
 use Core\Support\Str;
 
 class StubHandler extends Build
@@ -77,12 +78,17 @@ class StubHandler extends Build
      * @param [type] $fileSave
      * @return string Devuelve el archivo creado
      */
-    public function createFile(string $buildFileName, string $content, string $resultFolder): string
+    public function createFile(string $buildFileName, string $content, string $resultFolder, bool $customResultFolder = false): string
     {
-        $fileSave = Filesystem::rootPath([
-            $this->buildResultFolder[$resultFolder],
-            $buildFileName
-        ]);
+        if ($customResultFolder) {
+            $fileSave = $resultFolder;
+        } else {
+            $fileSave = Filesystem::rootPath([
+                $this->buildResultFolder[$resultFolder],
+                $buildFileName
+            ]);
+        }
+
         if (file_exists($fileSave)) {
             throw new \Exception("The file already exists: {$fileSave}");
         }
@@ -114,5 +120,26 @@ class StubHandler extends Build
         $getContent = file_get_contents($this->stub_folder . $this->findStub['install:fullbridge']);
         $buildFileName =  $this->buildFileName['install:fullbridge'];
         return $this->createFile($buildFileName, $getContent, 'config');
+    }
+
+    /**
+     * Create bridge component
+     */
+    public function createBridgeComponent(string $componentName): string
+    {
+        $getContent = file_get_contents($this->stub_folder . $this->findStub['fullbridge:component']);
+        $getContent = str_replace('{component_name}', $componentName, $getContent);
+        $resultFolder = Config::get('fullbridge.namespace', 'App\FullBridge');
+        $buildFileName = str_replace('{component_name}', $componentName, $this->buildFileName['fullbridge:component']);
+
+        return $this->createFile(
+            $buildFileName,
+            $getContent,
+            Filesystem::rootPath([
+                $resultFolder,
+                $buildFileName
+            ]),
+            true
+        );
     }
 }
