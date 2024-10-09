@@ -107,4 +107,12 @@ trait ActionsMake
 
         return $this->autoMake($isHelp, [0], 'full-bridge', 'publishConfigFullBridgeFile');
     }
+
+    /**
+     * Crea un nuevo componente de bridge
+     */
+    public function makeBridgeComponent(bool $isHelp, array $args = []): string
+    {
+        return '';
+    }
 }

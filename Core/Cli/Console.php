@@ -112,6 +112,9 @@ class Console extends Printer
             'make:controller' => $actions->makeController($isHelp, $this->cleanArgsActions()),
             'make:model' => $actions->makeModel($isHelp, $this->cleanArgsActions()),
 
+            // Bridge Actions
+            'make:bridge-component' => $actions->makeBridgeComponent($isHelp, $this->cleanArgsActions()),
+
             // Rate limit actions
             'rate-limit:list' => $actions->rateLimitList($isHelp),
             'rate-limit:reset' => $actions->resetRateLimit($isHelp),
