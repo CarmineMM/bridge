@@ -60,6 +60,7 @@
     },
     "full-bridge": {
         "name": "Full Bridge",
-        "install": "Instala Full Bridge e inicializa su archivo de configuración"
+        "install": "Instala Full Bridge e inicializa su archivo de configuración",
+        "created-in": "Archivo de configuración creado en: {folder}"
     }
 }

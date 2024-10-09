@@ -105,6 +105,6 @@ trait ActionsMake
             );
         }
 
-        return $this->autoMake($isHelp, [], 'install:fullbridge', 'publishConfigFullBridgeFile');
+        return $this->autoMake($isHelp, [0], 'full-bridge', 'publishConfigFullBridgeFile');
     }
 }
