@@ -24,7 +24,7 @@ document.addEventListener('alpine:init', () => {
         /**
          * Keys de los elementos que se deben de mostrar como un implode 
          */
-        const keyImplodeFileReference = ['view_path', 'providers', 'file', 'migration_handler', 'namespace', 'web'];
+        const keyImplodeFileReference = ['view_path', 'providers', 'file', 'migration_handler', 'namespace', 'middleware.web'];
 
         return {
             bodyOpen: false,
@@ -58,6 +58,8 @@ document.addEventListener('alpine:init', () => {
                 });
 
                 this.items = parseRenderItems;
+
+                console.log('Bridge Debugbar: ', parseRenderItems);
             },
 
             toggleBody() {

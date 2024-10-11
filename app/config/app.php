@@ -1,6 +1,5 @@
 <?php
 
-use App\Providers\Dos;
 use Core\Support\Env;
 
 /**
@@ -54,5 +53,6 @@ return [
      */
     'providers' => [
         \App\Providers\AppServiceProvider::class,
+        \Core\FullBridge\FullBridgeProvider::class,
     ],
 ];

@@ -67,6 +67,12 @@ class Debugging
         });
 
         $list = [
+            'bridge' => [
+                'title' => Application::FrameworkName,
+                'version' => Application::FrameworkVersion,
+                'elements' => [],
+                'tabs' => [],
+            ],
             'config' => [
                 'title' => Lang::_get('configurations', [], 'Config'),
                 'elements' => static::splitFormatFiles($allConfig->toArray(), ['view_path', 'providers', 'migration_handler', 'namespace']),

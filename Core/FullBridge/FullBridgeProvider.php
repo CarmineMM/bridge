@@ -3,6 +3,7 @@
 namespace Core\FullBridge;
 
 use Core\Foundation\ServiceProvider;
+use Core\Loaders\Config;
 
 class FullBridgeProvider extends ServiceProvider
 {
@@ -11,6 +12,6 @@ class FullBridgeProvider extends ServiceProvider
      */
     public function register(bool $consoleMode): void
     {
-        //
+        Config::addConfig('middleware.web', [FullBridgeMiddleware::class]);
     }
 }

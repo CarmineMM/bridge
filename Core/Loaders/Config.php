@@ -120,6 +120,16 @@ class Config
     }
 
     /**
+     * Agrega un nuevo path a la configuración
+     */
+    public static function addConfig(string $key, mixed $value): void
+    {
+        $self = static::getInstance();
+        $self->config->add($key, $value);
+        self::$instance = $self;
+    }
+
+    /**
      * Obtiene todas las configuraciones
      */
     public static function all(): Collection

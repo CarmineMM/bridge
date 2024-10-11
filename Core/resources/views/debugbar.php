@@ -18,9 +18,9 @@ $memory = UnitsConversion::make(memory_get_usage() - $app->memory, 'byte');
 
 <footer id="debug-bar" x-data="debugbar(<?= (new Str(json_encode($elements)))->toJsonHtml() ?>)" :class="{ open: bodyOpen }" class="debug-handle">
     <div class="debugbar-header">
-        <h2 class="debugbar-title">
+        <!-- <h2 class="debugbar-title">
             <a href="https://github.com/CarmineMM/bridge" target="_blank"><?= Application::FrameworkName ?></a>
-        </h2>
+        </h2> -->
         <ul class="debugbar-options">
             <!-- Lista de configuraciones -->
             <template x-for="(el, key) in items">
