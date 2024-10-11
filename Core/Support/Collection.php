@@ -131,7 +131,13 @@ class Collection
      */
     public function add(string $key, mixed $value): Collection
     {
-        $this->data[$key] = $value;
+        $wasGet = $this->get($key, false);
+
+        if ($wasGet && strpos($key, '.') !== false) {
+            $this->data[$key] = is_array($wasGet) ? array_merge($wasGet, $value) : $value;
+        } else {
+            $this->data[$key] = $value;
+        }
 
         return $this;
     }

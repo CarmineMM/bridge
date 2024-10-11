@@ -24,7 +24,7 @@ document.addEventListener('alpine:init', () => {
         /**
          * Keys de los elementos que se deben de mostrar como un implode 
          */
-        const keyImplodeFileReference = ['view_path', 'providers', 'file', 'migration_handler', 'namespace', 'middleware.web'];
+        const keyImplodeFileReference = ['view_path', 'providers', 'file', 'migration_handler', 'namespace'];
 
         return {
             bodyOpen: false,
