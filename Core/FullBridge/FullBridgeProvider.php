@@ -2,4 +2,15 @@
 
 namespace Core\FullBridge;
 
-class FullBridgeProvider {}
+use Core\Foundation\ServiceProvider;
+
+class FullBridgeProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     */
+    public function register(bool $consoleMode): void
+    {
+        //
+    }
+}

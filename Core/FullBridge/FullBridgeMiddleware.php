@@ -2,4 +2,13 @@
 
 namespace Core\FullBridge;
 
-class FullBridgeMiddleware {}
+use Core\Foundation\Request;
+use Core\Middleware\AppMiddleware;
+
+class FullBridgeMiddleware implements AppMiddleware
+{
+    public function handle(Request $request, $next): mixed
+    {
+        return $next($request);
+    }
+}
