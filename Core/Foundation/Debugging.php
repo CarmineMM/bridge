@@ -69,8 +69,10 @@ class Debugging
         $list = [
             'bridge' => [
                 'title' => Application::FrameworkName,
-                'version' => Application::FrameworkVersion,
-                'elements' => [],
+                'elements' => [
+                    'Bridge Version' => Application::FrameworkVersion,
+                    'Bridge Mode' => $allConfig->get('framework.consoleMode') ? 'Console' : 'Web',
+                ],
                 'tabs' => [],
             ],
             'config' => [
