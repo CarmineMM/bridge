@@ -2,6 +2,8 @@
 
 namespace Core\FullBridge;
 
+use Attribute;
+use Core\Support\Collection;
 use DOMDocument;
 use Exception;
 
@@ -32,6 +34,7 @@ class LoadBridgeComponent
         // Run pre render
         $render = $component->render();
         $id = random_int(1, 1000);
+        $publicProperties = new Collection(get_object_vars($component));
         $componentClass = $component::class;
         $render = preg_replace("/>/", " bridge:component='{$componentClass}' bridge:id='$id'>", $render, 1);
 
@@ -40,6 +43,27 @@ class LoadBridgeComponent
             mb_convert_encoding($render, 'HTML-ENTITIES', 'UTF-8'),
             LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
         );
+
+        // Se recorren todos los tags posibles del HTML
+        foreach (Attributes::ModelTags as $tag) {
+            $nodes = $doc->getElementsByTagName($tag)->getIterator();
+
+            foreach ($nodes as $node) {
+                // Ahora se recorren los atributos dentro del node (tag) de HTML
+                foreach (Attributes::ModelProperties as $property) {
+                    $model = $node->getAttribute($property);
+                    $search = $publicProperties->get($model);
+
+                    // Hacer el reemplazo de valores dentro de las etiquetas HTML según sea el caso
+                    if ($model && $search) {
+                        // Valor de 'Values'
+                        if (in_array($tag, Attributes::AddValuesToNode)) {
+                            $node->setAttribute('value', $search);
+                        }
+                    }
+                }
+            }
+        }
 
         return $doc->saveHTML();
     }
