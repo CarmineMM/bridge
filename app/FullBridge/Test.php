@@ -4,12 +4,15 @@ namespace App\FullBridge;
 
 use Core\FullBridge\Component;
 
-class {component_name} extends Component 
+class Test extends Component
 {
     public function render(): string
     {
+        // html
         return <<<HTML
-            <h1>Hello World</h1>
+            <div>
+                <h1 class="title">Hello World</h1>
+            </div>
         HTML;
     }
 }

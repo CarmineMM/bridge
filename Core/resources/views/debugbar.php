@@ -30,7 +30,7 @@ $memory = UnitsConversion::make(memory_get_usage() - $app->memory, 'byte');
             </template>
         </ul>
         <ul class="debugbar-resume">
-            <li title="<?= $memory->display('KB') ?>"><?= $memory->show() ?></li>
+            <li title="<?= $memory->smartConversion() ?>"><?= $memory->show() ?></li>
             <li title="<?= $execution_time ?> seconds"><?= TimeConversion::make($execution_time, 's')->show() ?></li>
             <li title="<?= $request->url ?>"><?= $request->uri ?></li>
             <li>

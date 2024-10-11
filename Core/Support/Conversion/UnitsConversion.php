@@ -87,4 +87,12 @@ class UnitsConversion extends BaseConversion
             default => $this->display('bit'),
         };
     }
+
+    /**
+     * Conversion inteligente a valores según la cantidad de bits
+     */
+    public function smartConversion(): string
+    {
+        return $this->show();
+    }
 }
