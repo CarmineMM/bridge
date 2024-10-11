@@ -52,13 +52,15 @@ class LoadBridgeComponent
                 // Ahora se recorren los atributos dentro del node (tag) de HTML
                 foreach (Attributes::ModelProperties as $property) {
                     $model = $node->getAttribute($property);
-                    $search = $publicProperties->get($model);
+                    $value = $publicProperties->get($model);
 
                     // Hacer el reemplazo de valores dentro de las etiquetas HTML según sea el caso
-                    if ($model && $search) {
+                    if ($model && $value) {
                         // Valor de 'Values'
                         if (in_array($tag, Attributes::AddValuesToNode)) {
-                            $node->setAttribute('value', $search);
+                            $node->setAttribute('value', $value);
+                        } else {
+                            $node->nodeValue = $value;
                         }
                     }
                 }

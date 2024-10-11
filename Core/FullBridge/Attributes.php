@@ -11,6 +11,18 @@ class Attributes
         'input',
         'textarea',
         'select',
+
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+
+        'div',
+        'article',
+        'main',
+        'section',
     ];
 
     /**
@@ -26,5 +38,12 @@ class Attributes
     const AddValuesToNode = [
         'input',
         'select'
+    ];
+
+    /***
+     * Realiza un append en los siguientes elementos
+     */
+    const addHtmlContent = [
+        ''
     ];
 }
