@@ -129,9 +129,14 @@ class StubHandler extends Build
      */
     public function createBridgeComponent(string $componentName): string
     {
+        $namespace = Config::get('fullbridge.namespace', 'App\FullBridge');
         $getContent = file_get_contents($this->stub_folder . $this->findStub['fullbridge:component']);
-        $getContent = str_replace('{component_name}', $componentName, $getContent);
-        $resultFolder = Config::get('fullbridge.namespace', 'App\FullBridge');
+        $getContent = str_replace(
+            ['{component_name}', '{namespace}'],
+            [$componentName, $namespace],
+            $getContent
+        );
+        $resultFolder = str_replace('App', 'app', $namespace);
         $buildFileName = str_replace('{component_name}', $componentName, $this->buildFileName['fullbridge:component']);
 
         return $this->createFile(
