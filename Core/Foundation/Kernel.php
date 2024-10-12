@@ -57,11 +57,11 @@ class Kernel
     public static function registerServiceProviders(bool $consoleMode): array
     {
         $providers = Config::get('app.providers');
-
+        $request = !$consoleMode ? Request::make() : null;
         foreach ($providers as $key => $value) {
             $providers[$key] = new $value();
             if (method_exists($providers[$key], 'register')) {
-                $providers[$key]->register($consoleMode);
+                $providers[$key]->register($consoleMode, $request);
             }
         }
 

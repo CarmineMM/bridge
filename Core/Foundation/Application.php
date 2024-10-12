@@ -75,13 +75,13 @@ class Application
             unset($timer);
         }
 
-        // Llamar el 'register' de los servicios
-        $this->providers = Kernel::registerServiceProviders($consoleMode);
-
         if (!$consoleMode) {
             Request::make();
             Response::make();
         }
+
+        // Llamar el 'register' de los servicios
+        $this->providers = Kernel::registerServiceProviders($consoleMode);
 
         Translate::make();
         Routes::loadForm();

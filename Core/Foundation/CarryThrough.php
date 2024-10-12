@@ -17,6 +17,11 @@ class CarryThrough
     public mixed $toRender = null;
 
     /**
+     * Lista de mutators
+     */
+    public static array $listMutatorsFunctions = [];
+
+    /**
      * Preparar para el despliegue de la app
      *
      * @lifecycle 19: Carry Through
@@ -31,8 +36,7 @@ class CarryThrough
          * @var array
          */
         public array $route = []
-    ) {
-    }
+    ) {}
 
     /**
      * Llama a la instancia
@@ -179,5 +183,18 @@ class CarryThrough
     public function renderString(): string
     {
         return $this->toRender;
+    }
+
+    /**
+     * Muta el render a realizar, la función debe retornar un string.
+     * La función recibe de parámetro, el render actual, sea JSON o HTML.
+     * El segundo parámetro de la función a recibir es el request.
+     *
+     * @param callable $callMutatorFunction
+     * @return void
+     */
+    public static function mutateRender(callable $callMutatorFunction): void
+    {
+        self::$listMutatorsFunctions[] = $callMutatorFunction;
     }
 }

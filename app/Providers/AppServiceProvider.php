@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Core\Foundation\Request;
 use Core\Foundation\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -9,7 +10,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(bool $consoleMode): void
+    public function register(bool $consoleMode, Request $request): void
     {
         //
     }

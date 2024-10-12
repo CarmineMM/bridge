@@ -39,6 +39,7 @@ Puedes crear un archivo _.env_ a partir del _.env.example_ e iniciar tu proyecto
 -   3: **Load DotEnv** Carga el archivo .env para las variables de entorno. A su vez establece las configs predeterminadas de la configuración del framework.
 -   4: **Load Config** Une las configuraciones del desarrollador con las predeterminadas, sobre escribiendo las del framework con las establecidas por el usuario.
 -   5: **Make Request** (Condicionado a request de la Web) Construye la request entrante. Solo establece ciertos valores, del server entrante.
+-   \*: **Register Service Providers** Registra los service providers en la aplicación luego de tener el request
 -   6: **Security Roadmap** Seguimiento a los estándares de seguridad del framework
 -   6: **Load Translate files** Carga los archivos de traducción (internos de la app y los usados por el usuario)
 -   7.1: **Load Web Routes** Carga las rutas definidas para la web
