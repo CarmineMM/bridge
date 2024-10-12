@@ -15,6 +15,7 @@ class Test extends Component
             <div>
                 <h1 class="title">Hello World</h1>
                 <input bridge:model="name" />
+                <input bridge:model="name" />
             </div>
         HTML;
     }

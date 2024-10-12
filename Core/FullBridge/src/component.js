@@ -2,10 +2,14 @@ document.addEventListener('alpine:init', () => {
     /**
      * Componentes de Full Bridge
      */
-    Alpine.data('full-bridge-component', (receivedData) => {
+    Alpine.data('FullBridgeComponent', (receivedData) => {
         return {
             loading: false,
-            data: {},
+            data: receivedData?.data ?? {},
+
+            init() {
+
+            }
         };
     });
 });

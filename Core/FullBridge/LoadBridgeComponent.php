@@ -33,10 +33,9 @@ class LoadBridgeComponent
 
         // Run pre render
         $render = $component->render();
-        $id = random_int(1, 1000);
         $publicProperties = new Collection(get_object_vars($component));
         $componentClass = $component::class;
-        $render = preg_replace("/>/", " bridge:component='{$componentClass}' bridge:id='$id'>", $render, 1);
+        $render = preg_replace("/>/", " bridge:component='{$componentClass}' x-data='FullBridgeComponent({ data: {$publicProperties->toJson()} })'>", $render, 1);
 
         // Load HTML
         $doc->loadHTML(

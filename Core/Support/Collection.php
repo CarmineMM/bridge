@@ -282,4 +282,12 @@ class Collection
         $this->data = array_filter($this->data, $call, ARRAY_FILTER_USE_BOTH);
         return $this;
     }
+
+    /**
+     * JSON
+     */
+    public function toJson(int $options = 0): string
+    {
+        return json_encode($this->data, $options);
+    }
 }
