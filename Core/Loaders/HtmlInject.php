@@ -31,7 +31,7 @@ class HtmlInject
     }
 
     /**
-     * Inyecta html al final de <head>
+     * Inyecta html al principio de <head>
      *
      * @param string $html
      * @return HtmlInject

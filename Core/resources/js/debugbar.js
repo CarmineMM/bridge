@@ -72,7 +72,6 @@ document.addEventListener('alpine:init', () => {
             },
 
             printable(value, key = null) {
-                console.log({ key: key === 'enable', key });
                 if (typeof value === 'boolean') {
                     return value ? 'true' : 'false'
                 }

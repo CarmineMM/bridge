@@ -175,6 +175,9 @@ class Application
             Kernel::runBootServiceProvider($this->providers);
         }
 
+        // Aplicar los mutadores
+        $through->applyMutators();
+
         // Render JSON en caso de ser una respuesta para la API
         if ((is_array($through->toRender) || is_object($through->toRender) || $through->toRender instanceof Collection)) {
             return $through->renderJson();

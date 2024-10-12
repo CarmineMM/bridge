@@ -197,4 +197,16 @@ class CarryThrough
     {
         self::$listMutatorsFunctions[] = $callMutatorFunction;
     }
+
+    /**
+     * Aplica los mutadores de render
+     */
+    public function applyMutators(): void
+    {
+        $request = Request::make();
+
+        foreach (self::$listMutatorsFunctions as $callMutatorFunction) {
+            $this->toRender = $callMutatorFunction($this->toRender, $request);
+        }
+    }
 }
