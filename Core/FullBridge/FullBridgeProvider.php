@@ -13,6 +13,6 @@ class FullBridgeProvider extends ServiceProvider
     public function register(bool $consoleMode): void
     {
         // Register middleware
-        Config::addConfig('middleware.web', [FullBridgeMiddleware::class]);
+        Config::addConfig('middleware.web', FullBridgeMiddleware::class);
     }
 }

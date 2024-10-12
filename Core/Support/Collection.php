@@ -127,16 +127,33 @@ class Collection
      *
      * @param string $key
      * @param mixed $value
+     * @param bool $overwrite Defina si se puede sobrescribir
      * @return $this
      */
-    public function add(string $key, mixed $value): Collection
+    public function add(string $key, mixed $value, bool $overwrite = false): Collection
     {
-        $wasGet = $this->get($key, false);
+        $wasGet = $this->has($key);
 
-        if ($wasGet && strpos($key, '.') !== false) {
-            $this->data[$key] = is_array($wasGet) ? array_merge($wasGet, $value) : $value;
-        } else {
+        if ($wasGet && strpos($key, '.') === false) {
+            $this->data[$key][] = $value;
+        } else if ($wasGet && $overwrite) {
             $this->data[$key] = $value;
+        } else if (strpos($key, '.') !== false) {
+            $route = explode('.', $key);
+            $current = &$this->data;
+
+            foreach ($route as $segment) {
+                if (!isset($current[$segment])) {
+                    $current[$segment] = [];
+                }
+                $current = &$current[$segment];
+            }
+
+            if (is_array($current)) {
+                $current[] = $value;
+            } else {
+                $current = $value;
+            }
         }
 
         return $this;
