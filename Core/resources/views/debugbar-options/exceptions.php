@@ -9,7 +9,7 @@
                 <div style="margin-left: 1.5em;">
                     <p x-show="exception.severity === 'warning'" x-text="exception.message"></p>
                     <p class="small-monospace">
-                        <span x-text="exception.file.join('\\\')"></span>:<span x-text="exception.line"></span>
+                        <span x-text="exception.file"></span>:<span x-text="exception.line"></span>
                     </p>
                 </div>
             </li>

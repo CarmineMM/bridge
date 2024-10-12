@@ -24,7 +24,7 @@ document.addEventListener('alpine:init', () => {
         /**
          * Keys de los elementos que se deben de mostrar como un implode 
          */
-        const keyImplodeFileReference = ['view_path', 'providers', 'file', 'migration_handler', 'namespace'];
+        const keyImplodeFileReference = ['providers'];
 
         return {
             bodyOpen: false,
@@ -71,18 +71,19 @@ document.addEventListener('alpine:init', () => {
                 this.bodyOpen = true;
             },
 
-            printable(value) {
+            printable(value, key = null) {
+                console.log({ key: key === 'enable', key });
                 if (typeof value === 'boolean') {
                     return value ? 'true' : 'false'
                 }
 
                 if (_.isArray(value)) {
-                    if (_.isArray(value[0])) {
-                        return '[' + value.map((sub) => this.printable(sub)).join(', ') + ']'
+                    if (keyImplodeFileReference.includes(key)) {
+                        return '[' + value.map((sub) => this.printable(sub)).join(', ') + ']';
                     }
-
-                    return value.join('\\')
+                    return value.join('\\');
                 }
+
 
                 return value
             },
@@ -96,7 +97,7 @@ document.addEventListener('alpine:init', () => {
                     return `
                         <li class="item-config">
                             <p class="first-element" x-text="key"></p>
-                            <p class="medium-content" x-html="printable(values)"></p>
+                            <p class="medium-content" x-html="printable(values, key)"></p>
                         </li>
                     `
                 }

@@ -77,7 +77,7 @@ class Debugging
             ],
             'config' => [
                 'title' => Lang::_get('configurations', [], 'Config'),
-                'elements' => static::splitFormatFiles($allConfig->toArray(), ['view_path', 'providers', 'migration_handler', 'namespace']),
+                'elements' => static::splitFormatFiles($allConfig->toArray(), ['view_path', 'providers', 'migration_handler', 'namespace', 'middleware.web']),
                 'tabs' => [],
             ],
             'queries' => [
@@ -120,10 +120,12 @@ class Debugging
             foreach ($values as $key => $path) {
                 if (in_array($key, $coincidences)) {
                     if (is_string($path)) {
-                        $innerArray[$innerKey][$key] = explode('\\', $path);
+                        // $innerArray[$innerKey][$key] = explode('\\', $path);
+                        $innerArray[$innerKey][$key] = str_replace('\\', '/', $path);
                     } else if (is_array($path)) {
                         $innerArray[$innerKey][$key] = array_map(function ($item) {
-                            return explode('\\', $item);
+                            // return explode('\\', $item);
+                            return str_replace('\\', '/', $item);
                         }, $path);
                     }
                 }
