@@ -9,7 +9,7 @@ use Core\Loaders\Config;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= Config::get('app.name') ?> - 404 Not Found</title>
+    <title><?= Config::get('app.name') ?> - 429 Rate Limit Exceeded</title>
     <style>
         :root {
             --debug-bar-primary: #fe5f00;

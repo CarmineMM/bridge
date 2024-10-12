@@ -10,7 +10,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(bool $consoleMode, Request $request): void
+    public function register(bool $consoleMode, ?Request $request): void
     {
         //
     }

@@ -14,8 +14,12 @@ class FullBridgeProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-    public function register(bool $consoleMode, Request $request): void
+    public function register(bool $consoleMode, ?Request $request): void
     {
+        if ($consoleMode) {
+            return;
+        }
+
         // Register middleware
         Config::addConfig('middleware.web', FullBridgeMiddleware::class);
 

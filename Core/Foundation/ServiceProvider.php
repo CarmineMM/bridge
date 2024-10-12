@@ -17,7 +17,7 @@ class ServiceProvider
     /**
      * Registra los servicios de la aplicación
      */
-    public function register(bool $consoleMode, Request $request): void
+    public function register(bool $consoleMode, ?Request $request): void
     {
         // Registrar servicios
     }
