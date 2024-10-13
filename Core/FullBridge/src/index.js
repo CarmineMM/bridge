@@ -1,2 +1,2 @@
-import Alpine from 'alpinejs/index';
+import Alpine from './alpinejs/index';
 import './component'
