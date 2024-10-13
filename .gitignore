@@ -4,3 +4,5 @@
 /.vscode
 composer.lock
 /composer.lock
+node_modules
+/dist

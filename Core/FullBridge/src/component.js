@@ -1,15 +1,18 @@
+
 document.addEventListener('alpine:init', () => {
     /**
      * Componentes de Full Bridge
      */
-    Alpine.data('FullBridgeComponent', (receivedData) => {
-        return {
-            loading: false,
-            data: receivedData?.data ?? {},
+    // Alpine.data('FullBridgeComponent', (receivedData) => {
+    //     return {
+    //         loading: false,
+    //         ...receivedData?.data,
 
-            init() {
+    //         init() {
+    //             console.log(['receivedData', receivedData]);
+    //         }
 
-            }
-        };
-    });
+
+    //     };
+    // });
 });

@@ -1,0 +1,24 @@
+{
+    "name": "fullbridge",
+    "version": "3.14.1",
+    "description": "FullBridge is a framework full stack based in Alpinejs",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/CarmineMM/bridge"
+    },
+    "author": "Carmine Maggio",
+    "license": "MIT",
+    "main": "dist/module.cjs.js",
+    "module": "dist/module.esm.js",
+    "unpkg": "dist/cdn.min.js",
+    "dependencies": {
+        "@vue/reactivity": "~3.1.1"
+    },
+    "scripts": {
+        "build": "node ./scripts/build.js",
+        "watch": "node ./scripts/build.js --watch"
+    },
+    "devDependencies": {
+        "dot-json": "^1.3.0"
+    }
+}
