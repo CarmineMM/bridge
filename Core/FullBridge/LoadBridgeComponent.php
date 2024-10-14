@@ -4,6 +4,7 @@ namespace Core\FullBridge;
 
 use Attribute;
 use Core\Support\Collection;
+use Core\Support\Str;
 use DOMDocument;
 use Exception;
 
@@ -35,8 +36,7 @@ class LoadBridgeComponent
         $render = $component->render();
         $publicProperties = new Collection(get_object_vars($component));
         $componentClass = $component::class;
-        // $render = preg_replace("/>/", " bridge:component='{$componentClass}' x-data='FullBridgeComponent({ data: {$publicProperties->toJson()} })'>", $render, 1);
-        $render = preg_replace("/>/", " bridge:data=\"{ 'name': 'probando' }\" >", $render, 1);
+        $render = preg_replace("/>/", " bridge:data='FullBridgeComponent({ data: {$publicProperties->toJson()}, componentName: \"$componentClass\" })'>", $render, 1);
 
         // Load HTML
         $doc->loadHTML(
