@@ -23,7 +23,7 @@ class Test extends Component
                 <input bridge:model="name" />
                 <input bridge:model="name" />
                 <ul>
-                    <template bridge:for="element in elements" >
+                    <template bridge:for="element in elements">
                         <li bridge:text="element"></li>
                     </template>
                 </ul>

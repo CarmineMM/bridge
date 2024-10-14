@@ -84,11 +84,9 @@ class LoadBridgeComponent
                         continue;
                     }
 
-                    dump([
-                        'attributeValue' => $attributeValue,
-                        'directive' => $directive,
-                        'el' => $el
-                    ]);
+                    if (str_contains($directive, ':for')) {
+                        // Attributes::loopCycle($el);
+                    }
                 }
             }
         }
