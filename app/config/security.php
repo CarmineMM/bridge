@@ -31,7 +31,7 @@ return [
         /**
          * Enable rate limit
          */
-        'enable' => true,
+        'enable' => false,
 
         /**
          * Cantidad de peticiones permitidas por minuto
@@ -49,6 +49,6 @@ return [
         /**
          * Tiempo de ban expresado en segundos.
          */
-        'ban_time' => 3600
+        'ban_time' => 360
     ],
 ];

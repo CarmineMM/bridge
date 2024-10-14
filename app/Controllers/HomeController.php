@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use Core\Foundation\BaseController;
-use Core\Foundation\RateLimit\Driver\Session;
+use Core\Foundation\RateLimit\RateLimit;
 
 class HomeController extends BaseController
 {

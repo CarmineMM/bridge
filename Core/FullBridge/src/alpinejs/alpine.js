@@ -25,7 +25,7 @@ let Alpine = {
     get release() { return release },
     get effect() { return effect },
     get raw() { return raw },
-    version: ALPINE_VERSION,
+    version: 'fullbridge-alpine-1.0',
     flushAndStopDeferringMutations,
     dontAutoEvaluateFunctions,
     disableEffectScheduling,

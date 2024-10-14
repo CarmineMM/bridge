@@ -29,7 +29,7 @@ class Attributes
      * Propiedades que pueden contener atributos de bridge component
      */
     const ModelProperties = [
-        'x-model'
+        'bridge:model'
     ];
 
     /**

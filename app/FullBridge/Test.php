@@ -13,9 +13,9 @@ class Test extends Component
         // html
         return <<<HTML
             <div>
-                <h1 class="title" x-text="name">Hello World</h1>
-                <input x-model="name" />
-                <input x-model="name" />
+                <h1 class="title" bridge:text="name">Hello World</h1>
+                <input bridge:model="name" />
+                <input bridge:model="name" />
                 <button>Increment</button>
                 Count: <span></span>
             </div>

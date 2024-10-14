@@ -74,7 +74,7 @@ export default defineConfig({
             },
             output: {
                 // Nombres estáticos
-                // entryFileNames: 'js/[name].js',
+                entryFileNames: '[name].js',
 
                 // Nombres estáticos
                 // assetFileNames: 'css/[name].[ext]',

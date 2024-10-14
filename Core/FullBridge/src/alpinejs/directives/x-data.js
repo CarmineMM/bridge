@@ -60,7 +60,7 @@ interceptClone((from, to) => {
 // The reason a data context WOULD exist is that we graft root x-data state over
 // from the live tree before hydrating the clone tree.
 function shouldSkipRegisteringDataDuringClone(el) {
-    if (! isCloning) return false
+    if (!isCloning) return false
     if (isCloningLegacy) return true
 
     return el.hasAttribute('data-has-alpine-state')

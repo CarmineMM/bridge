@@ -23,6 +23,7 @@ return [
 
     /**
      * Entorno actual del framework.
+     * local - production
      */
     'env' => Env::get('APP_ENV', 'local'),
 

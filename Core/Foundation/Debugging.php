@@ -33,11 +33,11 @@ class Debugging
         $render = new Render;
         $render->config_view_path = 'framework.view_path';
 
+        //      <script src='/{$deps}' defer></script> TODO: colocar de nuevo
         $renderHtml = $htmlInject
             ->headBot("
                 <link rel='stylesheet' href='/{$cssDebug}'>
                 <script src='/{$jsDebug}' defer></script>
-                <script src='/{$deps}' defer></script>
             ")
             ->bodyBot($render->view('debugbar', ['app' => $app]))
             ->getHtml();

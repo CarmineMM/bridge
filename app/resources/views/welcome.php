@@ -43,9 +43,9 @@
 </head>
 
 <body>
-    <hgroup>
-        <!-- <h1>Bridge Framework</h1> -->
-    </hgroup>
+    <!-- <hgroup>
+        <h1>Bridge Framework</h1>
+    </hgroup> -->
     <?php
 
     use App\FullBridge\Test;

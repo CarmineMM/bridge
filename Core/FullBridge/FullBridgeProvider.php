@@ -25,11 +25,11 @@ class FullBridgeProvider extends ServiceProvider
         // Register middleware
         Config::addConfig('middleware.web', FullBridgeMiddleware::class);
 
-        if (!$request->isAjax) {
+        if (!$request->isAjax && Config::get('app.env') !== 'local') {
             // Register routes
             Router::get('/full-bridge-scripts', function () {
                 Response::make()->setHeader('Content-Type', 'text/javascript');
-                return file_get_contents(Filesystem::rootPath(['Core', 'FullBridge', 'src', 'component.js']));
+                return file_get_contents(Filesystem::rootPath(['Core', 'FullBridge', 'src', 'dist', 'main.js']));
             })->name('full-bridge-scripts');
         }
 
@@ -40,6 +40,14 @@ class FullBridgeProvider extends ServiceProvider
                 }
 
                 $inject = new HtmlInject($current);
+
+                if (Config::get('app.env') === 'local') {
+                    return $inject->headBot('
+                        <script src="http://localhost:8282/@vite/client" type="module"></script>
+                        <script src="http://localhost:8282/index.js" type="module"></script>
+                    ')->getHtml();
+                }
+
                 return $inject->headBot('<script src="/full-bridge-scripts"></script>')->getHtml();
             });
         }
