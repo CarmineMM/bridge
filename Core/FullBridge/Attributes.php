@@ -12,6 +12,8 @@ class Attributes
         'textarea',
         'select',
 
+        'template',
+
         'h1',
         'h2',
         'h3',
@@ -29,7 +31,9 @@ class Attributes
      * Propiedades que pueden contener atributos de bridge component
      */
     const ModelProperties = [
-        'bridge:model'
+        'bridge:model',
+        'bridge:text',
+        'bridge:for',
     ];
 
     /**
@@ -41,9 +45,34 @@ class Attributes
     ];
 
     /***
-     * Realiza un append en los siguientes elementos
+     * Realiza un replace HTML en los siguientes elementos
      */
     const addHtmlContent = [
-        ''
+        'bridge:text'
     ];
+
+    const LoopsTags = [
+        'template',
+    ];
+
+    /**
+     * Obtiene las directivas a las cuales hay que prestarle atención para el SSR
+     */
+    public  static function directives(): array
+    {
+        return [
+            'bridge:model',
+            'bridge:for'
+        ];
+    }
+
+    /**
+     * Lista de tags las cuales se les debe colocar SSR
+     */
+    public  static function tags(): array
+    {
+        return [
+            'template',
+        ];
+    }
 }

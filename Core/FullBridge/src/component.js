@@ -10,7 +10,7 @@ document.addEventListener('alpine:init', () => {
             ...receivedData?.data,
 
             init() {
-                console.log(['receivedData', receivedData]);
+                console.log(receivedData);
             }
         };
     });

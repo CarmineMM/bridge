@@ -111,7 +111,7 @@ class Application
         if (!$isConsole) {
             // Este try esta vinculado al manejo de los controladores
             try {
-                if (Config::get('security.rate_limit.enabled', true)) {
+                if (Config::get('security.rate_limit.enable', true)) {
                     $rateLimit = new RateLimit(
                         Config::get('security.rate_limit.driver', 'session'),
                         Config::get('security.rate_limit.limit', 60),

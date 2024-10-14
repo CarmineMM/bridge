@@ -35,7 +35,7 @@ class LoadBridgeComponent
         // Run pre render
         $render = $component->render();
         $publicProperties = new Collection(get_object_vars($component));
-        $componentClass = $component::class;
+        $componentClass = (new Str($component::class))->replace('\\', '.')->getString();
         $render = preg_replace("/>/", " bridge:data='FullBridgeComponent({ data: {$publicProperties->toJson()}, componentName: \"$componentClass\" })'>", $render, 1);
 
         // Load HTML
@@ -45,24 +45,50 @@ class LoadBridgeComponent
         );
 
         // Se recorren todos los tags posibles del HTML
-        foreach (Attributes::ModelTags as $tag) {
-            $nodes = $doc->getElementsByTagName($tag)->getIterator();
+        // foreach (Attributes::ModelTags as $tag) {
+        //     $nodes = $doc->getElementsByTagName($tag)->getIterator();
 
-            foreach ($nodes as $node) {
-                // Ahora se recorren los atributos dentro del node (tag) de HTML
-                foreach (Attributes::ModelProperties as $property) {
-                    $model = $node->getAttribute($property);
-                    $value = $publicProperties->get($model);
+        //     foreach ($nodes as $node) {
+        //         // Ahora se recorren los atributos dentro del node (tag) de HTML
+        //         foreach (Attributes::ModelProperties as $property) {
+        //             dump($node->nodeName);
+        //             $model = $node->getAttribute($property);
+        //             $value = $publicProperties->get($model);
 
-                    // Hacer el reemplazo de valores dentro de las etiquetas HTML según sea el caso
-                    if ($model && $value) {
-                        // Valor de 'Values'
-                        if (in_array($tag, Attributes::AddValuesToNode)) {
-                            $node->setAttribute('value', $value);
-                        } else {
-                            $node->nodeValue = $value;
-                        }
+        //             // Hacer el reemplazo de valores dentro de las etiquetas HTML según sea el caso
+        //             if ($model && $value) {
+        //                 // Valor de 'Values'
+        //                 if (in_array($tag, Attributes::AddValuesToNode)) {
+        //                     $node->setAttribute('value', $value);
+        //                 } else if (is_string($value)) {
+        //                     $node->nodeValue = $value;
+        //                 } else if (is_array($value)) {
+        //                     dump('array');
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
+        foreach (Attributes::tags() as $tag) {
+            $elements = $doc->getElementsByTagName($tag);
+
+            // Realizar el reemplazo por TagsName
+            foreach ($elements as $el) {
+
+                // Iterar las directivas sobre el elemento
+                foreach (Attributes::directives() as $directive) {
+                    $attributeValue = $el->getAttribute($directive);
+
+                    if (!$attributeValue) {
+                        continue;
                     }
+
+                    dump([
+                        'attributeValue' => $attributeValue,
+                        'directive' => $directive,
+                        'el' => $el
+                    ]);
                 }
             }
         }
