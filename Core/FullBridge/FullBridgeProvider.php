@@ -18,7 +18,7 @@ class FullBridgeProvider extends ServiceProvider
      */
     public function register(bool $consoleMode, ?Request $request): void
     {
-        if ($consoleMode) {
+        if ($consoleMode || !Config::get('fullbridge.enabled', false)) {
             return;
         }
 
@@ -33,7 +33,7 @@ class FullBridgeProvider extends ServiceProvider
             })->name('full-bridge-scripts');
         }
 
-        if (Response::headerIs('Content-Type', 'text/html') && Config::get('fullbridge.enabled', false)) {
+        if (Response::headerIs('Content-Type', 'text/html')) {
             CarryThrough::mutateRender(function (string $current, Request $request) {
                 if (strpos($current, '<head>') === false) {
                     return $current;
