@@ -4,7 +4,7 @@ return [
     /**
      * Habilita la interacción bridge-wire
      */
-    'enable' => true,
+    'enable' => false,
 
     /**
      * Ruta donde se guardan los archivos,

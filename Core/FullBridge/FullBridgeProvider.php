@@ -33,7 +33,7 @@ class FullBridgeProvider extends ServiceProvider
             })->name('full-bridge-scripts');
         }
 
-        if (Response::headerIs('Content-Type', 'text/html')) {
+        if (Response::headerIs('Content-Type', 'text/html') && Config::get('fullbridge.enabled', false)) {
             CarryThrough::mutateRender(function (string $current, Request $request) {
                 if (strpos($current, '<head>') === false) {
                     return $current;
