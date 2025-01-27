@@ -43,15 +43,9 @@
 </head>
 
 <body>
-    <!-- <hgroup>
+    <hgroup>
         <h1>Bridge Framework</h1>
-    </hgroup> -->
-    <?php
-
-    use App\FullBridge\Test;
-    use Core\FullBridge\LoadBridgeComponent;
-
-    echo LoadBridgeComponent::call(Test::class); ?>
+    </hgroup>
 </body>
 
 </html>
