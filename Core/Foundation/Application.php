@@ -130,6 +130,10 @@ class Application
                     MiddlewareHandler::runMiddlewaresFromConfig('middleware.app');
 
                     if (empty($route)) {
+                        /**
+                         * Pagina no encontrada, el sitio al que esta intentando acceder,
+                         * no esta definido en las rutas de la aplicación.
+                         */
                         throw new \Exception('Not found', 404);
                     }
 
